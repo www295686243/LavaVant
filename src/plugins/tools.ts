@@ -1,6 +1,6 @@
-const ua = window.navigator.userAgent
 import areaList from '@/assets/json/area'
 
+const ua = window.navigator.userAgent
 export const isWX = /MicroMessenger/ig.test(ua)
 export const isWXDev = /wechatdevtools/ig.test(ua)
 export const isIOS = /iP(ad|hone|od)/.test(ua)
@@ -29,7 +29,7 @@ export function getCityName (code: string, format = '/'): string {
  * @param value
  * @param fmt Y-m-d/Y-m-d H:i/Y-m
  */
-export function formatDate (value: Date, fmt: string = 'Y-m-d') {
+export function formatDate (value: Date, fmt = 'Y-m-d') {
   const date = value ? new Date(value) : new Date()
   const year = date.getFullYear()
   let month: string = (date.getMonth() + 1) + ''
@@ -62,8 +62,8 @@ export function formatDate (value: Date, fmt: string = 'Y-m-d') {
 }
 
 // 根据最后一级的id获取整个path
-export function getSelectedPaths (id: number, data: any[], keyword: string = 'name') {
-  let paths: any[] = []
+export function getSelectedPaths (id: number, data: any[]) {
+  const paths: any[] = []
   function recursiveQuery (id: number) {
     const item = data.find((res: any) => res.id === id)
     if (item) {
