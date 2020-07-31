@@ -15,6 +15,9 @@ import { Button } from 'vant'
   }
 })
 export default class SS extends Vue {
+  created () {
+    console.log(process.env.VUE_APP_ENV)
+  }
 }
 </script>
 
