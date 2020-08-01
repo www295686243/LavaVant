@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <PageContainer>
     <FormRender :onSubmit="handleSubmit" submit-btn="登录">
       <FormInput v-model="form.username" :field="formFields.username" />
       <FormInput v-model="form.password" :field="formFields.password" />
     </FormRender>
-  </div>
+  </PageContainer>
 </template>
 
 <script lang="ts">

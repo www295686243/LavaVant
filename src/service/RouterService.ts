@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router'
+import StatService from './StatService'
 
 class RouterSerivce {
   router!: VueRouter
@@ -17,6 +18,8 @@ class RouterSerivce {
       }
       // 设置title
       document.title = to.meta.title || process.env.VUE_APP_NAME
+      // 页面访问埋点
+      StatService.viewPush(to)
       // 开发环境直接跳过
       if (process.env.VUE_APP_ENV === 'dev') {
         next()
@@ -31,6 +34,9 @@ class RouterSerivce {
   }
 
   push (path: string, query?: any) {
+    if (path.substr(0, 1) !== '/') {
+      path = this.getPath() + '/' + path
+    }
     this.router.push({
       path,
       query
@@ -38,6 +44,9 @@ class RouterSerivce {
   }
 
   replace (path: string, query?: any) {
+    if (path.substr(0, 1) !== '/') {
+      path = this.getPath() + '/' + path
+    }
     this.router.replace({
       path,
       query
@@ -65,6 +74,14 @@ class RouterSerivce {
     } else {
       return param as string || ''
     }
+  }
+
+  getPath () {
+    return this.getPathInfo().path
+  }
+
+  getPathInfo () {
+    return this.router.app.$route
   }
 }
 

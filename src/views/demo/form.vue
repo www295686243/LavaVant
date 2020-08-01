@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <PageContainer>
     <FormRender :onSubmit="handleSubmit">
       <FormInput v-model="form.text" :field="formFields.text" />
     </FormRender>
-  </div>
+  </PageContainer>
 </template>
 
 <script lang="ts">

@@ -10,6 +10,7 @@ export default {
   user: store.namespace(prefix + 'user'),
   config: store.namespace(prefix + 'config'),
   version: store.namespace(prefix + 'version'),
+  stat: store.namespace(prefix + 'stat'),
   clearAll () {
     store.clearAll()
   }

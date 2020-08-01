@@ -1,7 +1,7 @@
 import cache from '@/plugins/cache'
 import axios from '@/plugins/axios'
 
-interface Version {
+export interface Version {
   app: number;
   [key: string]: number;
 }

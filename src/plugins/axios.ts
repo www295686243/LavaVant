@@ -1,21 +1,51 @@
 import axios from 'axios'
 import cache from './cache'
 import router from '@/router'
-import VersionService from '@/service/VersionService'
+import VersionService, { Version } from '@/service/VersionService'
+import StatService from '@/service/StatService'
+import UserService from '@/service/UserService'
 
 export interface PromiseResult {
   message: string;
   data: any;
   code?: number;
   status?: string;
+  version: Version;
+}
+
+interface UrlParams {
+  url: string;
+  method: string;
+  params?: object;
+  data?: object;
 }
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.common.Accept = 'application/json'
 
 function notLogin () {
-  cache.user.clearAll()
-  router.push({ path: '/login' })
+  return UserService.logout()
+    .then(() => {
+      router.push({ path: '/login' })
+    })
+}
+
+function checkVersion (data: UrlParams, res: PromiseResult) {
+  return Promise.resolve()
+    .then(() => {
+      if (data.url !== 'app/getAppConfig') {
+        return VersionService.checkAllVersion(res.version)
+      }
+    })
+}
+
+function checkStat (data: UrlParams) {
+  return Promise.resolve()
+    .then(() => {
+      if (data.url !== 'api_log' && data.method !== 'get' && cache.user.get('api_token')) {
+        return StatService.submit()
+      }
+    })
 }
 
 function ajax (data: any): Promise<PromiseResult> {
@@ -29,14 +59,11 @@ function ajax (data: any): Promise<PromiseResult> {
       .then(res => res.data)
       .then(res => {
         if (res.status === 'success') {
-          if (data.url !== 'app/getAppConfig') {
-            VersionService.checkAllVersion(res.version)
-              .then(() => {
-                resolve(res)
-              })
-          } else {
-            resolve(res)
-          }
+          return checkVersion(data, res)
+            .then(() => checkStat(data))
+            .then(() => {
+              resolve(res)
+            })
         } else {
           if (res.code === 401) {
             notLogin()
