@@ -37,7 +37,6 @@ class StatService {
     return Promise.resolve()
       .then(() => {
         if (this.stack.length > 0) {
-          console.log(this.stack)
           return axios.post('api_log', { stack: this.stack })
             .then(() => {
               this.forget()

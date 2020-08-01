@@ -12,7 +12,6 @@ import FormInput from './components/Form/FormInput.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
-import UserService from '@/service/UserService'
 import VersionService from '@/service/VersionService'
 
 Vue.use(Button).use(Popup).use(Loading).use(Dialog).use(Row).use(Col).use(Icon)
@@ -33,7 +32,6 @@ Vue.filter('empty', (value: string) => {
 })
 
 RouterService.init(router)
-UserService.init()
 VersionService.init()
 
 new Vue({

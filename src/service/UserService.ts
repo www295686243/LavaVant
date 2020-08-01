@@ -1,10 +1,16 @@
 import cache from '@/plugins/cache'
-import axios from '@/plugins/axios'
+import axios, { PromiseResult } from '@/plugins/axios'
 import VersionService from './VersionService'
+import { formatDate } from '@/plugins/tools'
 
 interface LoginParams {
   username: string;
   password: string;
+}
+
+interface RoleItem {
+  name: string;
+  display_name: string;
 }
 
 interface UserInfo {
@@ -12,6 +18,8 @@ interface UserInfo {
   username: string;
   nickname: string;
   phone: string;
+  roles: RoleItem[];
+  permissions: string[];
 }
 
 class UserService {
@@ -19,10 +27,12 @@ class UserService {
     id: 0,
     nickname: '',
     username: '',
-    phone: ''
+    phone: '',
+    roles: [],
+    permissions: []
   }
 
-  init () {
+  constructor () {
     Object.assign(this.info, cache.user.getAll())
   }
 
@@ -35,11 +45,27 @@ class UserService {
       .then(() => this.getUserInfo())
   }
 
+  todayFirstLogin () {
+    return Promise.resolve()
+      .then(() => {
+        const today = formatDate()
+        const firstLoginDate = cache.user.get('_firstLoginDate')
+        if ((!firstLoginDate || today > firstLoginDate) && this.info.id) {
+          return axios.post('user/todayFirstLogin', {})
+            .then((res) => {
+              this.cacheUserInfo(res)
+              cache.user.set('_firstLoginDate', today)
+            })
+        }
+      })
+  }
+
   logout () {
     return Promise.resolve()
       .then(() => {
         cache.clearAll()
         VersionService.clearAll()
+        this.info.id = 0
         return '注销成功'
       })
   }
@@ -55,16 +81,19 @@ class UserService {
   private getUserInfo () {
     return axios.get('user/getUserInfo')
       .then((res) => {
-        cache.user.setAll(res.data.user)
-        this.updateData(res.data.user)
-        cache.user.set('roles', res.data.roles || [])
-        cache.user.set('permissions', res.data.permissions || [])
+        this.cacheUserInfo(res)
       })
   }
 
+  private cacheUserInfo (res: PromiseResult) {
+    cache.user.setAll(res.data.user)
+    this.updateData(res.data.user)
+    cache.user.set('roles', res.data.roles || [])
+    cache.user.set('permissions', res.data.permissions || [])
+  }
+
   hasPermission (name: string) {
-    const permissions: string[] = cache.user.get('permissions') || []
-    return permissions.includes(name)
+    return this.info.permissions.includes(name)
   }
 }
 

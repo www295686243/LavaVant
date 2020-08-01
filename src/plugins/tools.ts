@@ -29,13 +29,24 @@ export function getCityName (code: string, format = '/'): string {
  * @param value
  * @param fmt Y-m-d/Y-m-d H:i/Y-m
  */
-export function formatDate (value: string, fmt?: string) {
+export function formatDate (value?: string, fmt?: string) {
   let date!: Date
-  if (fmt) {
+
+  if (value && fmt) {
     date = new Date(value)
   } else {
-    date = new Date()
-    fmt = value
+    if (value) {
+      if (value.includes('-')) {
+        date = new Date()
+        fmt = value
+      } else {
+        date = new Date(value)
+        fmt = 'Y-m-d'
+      }
+    } else {
+      date = new Date()
+      fmt = 'Y-m-d'
+    }
   }
   const year = date.getFullYear()
   let month: string = (date.getMonth() + 1) + ''

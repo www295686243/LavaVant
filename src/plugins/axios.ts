@@ -23,6 +23,8 @@ interface UrlParams {
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.common.Accept = 'application/json'
 
+const onceUrls = ['app/getAppConfig', 'api_log', 'user/todayFirstLogin']
+
 function notLogin () {
   return UserService.logout()
     .then(() => {
@@ -30,20 +32,32 @@ function notLogin () {
     })
 }
 
+// 获取应用配置
 function checkVersion (data: UrlParams, res: PromiseResult) {
   return Promise.resolve()
     .then(() => {
-      if (data.url !== 'app/getAppConfig') {
+      if (!onceUrls.includes(data.url)) {
         return VersionService.checkAllVersion(res.version)
       }
     })
 }
 
+// 提交埋点
 function checkStat (data: UrlParams) {
   return Promise.resolve()
     .then(() => {
-      if (data.url !== 'api_log' && data.method !== 'get' && cache.user.get('api_token')) {
+      if (!onceUrls.includes(data.url) && data.method !== 'get' && cache.user.get('api_token')) {
         return StatService.submit()
+      }
+    })
+}
+
+// 首次登录记录
+function checkTodayFirstLogin (data: UrlParams) {
+  return Promise.resolve()
+    .then(() => {
+      if (!onceUrls.includes(data.url) && cache.user.get('api_token')) {
+        return UserService.todayFirstLogin()
       }
     })
 }
@@ -60,6 +74,7 @@ function ajax (data: any): Promise<PromiseResult> {
       .then(res => {
         if (res.status === 'success') {
           return checkVersion(data, res)
+            .then(() => checkTodayFirstLogin(data))
             .then(() => checkStat(data))
             .then(() => {
               resolve(res)
