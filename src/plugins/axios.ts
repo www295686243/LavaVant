@@ -3,11 +3,11 @@ import cache from './cache'
 import router from '@/router'
 import VersionService from '@/service/VersionService'
 
-export interface IResult {
-  message: string,
-  data: any,
-  code?: number,
-  status?: string
+export interface PromiseResult {
+  message: string;
+  data: any;
+  code?: number;
+  status?: string;
 }
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -18,8 +18,8 @@ function notLogin () {
   router.push({ path: '/login' })
 }
 
-function ajax (data: any): Promise<IResult> {
-  axios.defaults.baseURL = ''
+function ajax (data: any): Promise<PromiseResult> {
+  axios.defaults.baseURL = process.env.VUE_APP_BASEURL
   if (cache.user.get('api_token')) {
     axios.defaults.headers.common.Authorization = 'Bearer ' + cache.user.get('api_token')
   }
@@ -29,7 +29,7 @@ function ajax (data: any): Promise<IResult> {
       .then(res => res.data)
       .then(res => {
         if (res.status === 'success') {
-          if (data.url !== 'auth/getAppConfig') {
+          if (data.url !== 'app/getAppConfig') {
             VersionService.checkAllVersion(res.version)
               .then(() => {
                 resolve(res)

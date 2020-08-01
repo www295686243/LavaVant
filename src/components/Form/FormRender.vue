@@ -3,7 +3,7 @@
     <van-form ref="formElement">
       <slot></slot>
       <div class="FormRender-btn">
-        <ButtonSubmit :onClick="handleSubmit" block round>提交</ButtonSubmit>
+        <ButtonSubmit :onClick="handleSubmit" block round>{{submitBtn}}</ButtonSubmit>
       </div>
     </van-form>
   </div>
@@ -31,6 +31,9 @@ export default class FormRender extends Vue {
 
   @Prop({ default: () => () => Promise.resolve() })
   onSubmit!: Function
+
+  @Prop({ default: '提交' })
+  submitBtn!: string
 
   private handleSubmit () {
     return this.formElement.validate()

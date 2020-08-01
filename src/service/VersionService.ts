@@ -39,7 +39,7 @@ class VersionService {
   }
 
   getAppConfig (guard_name = '') {
-    return axios.get('auth/getAppConfig', { guard_name })
+    return axios.get('app/getAppConfig', { guard_name })
       .then((res) => {
         if (Array.isArray(res.data) && res.data.length === 0) {
           res.data = {

@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import VantService from '@/service/VantService'
-import { IResult } from '@/plugins/axios'
+import { PromiseResult } from '@/plugins/axios'
 
 @Component
 export default class ButtonSubmit extends Vue {
@@ -58,13 +58,13 @@ export default class ButtonSubmit extends Vue {
     const result = this.onClick()
     if (result && typeof result.then === 'function') {
       result
-        .then((res: IResult) => {
+        .then((res: PromiseResult) => {
           this.loading = false
           if (res && res.message) {
             VantService.toast.success(res.message)
           }
         })
-        .catch((res: IResult) => {
+        .catch((res: PromiseResult) => {
           this.loading = false
           if (res.status === 'error') {
             let message = res.message

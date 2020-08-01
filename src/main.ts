@@ -9,6 +9,10 @@ import FormRender from './components/Form/FormRender.vue'
 import FormInput from './components/Form/FormInput.vue'
 import { getCityName } from './plugins/tools'
 
+import RouterService from '@/service/RouterService'
+import UserService from '@/service/UserService'
+import VersionService from '@/service/VersionService'
+
 Vue.use(Button).use(Popup).use(Loading).use(Dialog).use(Row).use(Col).use(Icon)
 Vue.component('ButtonSubmit', ButtonSubmit)
 Vue.component('FormRender', FormRender)
@@ -23,6 +27,10 @@ Vue.filter('cityName', (value: string) => {
 Vue.filter('empty', (value: string) => {
   return value || '--'
 })
+
+RouterService.init(router)
+UserService.init()
+VersionService.init()
 
 new Vue({
   router,
