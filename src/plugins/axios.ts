@@ -1,6 +1,7 @@
 import axios from 'axios'
 import cache from './cache'
 import router from '@/router'
+import VersionService from '@/service/VersionService'
 
 export interface IResult {
   message: string,
@@ -28,7 +29,14 @@ function ajax (data: any): Promise<IResult> {
       .then(res => res.data)
       .then(res => {
         if (res.status === 'success') {
-          resolve(res)
+          if (data.url !== 'auth/getAppConfig') {
+            VersionService.checkAllVersion(res.version)
+              .then(() => {
+                resolve(res)
+              })
+          } else {
+            resolve(res)
+          }
         } else {
           if (res.code === 401) {
             notLogin()

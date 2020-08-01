@@ -19,7 +19,7 @@ export default class DemoForm extends Vue {
   private formFields = {
     text: ValidateService.genRule({
       label: '文本',
-      rules: [ValidateService.required, ValidateService.bewteen(2, 4)]
+      rules: [ValidateService.required, ValidateService.email]
     })
   }
 

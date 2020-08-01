@@ -196,7 +196,7 @@ class ValidateService {
   bewteen (min = 0, max = 0) {
     return function ({ name = '' } = {}) {
       return {
-        bewteen: { min, max, validator: (value: string) => validateBewteen(value, min, max), message: `${name}长度应为${min}-${max}`, trigger: 'onBlur' }
+        bewteen: { min, max, validator: (value: string) => validateBewteen(value, min, max), message: `${name}长度应为${min}-${max}个字符`, trigger: 'onBlur' }
       }
     }
   }
