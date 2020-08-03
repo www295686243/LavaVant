@@ -3,6 +3,7 @@
     <FormRender :onSubmit="handleSubmit">
       <FormInput v-model="form.text" :field="formFields.text" />
       <FormTextarea v-model="form.textarea" :field="formFields.textarea" />
+      <FormSwitch v-model="form.switch" :field="formFields.switch" />
     </FormRender>
   </PageContainer>
 </template>
@@ -15,7 +16,8 @@ import ValidateService from '@/service/ValidateService'
 export default class DemoForm extends Vue {
   private form = {
     text: '',
-    textarea: ''
+    textarea: '',
+    switch: 1
   }
 
   private formFields = {
@@ -26,7 +28,10 @@ export default class DemoForm extends Vue {
     textarea: ValidateService.genRule({
       label: '文本框',
       rules: [ValidateService.required, ValidateService.max(200)]
-    })
+    }),
+    switch: {
+      label: '开关'
+    }
   }
 
   private handleSubmit () {

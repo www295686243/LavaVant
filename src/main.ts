@@ -11,6 +11,7 @@ import ButtonStat from './components/Button/ButtonStat.vue'
 import FormRender from './components/Form/FormRender.vue'
 import FormInput from './components/Form/FormInput.vue'
 import FormTextarea from './components/Form/FormTextarea.vue'
+import FormSwitch from './components/Form/FormSwitch.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -24,6 +25,7 @@ Vue.component('ButtonStat', ButtonStat)
 Vue.component('FormRender', FormRender)
 Vue.component('FormInput', FormInput)
 Vue.component('FormTextarea', FormTextarea)
+Vue.component('FormSwitch', FormSwitch)
 
 Vue.config.productionTip = false
 
