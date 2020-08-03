@@ -2,7 +2,6 @@ import cache from '@/plugins/cache'
 import axios from '@/plugins/axios'
 import { Route } from 'vue-router'
 import { formatDate } from '@/plugins/tools'
-import router from '@/router'
 import RouterService from './RouterService'
 
 interface StackInput {

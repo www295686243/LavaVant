@@ -5,6 +5,7 @@
       <FormTextarea v-model="form.textarea" :field="formFields.textarea" />
       <FormSwitch v-model="form.switch" :field="formFields.switch" />
       <FormCheckbox v-model="form.checkbox" :field="formFields.checkbox" />
+      <FormSelect v-model="form.select" :field="formFields.select" />
     </FormRender>
   </PageContainer>
 </template>
@@ -19,7 +20,8 @@ export default class DemoForm extends Vue {
     text: '',
     textarea: '',
     switch: 1,
-    checkbox: []
+    checkbox: [],
+    select: 2
   }
 
   private formFields = {
@@ -36,6 +38,14 @@ export default class DemoForm extends Vue {
     },
     checkbox: {
       label: '复选框',
+      options: [
+        { id: 1, display_name: '选项1' },
+        { id: 2, display_name: '选项2' },
+        { id: 3, display_name: '选项3' }
+      ]
+    },
+    select: {
+      label: '下拉框',
       options: [
         { id: 1, display_name: '选项1' },
         { id: 2, display_name: '选项2' },

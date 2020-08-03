@@ -15,7 +15,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import VantService from '@/service/VantService'
 import { PromiseResult } from '@/plugins/axios'
 import StatService from '@/service/StatService'
-import { VNode } from 'vue'
 
 @Component({
   inheritAttrs: false

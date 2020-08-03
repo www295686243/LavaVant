@@ -1,6 +1,8 @@
 export interface FormField {
   label: string;
+  placeholder?: string;
   rules?: any[];
+  options?: any[];
 }
 
 function checkIdcard (e: any) {
@@ -180,11 +182,10 @@ class ValidateService {
   }
 
   // trigger onChange or onBlur
-  required ({ trigger = 'onBlur', type = 'string' } = {}) {
+  required ({ trigger = 'onBlur' } = {}) {
     return function ({ name = '' } = {}) {
       return {
         required: {
-          type,
           required: true,
           message: `请${trigger === 'onBlur' ? '输入' : '选择'}${name}`,
           trigger

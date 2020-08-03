@@ -4,17 +4,18 @@
     v-model="innerValue"
     :label="field.label"
     :name="field.label"
-    :placeholder="'请输入' + field.label"
+    :placeholder="placeholder ? placeholder : '请输入' + field.label"
     :rules="field.rules"
     :maxlength="maxlength"
     :required="required"
+    @click="handleClick"
     clearable
     v-bind="$attrs" />
 </template>
 
 <script lang="ts">
 import FormMixins from './FormMixins'
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Prop } from 'vue-property-decorator'
 import { Field } from 'vant'
 
 @Component({
@@ -24,6 +25,9 @@ import { Field } from 'vant'
   }
 })
 export default class FormInput extends Mixins(FormMixins) {
+  @Prop()
+  placeholder!: string
+
   private maxlength = null
   private required = false
 
@@ -36,6 +40,10 @@ export default class FormInput extends Mixins(FormMixins) {
 
   private genRequired () {
     this.required = (this.field.rules || []).some((res) => res.required)
+  }
+
+  private handleClick () {
+    this.$emit('click')
   }
 
   created () {
