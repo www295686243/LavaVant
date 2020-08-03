@@ -2,12 +2,19 @@ import cache from '@/plugins/cache'
 import axios from '@/plugins/axios'
 import { Route } from 'vue-router'
 import { formatDate } from '@/plugins/tools'
+import router from '@/router'
+import RouterService from './RouterService'
+
+interface StackInput {
+  message?: string;
+}
 
 interface StackItem {
   path: string;
   desc: string;
   method: string;
   time?: string;
+  input?: StackInput;
 }
 
 class StatService {
@@ -20,7 +27,16 @@ class StatService {
     this.push({
       path: route.path,
       desc: route.meta.title,
-      method: 'view'
+      method: 'View'
+    })
+  }
+
+  clickPush (name: string, input?: StackInput) {
+    this.push({
+      path: RouterService.getPath(),
+      desc: name,
+      method: 'Click',
+      input: input
     })
   }
 
