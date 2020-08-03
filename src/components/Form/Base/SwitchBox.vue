@@ -23,7 +23,7 @@ import { PromiseResult } from '@/plugins/axios'
     [Switch.name]: Switch
   }
 })
-export default class FormSwitch extends Mixins(FormMixins) {
+export default class FormBaseSwitch extends Mixins(FormMixins) {
   @Prop()
   onSubmit!: Function
 
