@@ -10,6 +10,7 @@ import ButtonSubmit from './components/Button/ButtonSubmit.vue'
 import ButtonStat from './components/Button/ButtonStat.vue'
 import FormRender from './components/Form/FormRender.vue'
 import FormInput from './components/Form/FormInput.vue'
+import FormTextarea from './components/Form/FormTextarea.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -22,6 +23,7 @@ Vue.component('ButtonSubmit', ButtonSubmit)
 Vue.component('ButtonStat', ButtonStat)
 Vue.component('FormRender', FormRender)
 Vue.component('FormInput', FormInput)
+Vue.component('FormTextarea', FormTextarea)
 
 Vue.config.productionTip = false
 

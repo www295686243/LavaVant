@@ -2,6 +2,7 @@
   <PageContainer>
     <FormRender :onSubmit="handleSubmit">
       <FormInput v-model="form.text" :field="formFields.text" />
+      <FormTextarea v-model="form.textarea" :field="formFields.textarea" />
     </FormRender>
   </PageContainer>
 </template>
@@ -13,13 +14,18 @@ import ValidateService from '@/service/ValidateService'
 @Component
 export default class DemoForm extends Vue {
   private form = {
-    text: ''
+    text: '',
+    textarea: ''
   }
 
   private formFields = {
     text: ValidateService.genRule({
-      label: '文本',
-      rules: [ValidateService.required, ValidateService.email]
+      label: '输入框',
+      rules: [ValidateService.required]
+    }),
+    textarea: ValidateService.genRule({
+      label: '文本框',
+      rules: [ValidateService.required, ValidateService.max(200)]
     })
   }
 
