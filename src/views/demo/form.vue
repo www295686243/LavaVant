@@ -6,6 +6,7 @@
       <FormSwitch v-model="form.switch" :field="formFields.switch" />
       <FormCheckbox v-model="form.checkbox" :field="formFields.checkbox" />
       <FormSelect v-model="form.select" :field="formFields.select" />
+      <FormDateTime v-model="form.date" :field="formFields.date" />
     </FormRender>
   </PageContainer>
 </template>
@@ -21,7 +22,8 @@ export default class DemoForm extends Vue {
     textarea: '',
     switch: 1,
     checkbox: [],
-    select: 2
+    select: 2,
+    date: ''
   }
 
   private formFields = {
@@ -51,6 +53,9 @@ export default class DemoForm extends Vue {
         { id: 2, display_name: '选项2' },
         { id: 3, display_name: '选项3' }
       ]
+    },
+    date: {
+      label: '日期'
     }
   }
 

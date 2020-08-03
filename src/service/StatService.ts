@@ -43,7 +43,7 @@ class StatService {
     if (!params.desc) return
     this.stack.push({
       ...params,
-      time: formatDate('Y-m-d H:i:s')
+      time: formatDate(new Date(), 'Y-m-d H:i:s')
     })
     cache.stat.set('stack', this.stack)
   }

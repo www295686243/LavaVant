@@ -14,6 +14,7 @@ import FormTextarea from './components/Form/FormTextarea.vue'
 import FormSwitch from './components/Form/FormSwitch.vue'
 import FormCheckbox from './components/Form/FormCheckbox.vue'
 import FormSelect from './components/Form/FormSelect.vue'
+import FormDateTime from './components/Form/FormDateTime.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -30,6 +31,7 @@ Vue.component('FormTextarea', FormTextarea)
 Vue.component('FormSwitch', FormSwitch)
 Vue.component('FormCheckbox', FormCheckbox)
 Vue.component('FormSelect', FormSelect)
+Vue.component('FormDateTime', FormDateTime)
 
 Vue.config.productionTip = false
 
