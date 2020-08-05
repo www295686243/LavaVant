@@ -3,12 +3,9 @@
     v-model="isShow"
     position="bottom"
     get-container="body">
-    <van-picker
-      show-toolbar
-      title="请选择"
-      :default-index="defaultIndex"
-      :columns="options"
-      value-key="display_name"
+    <van-area
+      :area-list="areaList"
+      v-model="defaultValue"
       @cancel="handleCancel"
       @confirm="handleConfirm"
     />
@@ -17,23 +14,20 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { Picker } from 'vant'
-import { Options } from './PopupPickerService'
+import { Area } from 'vant'
+import areaList from '@/assets/json/area'
 
 @Component({
   components: {
-    [Picker.name]: Picker
+    [Area.name]: Area
   }
 })
-export default class PopupPicker extends Vue {
-  @Prop()
-  options!: Options[]
-
+export default class PopupArea extends Vue {
   @Prop()
   defaultValue!: number
 
+  private areaList = areaList
   private isShow = false
-  private defaultIndex = 0
   private resolve!: Function
   private reject!: Function
 
@@ -57,16 +51,9 @@ export default class PopupPicker extends Vue {
     this.close()
   }
 
-  private handleConfirm (item: Options) {
-    this.resolve(item)
+  private handleConfirm (res: { code: number }[]) {
+    this.resolve(res[res.length - 1].code)
     this.close()
-  }
-
-  created () {
-    const item = this.options.find((res) => res.id === this.defaultValue)
-    if (item) {
-      this.defaultIndex = this.options.indexOf(item)
-    }
   }
 }
 </script>

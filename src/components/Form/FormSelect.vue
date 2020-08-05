@@ -23,16 +23,24 @@ export default class FormSelect extends Mixins(FormMixins) {
   private handleOpenSelect () {
     this.PopupPicker.open(this.field.options as any[], this.innerValue)
       .then((res: Options) => {
-        this.innerName = res.display_name
-        this.$emit('input', res.id)
+        this.innerValue = res.id
+        this.initName()
       })
   }
 
-  created () {
+  private initName () {
     const item = (this.field.options || []).find((res) => res.id === this.innerValue)
     if (item) {
       this.innerName = item.display_name || ''
     }
+  }
+
+  created () {
+    this.initName()
+  }
+
+  beforeDestroy () {
+    this.PopupPicker.destroy()
   }
 }
 </script>

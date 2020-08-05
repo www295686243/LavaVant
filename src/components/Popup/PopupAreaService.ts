@@ -1,21 +1,15 @@
 import Vue from 'vue'
-import PopupPicker from './PopupPicker.vue'
+import PopupArea from './PopupArea.vue'
 
-export interface Options {
-  id: number;
-  display_name: string;
-}
-
-export default class PopupPickerService {
+export default class PopupAreaService {
   instance!: any
 
-  open (options: Options[], defaultValue: number) {
+  open (defaultValue: number) {
     if (!this.instance) {
       const el = document.body.appendChild(document.createElement('div'))
-      const Constructor = Vue.extend(PopupPicker)
+      const Constructor = Vue.extend(PopupArea)
       this.instance = new Constructor({
         propsData: {
-          options,
           defaultValue
         }
       }).$mount(el)

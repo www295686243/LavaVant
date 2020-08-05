@@ -17,6 +17,7 @@
         :min-value.sync="form.minSalary"
         :max-value.sync="form.maxSalary"
         :field="formFields.rangeSalary" />
+      <FormArea v-model="form.area" :field="formFields.area"/>
     </FormRender>
   </PageContainer>
 </template>
@@ -39,7 +40,8 @@ export default class DemoForm extends Vue {
     maxDate: '2019-12-12',
     minSalary: '',
     maxSalary: '',
-    negotiable: 0
+    negotiable: 0,
+    area: ''
   }
 
   private formFields = {
@@ -81,6 +83,9 @@ export default class DemoForm extends Vue {
     },
     rangeSalary: {
       label: '薪资范围'
+    },
+    area: {
+      label: '城市'
     }
   }
 

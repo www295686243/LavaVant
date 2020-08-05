@@ -2,6 +2,7 @@
   <van-popup
     v-model="isShow"
     position="bottom"
+    @closed="handleCancel"
     get-container="body">
     <van-datetime-picker
       v-model="dateValue"
@@ -56,6 +57,10 @@ export default class PopupPicker extends Vue {
 
   public close () {
     this.isShow = false
+    this.destroy()
+  }
+
+  public destroy () {
     setTimeout(() => {
       this.$destroy()
     }, 300)
