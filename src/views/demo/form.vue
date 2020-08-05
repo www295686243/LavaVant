@@ -18,6 +18,7 @@
         :max-value.sync="form.maxSalary"
         :field="formFields.rangeSalary" />
       <FormArea v-model="form.area" :field="formFields.area"/>
+      <FormSms v-model="form.code" :field="formFields.code"/>
     </FormRender>
   </PageContainer>
 </template>
@@ -41,7 +42,8 @@ export default class DemoForm extends Vue {
     minSalary: '',
     maxSalary: '',
     negotiable: 0,
-    area: ''
+    area: '',
+    code: ''
   }
 
   private formFields = {
@@ -86,6 +88,9 @@ export default class DemoForm extends Vue {
     },
     area: {
       label: '城市'
+    },
+    code: {
+      label: '验证码'
     }
   }
 
