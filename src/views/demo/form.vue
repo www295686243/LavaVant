@@ -8,7 +8,15 @@
       <FormSelect v-model="form.select" :field="formFields.select" />
       <FormDateTime v-model="form.date" :field="formFields.date" />
       <FormStepper v-model="form.stepper" :field="formFields.stepper" />
-      <FormRangeDate :min-value.sync="form.minDate" :max-value.sync="form.maxDate" :field="formFields.rangeDate" />
+      <FormRangeDate
+        :min-value.sync="form.minDate"
+        :max-value.sync="form.maxDate"
+        :field="formFields.rangeDate" />
+      <FormSalary
+        :isNegotiable.sync="form.negotiable"
+        :min-value.sync="form.minSalary"
+        :max-value.sync="form.maxSalary"
+        :field="formFields.rangeSalary" />
     </FormRender>
   </PageContainer>
 </template>
@@ -28,7 +36,10 @@ export default class DemoForm extends Vue {
     date: '',
     stepper: 1,
     minDate: '2018-01-01',
-    maxDate: '2019-12-12'
+    maxDate: '2019-12-12',
+    minSalary: '',
+    maxSalary: '',
+    negotiable: 0
   }
 
   private formFields = {
@@ -67,6 +78,9 @@ export default class DemoForm extends Vue {
     },
     rangeDate: {
       label: '日期区间'
+    },
+    rangeSalary: {
+      label: '薪资范围'
     }
   }
 

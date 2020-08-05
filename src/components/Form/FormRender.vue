@@ -1,6 +1,6 @@
 <template>
   <div class="FormRender">
-    <van-form ref="formElement">
+    <van-form ref="formElement" :label-width="66" label-align="right">
       <slot></slot>
       <div class="FormRender-btn">
         <ButtonSubmit :onClick="handleSubmit" block round>{{submitBtn}}</ButtonSubmit>
@@ -46,6 +46,9 @@ export default class FormRender extends Vue {
 .FormRender {
   &-btn {
     padding: @padding-md;
+  }
+  .van-field__label--right {
+    padding-right: 8px;
   }
 }
 </style>

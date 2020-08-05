@@ -17,6 +17,7 @@ import FormSelect from './components/Form/FormSelect.vue'
 import FormDateTime from './components/Form/FormDateTime.vue'
 import FormStepper from './components/Form/FormStepper.vue'
 import FormRangeDate from './components/Form/FormRangeDate.vue'
+import FormSalary from './components/Form/FormSalary.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -36,6 +37,7 @@ Vue.component('FormSelect', FormSelect)
 Vue.component('FormDateTime', FormDateTime)
 Vue.component('FormStepper', FormStepper)
 Vue.component('FormRangeDate', FormRangeDate)
+Vue.component('FormSalary', FormSalary)
 
 Vue.config.productionTip = false
 
