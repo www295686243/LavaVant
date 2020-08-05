@@ -20,9 +20,6 @@ import { Checkbox } from 'vant'
   }
 })
 export default class FormBaseCheckbox extends Mixins(FormMixins) {
-  @Prop()
-  value!: number|boolean
-
   @Prop({ default: '#1989fa' })
   checkedColor!: string
 

@@ -4,10 +4,11 @@
     position="bottom"
     get-container="body">
     <van-datetime-picker
-      title="请选择"
       v-model="dateValue"
-      type="date"
+      :title="title"
+      :type="type"
       :min-date="minDate"
+      :confirm-button-text="confirmButtonText"
       @cancel="handleCancel"
       @confirm="handleConfirm"
     />
@@ -31,6 +32,15 @@ export default class PopupPicker extends Vue {
   @Prop({ default: () => new Date('1920/01/01') })
   minDate!: Date
 
+  @Prop({ default: '请选择' })
+  title!: string
+
+  @Prop({ default: 'date' })
+  type!: string
+
+  @Prop()
+  confirmButtonText!: string
+
   private isShow = false
   private dateValue = this.defaultValue ? new Date(this.defaultValue) : new Date()
   private resolve!: Function
@@ -46,6 +56,9 @@ export default class PopupPicker extends Vue {
 
   public close () {
     this.isShow = false
+    setTimeout(() => {
+      this.$destroy()
+    }, 300)
   }
 
   private handleCancel () {

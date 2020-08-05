@@ -15,6 +15,8 @@ import FormSwitch from './components/Form/FormSwitch.vue'
 import FormCheckbox from './components/Form/FormCheckbox.vue'
 import FormSelect from './components/Form/FormSelect.vue'
 import FormDateTime from './components/Form/FormDateTime.vue'
+import FormStepper from './components/Form/FormStepper.vue'
+import FormRangeDate from './components/Form/FormRangeDate.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -32,6 +34,8 @@ Vue.component('FormSwitch', FormSwitch)
 Vue.component('FormCheckbox', FormCheckbox)
 Vue.component('FormSelect', FormSelect)
 Vue.component('FormDateTime', FormDateTime)
+Vue.component('FormStepper', FormStepper)
+Vue.component('FormRangeDate', FormRangeDate)
 
 Vue.config.productionTip = false
 

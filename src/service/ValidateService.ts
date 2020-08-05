@@ -3,6 +3,7 @@ export interface FormField {
   placeholder?: string;
   rules?: any[];
   options?: any[];
+  minDate?: Date; // 日期表单用到
 }
 
 function checkIdcard (e: any) {

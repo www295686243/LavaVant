@@ -7,6 +7,8 @@
       <FormCheckbox v-model="form.checkbox" :field="formFields.checkbox" />
       <FormSelect v-model="form.select" :field="formFields.select" />
       <FormDateTime v-model="form.date" :field="formFields.date" />
+      <FormStepper v-model="form.stepper" :field="formFields.stepper" />
+      <FormRangeDate :min-value.sync="form.minDate" :max-value.sync="form.maxDate" :field="formFields.rangeDate" />
     </FormRender>
   </PageContainer>
 </template>
@@ -23,7 +25,10 @@ export default class DemoForm extends Vue {
     switch: 1,
     checkbox: [],
     select: 2,
-    date: ''
+    date: '',
+    stepper: 1,
+    minDate: '2018-01-01',
+    maxDate: '2019-12-12'
   }
 
   private formFields = {
@@ -56,6 +61,12 @@ export default class DemoForm extends Vue {
     },
     date: {
       label: '日期'
+    },
+    stepper: {
+      label: '步进器'
+    },
+    rangeDate: {
+      label: '日期区间'
     }
   }
 
