@@ -20,6 +20,8 @@ import FormRangeDate from './components/Form/FormRangeDate.vue'
 import FormSalary from './components/Form/FormSalary.vue'
 import FormArea from './components/Form/FormArea.vue'
 import FormSms from './components/Form/FormSms.vue'
+import FormImage from './components/Form/FormImage.vue'
+import FormImages from './components/Form/FormImages.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -42,6 +44,8 @@ Vue.component('FormRangeDate', FormRangeDate)
 Vue.component('FormSalary', FormSalary)
 Vue.component('FormArea', FormArea)
 Vue.component('FormSms', FormSms)
+Vue.component('FormImage', FormImage)
+Vue.component('FormImages', FormImages)
 
 Vue.config.productionTip = false
 

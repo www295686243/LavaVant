@@ -1,7 +1,8 @@
 <template>
   <van-field
     class="FormSwitch"
-    :label="field.label">
+    :label="field.label"
+    :name="field.label">
     <template #input>
       <SwitchBox v-model="innerValue"></SwitchBox>
     </template>

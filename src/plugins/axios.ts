@@ -127,5 +127,13 @@ export default {
       method: 'delete',
       data
     })
+  },
+  upload (url: string, data: object) {
+    return ajax({
+      url,
+      method: 'post',
+      data,
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
   }
 }

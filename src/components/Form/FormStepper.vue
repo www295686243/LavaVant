@@ -1,7 +1,8 @@
 <template>
   <van-field
     class="FormStepper"
-    :label="field.label">
+    :label="field.label"
+    :name="field.label">
     <template #input>
       <van-stepper
         :integer="true"

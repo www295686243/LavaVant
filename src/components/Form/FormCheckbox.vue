@@ -1,7 +1,8 @@
 <template>
   <van-field
     class="FormCheckbox"
-    :label="field.label">
+    :label="field.label"
+    :name="field.label">
     <template #input>
       <div>
         <div>

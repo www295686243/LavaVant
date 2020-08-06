@@ -19,6 +19,8 @@
         :field="formFields.rangeSalary" />
       <FormArea v-model="form.area" :field="formFields.area"/>
       <FormSms v-model="form.code" :field="formFields.code"/>
+      <FormImage v-model="form.image" :field="formFields.image" :uploadParmas="{ type: 'News', info_id: 1 }" />
+      <FormImages v-model="form.images" :field="formFields.images" :uploadParmas="{ type: 'News', info_id: 1 }" />
     </FormRender>
   </PageContainer>
 </template>
@@ -44,7 +46,9 @@ export default class DemoForm extends Vue {
     maxSalary: '',
     negotiable: 0,
     area: '',
-    code: ''
+    code: '',
+    image: '',
+    images: []
   }
 
   private formFields = {
@@ -97,7 +101,15 @@ export default class DemoForm extends Vue {
     },
     code: {
       label: '验证码'
-    }
+    },
+    image: ValidateService.genRule({
+      label: '图片',
+      rules: []
+    }),
+    images: ValidateService.genRule({
+      label: '图片集',
+      rules: []
+    })
   }
 
   private handleSubmit () {

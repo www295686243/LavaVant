@@ -169,6 +169,14 @@ function validateLen (value: string, num: number) {
   }
 }
 
+function validateUpload (arr: { status: string }[]) {
+  return arr.every((res) => res.status === 'success')
+}
+
+function validateUploadRequired (arr: { status: string; url: string }[]) {
+  return arr.some((res) => res.status === 'success')
+}
+
 class ValidateService {
   genRule (field: FormField) {
     const innerRules = field.rules || []
@@ -296,6 +304,18 @@ class ValidateService {
     return Object.assign({}, this.required()({ name }), {
       email: { validator: validateEmail, message: `请输入正确的${name}`, trigger: 'onBlur' }
     })
+  }
+
+  upload ({ name = '' } = {}) {
+    return {
+      upload: { validator: validateUpload, message: `请等待${name}上传结束`, trigger: 'onBlur' }
+    }
+  }
+
+  uploadRequired ({ name = '' } = {}) {
+    return {
+      upload: { required: true, validator: validateUploadRequired, message: `请上传${name}`, trigger: 'onBlur' }
+    }
   }
 }
 

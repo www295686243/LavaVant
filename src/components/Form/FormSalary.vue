@@ -1,7 +1,8 @@
 <template>
   <van-field
     class="FormSalary"
-    :label="field.label">
+    :label="field.label"
+    :name="field.label">
     <template #input>
       <div class="range-input-container">
         <template v-if="innerIsNegotiable === 0">

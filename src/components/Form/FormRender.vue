@@ -10,10 +10,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Ref, Prop } from 'vue-property-decorator'
+import { Component, Vue, Ref, Prop, Provide } from 'vue-property-decorator'
 import { Form } from 'vant'
 
-interface FormElement {
+export interface FormElement {
   submit: Function;
   validate: Function;
   resetValidation: Function;
@@ -35,9 +35,19 @@ export default class FormRender extends Vue {
   @Prop({ default: '提交' })
   submitBtn!: string
 
+  @Provide()
+  FormRenderElement = () => {
+    return this.$refs.formElement
+  }
+
   private handleSubmit () {
     return this.formElement.validate()
       .then(() => this.onSubmit())
+      .catch((err: { name: string; message: string }[]) => {
+        if (Array.isArray(err) && err.length > 0) {
+          this.formElement.scrollToField(err[0].name)
+        }
+      })
   }
 }
 </script>

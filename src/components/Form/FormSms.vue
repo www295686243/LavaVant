@@ -7,6 +7,7 @@
     :rules="smsField.code.rules"
     type="digit"
     required
+    :name="field.label"
     :label="field.label">
     <ButtonSubmit
       :disabled="isCountDown"
