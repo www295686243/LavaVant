@@ -4,7 +4,7 @@
       <FormInput v-model="form.text" :field="formFields.text" />
       <FormTextarea v-model="form.textarea" :field="formFields.textarea" />
       <FormSwitch v-model="form.switch" :field="formFields.switch" />
-      <FormCheckbox v-model="form.checkbox" :field="formFields.checkbox" />
+      <FormCheckbox :text.sync="form.extraText" v-model="form.checkbox" :field="formFields.checkbox" />
       <FormSelect v-model="form.select" :field="formFields.select" />
       <FormDateTime v-model="form.date" :field="formFields.date" />
       <FormStepper v-model="form.stepper" :field="formFields.stepper" />
@@ -34,6 +34,7 @@ export default class DemoForm extends Vue {
     textarea: '',
     switch: 1,
     checkbox: [],
+    extraText: '',
     select: 2,
     date: '',
     stepper: 1,
@@ -63,7 +64,12 @@ export default class DemoForm extends Vue {
       options: [
         { id: 1, display_name: '选项1' },
         { id: 2, display_name: '选项2' },
-        { id: 3, display_name: '选项3' }
+        { id: 3, display_name: '选项3' },
+        { id: 4, display_name: '三生三世' },
+        { id: 5, display_name: '反反复复' },
+        { id: 6, display_name: '额鹅鹅鹅' },
+        { id: 7, display_name: '凄凄切切' },
+        { id: 8, display_name: '啛啛喳喳' }
       ]
     },
     select: {

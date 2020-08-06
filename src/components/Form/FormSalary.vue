@@ -116,6 +116,7 @@ export default class FormSalary extends Mixins(FormMixins) {
   .negotiable {
     margin-left: 12px;
     flex: 0 0 auto;
+    height: 26px;
     .van-checkbox__label {
       line-height: initial;
     }
