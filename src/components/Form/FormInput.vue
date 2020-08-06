@@ -5,12 +5,15 @@
     :label="field.label"
     :name="field.label"
     :placeholder="placeholder ? placeholder : '请输入' + field.label"
-    :rules="field.rules"
+    :rules="field.rules || []"
     :maxlength="maxlength"
     :required="required"
     @click="handleClick"
+    @clear="handleClear"
     clearable
-    v-bind="$attrs" />
+    v-bind="$attrs">
+    <slot name="input" slot="input"></slot>
+  </van-field>
 </template>
 
 <script lang="ts">
@@ -44,6 +47,10 @@ export default class FormInput extends Mixins(FormMixins) {
 
   private handleClick () {
     this.$emit('click')
+  }
+
+  private handleClear () {
+    this.$emit('clear')
   }
 
   created () {

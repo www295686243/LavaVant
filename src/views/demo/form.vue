@@ -21,6 +21,7 @@
       <FormSms v-model="form.code" :field="formFields.code"/>
       <FormImage v-model="form.image" :field="formFields.image" :uploadParmas="{ type: 'News', info_id: 1 }" />
       <FormImages v-model="form.images" :field="formFields.images" :uploadParmas="{ type: 'News', info_id: 1 }" />
+      <FormClassify v-model="form.classify" :field="formFields.classify"/>
     </FormRender>
   </PageContainer>
 </template>
@@ -28,6 +29,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
+import { getClassifyOptions } from '@/service/ConstService'
 
 @Component
 export default class DemoForm extends Vue {
@@ -48,7 +50,8 @@ export default class DemoForm extends Vue {
     area: '',
     code: '',
     image: '',
-    images: []
+    images: [],
+    classify: [111, 112]
   }
 
   private formFields = {
@@ -109,6 +112,11 @@ export default class DemoForm extends Vue {
     images: ValidateService.genRule({
       label: '图片集',
       rules: []
+    }),
+    classify: ValidateService.genRule({
+      label: '行业',
+      options: getClassifyOptions(),
+      rules: [ValidateService.maxItem(4)]
     })
   }
 

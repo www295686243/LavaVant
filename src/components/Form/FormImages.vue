@@ -1,26 +1,21 @@
 <template>
-  <van-field
+  <FormInput
     class="FormImage"
-    :label="field.label"
-    :name="field.label"
-    :required="required"
-    :rules="rules">
+    :field="field">
     <template #input>
       <ImagesBox v-model="innerValue" :uploadParmas="uploadParmas" @success="handleUploadSuccess"></ImagesBox>
     </template>
-  </van-field>
+  </FormInput>
 </template>
 
 <script lang="ts">
 import FormMixins from './FormMixins'
 import { Component, Mixins, Prop, Inject } from 'vue-property-decorator'
-import { Field } from 'vant'
 import ImagesBox from './Base/ImagesBox.vue'
 import ValidateService from '@/service/ValidateService'
 
 @Component({
   components: {
-    [Field.name]: Field,
     ImagesBox
   }
 })
@@ -39,19 +34,13 @@ export default class FormImage extends Mixins(FormMixins) {
   }
 
   private rules: any[] = []
-  private required = false
 
   private handleUploadSuccess () {
     this.FormRenderElement().resetValidation(this.field.label)
   }
 
-  private genRequired () {
-    this.required = this.rules.some((res) => res.required)
-  }
-
   created () {
     this.rules = ([] as any[]).concat(this.fields.file.rules).concat(this.field.rules || [])
-    this.genRequired()
   }
 }
 </script>

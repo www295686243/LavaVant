@@ -145,11 +145,15 @@ function validateMin (value: string, num: number) {
   }
 }
 
-function validateMax (value: string, num: number) {
-  if (value) {
-    return value.toString().length <= num
+function validateMax (value: string | any[], num: number) {
+  if (Array.isArray(value)) {
+    return value.length <= num
   } else {
-    return true
+    if (value) {
+      return value.toString().length <= num
+    } else {
+      return true
+    }
   }
 }
 
@@ -174,6 +178,7 @@ function validateUpload (arr: { status: string }[]) {
 }
 
 function validateUploadRequired (arr: { status: string; url: string }[]) {
+  console.log(arr)
   return arr.some((res) => res.status === 'success')
 }
 
@@ -231,6 +236,14 @@ class ValidateService {
     return function ({ name = '' } = {}) {
       return {
         max: { max, validator: (value: string) => validateMax(value, max), message: `${name}最多${max}个字符`, trigger: 'onBlur' }
+      }
+    }
+  }
+
+  maxItem (max = 0) {
+    return function ({ name = '' } = {}) {
+      return {
+        max: { max, validator: (value: string) => validateMax(value, max), message: `${name}最多选${max}项`, trigger: 'onBlur' }
       }
     }
   }
@@ -314,7 +327,7 @@ class ValidateService {
 
   uploadRequired ({ name = '' } = {}) {
     return {
-      upload: { required: true, validator: validateUploadRequired, message: `请上传${name}`, trigger: 'onBlur' }
+      upload: { validator: validateUploadRequired, message: `请上传${name}`, trigger: 'onBlur' }
     }
   }
 }

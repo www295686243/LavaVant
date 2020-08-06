@@ -88,8 +88,7 @@ export default class FormSms extends Mixins(FormMixins) {
 .FormSms {
   padding: 0 16px;
   &:before {
-    top: 50%;
-    transform: translateY(-60%);
+    top: 8px;
   }
   .van-field__label {
     line-height: 44px;
