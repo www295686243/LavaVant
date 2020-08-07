@@ -23,6 +23,7 @@ import FormSms from './components/Form/FormSms.vue'
 import FormImage from './components/Form/FormImage.vue'
 import FormImages from './components/Form/FormImages.vue'
 import FormClassify from './components/Form/FormClassify.vue'
+import FormGroupRender from './components/Form/FormGroupRender.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -48,6 +49,7 @@ Vue.component('FormSms', FormSms)
 Vue.component('FormImage', FormImage)
 Vue.component('FormImages', FormImages)
 Vue.component('FormClassify', FormClassify)
+Vue.component('FormGroupRender', FormGroupRender)
 
 Vue.config.productionTip = false
 

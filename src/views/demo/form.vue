@@ -22,6 +22,13 @@
       <FormImage v-model="form.image" :field="formFields.image" :uploadParmas="{ type: 'News', info_id: 1 }" />
       <FormImages v-model="form.images" :field="formFields.images" :uploadParmas="{ type: 'News', info_id: 1 }" />
       <FormClassify v-model="form.classify" :field="formFields.classify"/>
+      <FormGroupRender v-model="form.group" :initData="groupForm" title="组合">
+        <template v-slot="{ v }">
+          <FormDateTime v-model="v.date" :field="groupFormFields.date" />
+          <FormInput v-model="v.text1" :field="groupFormFields.text1" />
+          <FormInput v-model="v.text2" :field="groupFormFields.text2" />
+        </template>
+      </FormGroupRender>
     </FormRender>
   </PageContainer>
 </template>
@@ -51,7 +58,8 @@ export default class DemoForm extends Vue {
     code: '',
     image: '',
     images: [],
-    classify: [111, 112]
+    classify: [111, 112],
+    group: [{ date: '2020-01-01', text1: '1', text2: '2' }]
   }
 
   private formFields = ValidateService.genRules({
@@ -122,6 +130,27 @@ export default class DemoForm extends Vue {
       label: '行业',
       options: getClassifyOptions(),
       rules: []
+    }
+  })
+
+  private groupForm = {
+    date: '',
+    text1: '',
+    text2: ''
+  }
+
+  private groupFormFields = ValidateService.genRules({
+    date: {
+      label: '日期',
+      rules: [ValidateService.required]
+    },
+    text1: {
+      label: '文本1',
+      rules: [ValidateService.required]
+    },
+    text2: {
+      label: '文本2',
+      rules: [ValidateService.required]
     }
   })
 
