@@ -46,7 +46,7 @@ function checkVersion (data: UrlParams, res: PromiseResult) {
 function checkStat (data: UrlParams) {
   return Promise.resolve()
     .then(() => {
-      if (!onceUrls.includes(data.url) && data.method !== 'get' && cache.user.get('api_token')) {
+      if (!onceUrls.includes(data.url) && cache.user.get('api_token')) {
         return StatService.submit()
       }
     })
