@@ -1,8 +1,7 @@
 <template>
-  <van-field
+  <FormInput
     class="FormCheckbox"
-    :label="field.label"
-    :name="field.label">
+    :field="field">
     <template #input>
       <div>
         <div>
@@ -15,19 +14,18 @@
         </div>
       </div>
     </template>
-  </van-field>
+  </FormInput>
 </template>
 
 <script lang="ts">
 import FormMixins from './FormMixins'
 import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
-import { Field, CheckboxGroup } from 'vant'
+import { CheckboxGroup } from 'vant'
 import Checkbox from './Base/Checkbox.vue'
 import ValidateService from '@/service/ValidateService'
 
 @Component({
   components: {
-    [Field.name]: Field,
     [CheckboxGroup.name]: CheckboxGroup,
     Checkbox
   }

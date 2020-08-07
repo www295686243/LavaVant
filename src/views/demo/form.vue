@@ -54,15 +54,15 @@ export default class DemoForm extends Vue {
     classify: [111, 112]
   }
 
-  private formFields = {
-    text: ValidateService.genRule({
+  private formFields = ValidateService.genRules({
+    text: {
       label: '输入框',
       rules: [ValidateService.required]
-    }),
-    textarea: ValidateService.genRule({
+    },
+    textarea: {
       label: '文本框',
       rules: [ValidateService.required, ValidateService.max(200)]
-    }),
+    },
     switch: {
       label: '开关'
     },
@@ -77,7 +77,8 @@ export default class DemoForm extends Vue {
         { id: 6, display_name: '额鹅鹅鹅' },
         { id: 7, display_name: '凄凄切切' },
         { id: 8, display_name: '啛啛喳喳' }
-      ]
+      ],
+      rules: []
     },
     select: {
       label: '下拉框',
@@ -85,40 +86,44 @@ export default class DemoForm extends Vue {
         { id: 1, display_name: '选项1' },
         { id: 2, display_name: '选项2' },
         { id: 3, display_name: '选项3' }
-      ]
+      ],
+      rules: [ValidateService.required]
     },
     date: {
       label: '日期'
     },
     stepper: {
-      label: '步进器'
+      label: '步进器',
+      rules: []
     },
     rangeDate: {
       label: '日期区间'
     },
     rangeSalary: {
-      label: '薪资范围'
+      label: '薪资范围',
+      rules: [ValidateService.required]
     },
     area: {
-      label: '城市'
+      label: '城市',
+      rules: []
     },
     code: {
       label: '验证码'
     },
-    image: ValidateService.genRule({
+    image: {
       label: '图片',
       rules: []
-    }),
-    images: ValidateService.genRule({
+    },
+    images: {
       label: '图片集',
       rules: []
-    }),
-    classify: ValidateService.genRule({
+    },
+    classify: {
       label: '行业',
       options: getClassifyOptions(),
-      rules: [ValidateService.maxItem(4)]
-    })
-  }
+      rules: []
+    }
+  })
 
   private handleSubmit () {
     return Promise.resolve()

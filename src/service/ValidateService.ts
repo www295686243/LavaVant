@@ -137,17 +137,25 @@ function validateEmail (value: string) {
   }
 }
 
-function validateMin (value: string, num: number) {
-  if (value) {
-    return value.toString().length >= num
+function validateMin (value: string | number | any[], num: number) {
+  if (Array.isArray(value)) {
+    return value.length >= num
+  } else if (typeof value === 'number') {
+    return value >= num
   } else {
-    return true
+    if (value) {
+      return value.toString().length >= num
+    } else {
+      return true
+    }
   }
 }
 
-function validateMax (value: string | any[], num: number) {
+function validateMax (value: string | number | any[], num: number) {
   if (Array.isArray(value)) {
     return value.length <= num
+  } else if (typeof value === 'number') {
+    return value <= num
   } else {
     if (value) {
       return value.toString().length <= num
@@ -157,7 +165,7 @@ function validateMax (value: string | any[], num: number) {
   }
 }
 
-function validateBewteen (value: string, min: number, max: number) {
+function validateBewteen (value: string | number, min: number, max: number) {
   if (value) {
     return validateMin(value, min) && validateMax(value, max)
   } else {
@@ -178,7 +186,6 @@ function validateUpload (arr: { status: string }[]) {
 }
 
 function validateUploadRequired (arr: { status: string; url: string }[]) {
-  console.log(arr)
   return arr.some((res) => res.status === 'success')
 }
 
@@ -193,6 +200,13 @@ class ValidateService {
       }, {})
     field.rules = Object.values(rules)
     return field
+  }
+
+  genRules (fields: { [key: string]: FormField }) {
+    Object.keys(fields).forEach((key) => {
+      fields[key] = this.genRule(fields[key])
+    })
+    return fields
   }
 
   // trigger onChange or onBlur
@@ -216,6 +230,22 @@ class ValidateService {
     }
   }
 
+  bewteenItem (min = 0, max = 0) {
+    return function ({ name = '' } = {}) {
+      return {
+        bewteen: { min, max, validator: (value: string) => validateBewteen(value, min, max), message: `${name}需要选择${min}-${max}项`, trigger: 'onChange' }
+      }
+    }
+  }
+
+  bewteenNum (min = 0, max = 0) {
+    return function ({ name = '' } = {}) {
+      return {
+        bewteen: { min, max, validator: (value: string) => validateBewteen(Number(value) || 0, min, max), message: `${name}的值应为${min}-${max}之间`, trigger: 'onBlur' }
+      }
+    }
+  }
+
   len (len = 2) {
     return function ({ name = '' } = {}) {
       return {
@@ -232,6 +262,22 @@ class ValidateService {
     }
   }
 
+  minNum (min = 0) {
+    return function ({ name = '' } = {}) {
+      return {
+        min: { min, validator: (value: string) => validateMin(Number(value) || 0, min), message: `${name}最小值为${min}`, trigger: 'onBlur' }
+      }
+    }
+  }
+
+  minItem (min = 0) {
+    return function ({ name = '' } = {}) {
+      return {
+        min: { min, validator: (value: string) => validateMin(value, min), message: `${name}最少选${min}项`, trigger: 'onChange' }
+      }
+    }
+  }
+
   max (max = 0) {
     return function ({ name = '' } = {}) {
       return {
@@ -240,10 +286,18 @@ class ValidateService {
     }
   }
 
+  maxNum (max = 0) {
+    return function ({ name = '' } = {}) {
+      return {
+        max: { max, validator: (value: string) => validateMax(Number(value) || 0, max), message: `${name}最大值为${max}`, trigger: 'onBlur' }
+      }
+    }
+  }
+
   maxItem (max = 0) {
     return function ({ name = '' } = {}) {
       return {
-        max: { max, validator: (value: string) => validateMax(value, max), message: `${name}最多选${max}项`, trigger: 'onBlur' }
+        max: { max, validator: (value: string) => validateMax(value, max), message: `${name}最多选${max}项`, trigger: 'onChange' }
       }
     }
   }

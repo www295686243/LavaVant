@@ -1,31 +1,37 @@
 <template>
-  <van-field
+  <FormInput
     class="FormSalary"
-    :label="field.label"
-    :name="field.label">
+    :field="field">
     <template #input>
       <div class="range-input-container">
+        <van-checkbox-group v-model="innerValue"></van-checkbox-group>
         <template v-if="innerIsNegotiable === 0">
-          <FormInput v-model.number="innerMinValue" :field="minValueField" class="min-salary" placeholder="最小薪资" type="digit"></FormInput>
+          <FormInput v-model.number="innerMinValue" :field="{ label: '' }" class="min-salary" placeholder="最小薪资" type="digit"></FormInput>
           <div class="range-input-line">~</div>
-          <FormInput v-model.number="innerMaxValue" :field="maxValueField" class="max-salary" placeholder="最大薪资" type="digit"></FormInput>
+          <FormInput v-model.number="innerMaxValue" :field="{ label: '' }" class="max-salary" placeholder="最大薪资" type="digit"></FormInput>
         </template>
         <Checkbox v-model="innerIsNegotiable" class="negotiable">面议</Checkbox>
       </div>
     </template>
-  </van-field>
+  </FormInput>
 </template>
 
 <script lang="ts">
 import FormMixins from './FormMixins'
-import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
-import { Field } from 'vant'
+import { Component, Mixins, Prop, Watch, Inject } from 'vue-property-decorator'
 import Checkbox from './Base/Checkbox.vue'
+import { CheckboxGroup } from 'vant'
+
+interface InnerRule {
+  required?: boolean;
+  validator?: Function;
+  message?: string;
+}
 
 @Component({
   components: {
-    [Field.name]: Field,
-    Checkbox
+    Checkbox,
+    [CheckboxGroup.name]: CheckboxGroup
   }
 })
 export default class FormSalary extends Mixins(FormMixins) {
@@ -38,20 +44,27 @@ export default class FormSalary extends Mixins(FormMixins) {
   @Prop()
   isNegotiable!: number
 
+  @Inject()
+  FormRenderElement!: Function
+
   private innerMinValue = this.minValue || ''
   private innerMaxValue = this.maxValue || ''
   private innerIsNegotiable = this.isNegotiable
   private temporaryMinValue = ''
   private temporaryMaxValue = ''
 
+  private innerRules: InnerRule[] = [{ validator: this.validateSalary, message: `请正确输入${this.field.label}` }]
+
   @Watch('innerMinValue')
   onInnerMinValue (val: string) {
     this.$emit('update:minValue', val)
+    this.FormRenderElement().resetValidation(this.field.label)
   }
 
   @Watch('innerMaxValue')
   onInnerMaxValue (val: string) {
     this.$emit('update:maxValue', val)
+    this.FormRenderElement().resetValidation(this.field.label)
   }
 
   @Watch('minValue')
@@ -67,11 +80,6 @@ export default class FormSalary extends Mixins(FormMixins) {
   @Watch('innerIsNegotiable')
   onInnerIsNegotiable (val: number) {
     this.$emit('update:isNegotiable', val)
-  }
-
-  @Watch('isNegotiable')
-  onIsNegotiable (val: number) {
-    this.innerIsNegotiable = val
     if (val > 0) {
       this.temporaryMinValue = this.innerMinValue
       this.temporaryMaxValue = this.innerMaxValue
@@ -81,14 +89,34 @@ export default class FormSalary extends Mixins(FormMixins) {
       this.innerMinValue = this.temporaryMinValue
       this.innerMaxValue = this.temporaryMaxValue
     }
+    this.FormRenderElement().resetValidation(this.field.label)
   }
 
-  private minValueField = {
-    label: ''
+  @Watch('isNegotiable')
+  onIsNegotiable (val: number) {
+    this.innerIsNegotiable = val
   }
 
-  private maxValueField = {
-    label: ''
+  private validateSalary () {
+    if (this.innerMinValue || this.innerMaxValue) {
+      if (this.innerMinValue > this.innerMaxValue) {
+        return false
+      }
+    }
+    return true
+  }
+
+  private validateSalaryRequired () {
+    return this.innerIsNegotiable > 0 || !!this.innerMinValue || !!this.innerMaxValue
+  }
+
+  created () {
+    const isRequired = (this.field.rules || []).find((res) => res.required)
+    if (isRequired) {
+      this.innerRules = this.innerRules.concat([{ required: true, message: `请输入${this.field.label}` }]).concat([{ validator: this.validateSalaryRequired, message: `请输入${this.field.label}` }])
+    }
+    this.field.rules = this.innerRules
+    this.innerValue = [1]
   }
 }
 </script>
