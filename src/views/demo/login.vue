@@ -4,13 +4,14 @@
       <FormInput v-model="form.username" :field="formFields.username" />
       <FormInput v-model="form.password" :field="formFields.password" />
     </FormRender>
-    <ButtonStat :onClick="handleStat">按钮埋点</ButtonStat>
+    <ButtonStat :onClick="handleWeChatLogin">微信登陆</ButtonStat>
   </PageContainer>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import UserService from '@/service/UserService'
+import WXService from '@/service/WXService'
 
 @Component
 export default class DemoForm extends Vue {
@@ -32,10 +33,8 @@ export default class DemoForm extends Vue {
     return UserService.login(this.form)
   }
 
-  private handleStat () {
-    return Promise.resolve({
-      message: '好的结果'
-    })
+  private handleWeChatLogin () {
+    return WXService.auth()
   }
 }
 </script>

@@ -28,6 +28,7 @@ import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
 import VersionService from '@/service/VersionService'
+import WXService from '@/service/WXService'
 
 Vue.use(Button).use(Popup).use(Loading).use(Dialog).use(Row).use(Col).use(Icon)
 Vue.component('DataRender', DataRender)
@@ -63,6 +64,7 @@ Vue.filter('empty', (value: string) => {
 
 RouterService.init(router)
 VersionService.init()
+WXService.init()
 
 new Vue({
   router,
