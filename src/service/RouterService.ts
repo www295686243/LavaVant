@@ -67,13 +67,9 @@ class RouterSerivce {
     this.router.go(step)
   }
 
-  query (name: string): string | number {
+  query (name: string) {
     const param = this.router.app.$route.query[name]
-    if (name === 'id' || name.includes('_id')) {
-      return param ? Number(param) : 0
-    } else {
-      return param as string || ''
-    }
+    return param as string
   }
 
   getPath () {
@@ -82,6 +78,12 @@ class RouterSerivce {
 
   getPathInfo () {
     return this.router.app.$route
+  }
+
+  get (key: string) {
+    const urlStr = location.search.replace('?', '')
+    const params = urlStr.split('&').find((str) => str.includes(key + '='))
+    return params ? params.replace(key + '=', '') : ''
   }
 }
 

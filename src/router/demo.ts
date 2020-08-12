@@ -1,6 +1,7 @@
 import entra from '@/views/demo/entra.vue'
 import form from '@/views/demo/form.vue'
 import login from '@/views/demo/login.vue'
+import wechatLogin from '@/views/demo/wechat-login.vue'
 
 export default [
   {
@@ -22,6 +23,13 @@ export default [
     component: login,
     meta: {
       title: '登录'
+    }
+  },
+  {
+    path: '/demo/wechat-login',
+    component: wechatLogin,
+    meta: {
+      title: '微信登录'
     }
   }
 ]

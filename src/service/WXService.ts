@@ -1,6 +1,9 @@
 import wx from 'wx-jssdk-ts'
 import axios from '@/plugins/axios'
 import { isWX, isIOS, isAndroid, isPCWX } from '@/plugins/tools'
+import RouterService from './RouterService'
+import cache from '@/plugins/cache'
+import UserService from './UserService'
 
 class WXService {
   init () {
@@ -22,14 +25,18 @@ class WXService {
   }
 
   auth () {
-    return Promise.resolve()
-      .then(() => {
-        if (isWX) {
-          return axios.post('wechat/auth', { redirect_url: location.href })
-            .then((res) => {
-              location.href = res.data.url
-            })
-        }
+    return axios.post('wechat/auth', { redirect_url: location.href })
+      .then((res) => {
+        location.href = res.data.url
+      })
+  }
+
+  login () {
+    return axios.post('wechat/login', { code: RouterService.get('code'), state: RouterService.get('state') })
+      .then((res) => {
+        cache.user.setAll(res.data)
+        UserService.updateData(res.data)
+        location.replace(RouterService.query('redirect_url'))
       })
   }
 }

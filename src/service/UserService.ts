@@ -74,7 +74,7 @@ class UserService {
     return this.getUserInfo()
   }
 
-  private updateData (params: UserInfo) {
+  updateData (params: UserInfo) {
     Object.assign(this.info, params)
   }
 
