@@ -3,6 +3,7 @@ import form from '@/views/demo/form.vue'
 import login from '@/views/demo/login.vue'
 import wechatLogin from '@/views/demo/wechat-login.vue'
 import wechatShare from '@/views/demo/wechat-share.vue'
+import wechatPay from '@/views/demo/wechat-pay.vue'
 
 export default [
   {
@@ -38,6 +39,13 @@ export default [
     component: wechatShare,
     meta: {
       title: '微信分享'
+    }
+  },
+  {
+    path: '/demo/wechat-pay',
+    component: wechatPay,
+    meta: {
+      title: '微信支付'
     }
   }
 ]

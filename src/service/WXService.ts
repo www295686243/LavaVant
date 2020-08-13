@@ -4,12 +4,23 @@ import { isWX, isIOS, isAndroid, isPCWX } from '@/plugins/tools'
 import RouterService from './RouterService'
 import cache from '@/plugins/cache'
 import UserService from './UserService'
+import VantService from './VantService'
 
 interface ShareParams {
   title: string;
   desc: string;
   link: string;
   imgUrl?: string;
+}
+
+interface IchooseWXPay {
+  timestamp: number; // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+  nonceStr: string; // 支付签名随机串，不长于 32 位
+  package: string; // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+  signType: string; // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+  paySign: string; // 支付签名
+  // 支付成功后的回调函数
+  success(res: any): void;
 }
 
 class WXService {
@@ -52,6 +63,28 @@ class WXService {
         UserService.updateData(res.data)
         location.replace(RouterService.query('redirect_url'))
       })
+  }
+
+  pay (params: { amount: string, [key: string]: any }) {
+    return axios.post('pay/config', params)
+      .then((res) => this.chooseWXPay(res.data))
+      .then(() => {
+        VantService.alert('支付成功')
+      })
+  }
+
+  private chooseWXPay (params: IchooseWXPay) {
+    return new Promise((resolve, reject) => {
+      wx.chooseWXPay({
+        ...params,
+        success: (res) => {
+          resolve(res)
+        },
+        fail: (res) => {
+          reject(res)
+        }
+      })
+    })
   }
 
   updateShareData (params: ShareParams) {
