@@ -63,7 +63,7 @@ function checkTodayFirstLogin (data: UrlParams) {
 }
 
 function ajax (data: any): Promise<PromiseResult> {
-  axios.defaults.baseURL = process.env.VUE_APP_BASEURL
+  axios.defaults.baseURL = process.env.VUE_APP_APIURL + '/api'
   if (cache.user.get('api_token')) {
     axios.defaults.headers.common.Authorization = 'Bearer ' + cache.user.get('api_token')
   }

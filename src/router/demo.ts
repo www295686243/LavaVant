@@ -2,6 +2,7 @@ import entra from '@/views/demo/entra.vue'
 import form from '@/views/demo/form.vue'
 import login from '@/views/demo/login.vue'
 import wechatLogin from '@/views/demo/wechat-login.vue'
+import wechatShare from '@/views/demo/wechat-share.vue'
 
 export default [
   {
@@ -30,6 +31,13 @@ export default [
     component: wechatLogin,
     meta: {
       title: '微信登录'
+    }
+  },
+  {
+    path: '/demo/wechat-share',
+    component: wechatShare,
+    meta: {
+      title: '微信分享'
     }
   }
 ]
