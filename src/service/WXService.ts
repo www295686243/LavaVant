@@ -65,8 +65,8 @@ class WXService {
       })
   }
 
-  pay (params: { amount: string, [key: string]: any }) {
-    return axios.post('pay/config', params)
+  pay (params: { amount: string; [key: string]: any }) {
+    return axios.post('wechat/pay', params)
       .then((res) => this.chooseWXPay(res.data))
       .then(() => {
         VantService.alert('支付成功')
@@ -104,7 +104,7 @@ class WXService {
               }
             })
             .catch((err) => {
-              console.error(err)
+              window.console.error(err)
             })
         }
       })

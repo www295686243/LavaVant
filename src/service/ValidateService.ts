@@ -265,7 +265,7 @@ class ValidateService {
   minNum (min = 0) {
     return function ({ name = '' } = {}) {
       return {
-        min: { min, validator: (value: string) => validateMin(Number(value) || 0, min), message: `${name}最小值为${min}`, trigger: 'onBlur' }
+        min: { validator: (value: string) => validateMin(Number(value) || 0, min), message: `${name}最小值为${min}`, trigger: 'onBlur' }
       }
     }
   }
@@ -273,7 +273,7 @@ class ValidateService {
   minItem (min = 0) {
     return function ({ name = '' } = {}) {
       return {
-        min: { min, validator: (value: string) => validateMin(value, min), message: `${name}最少选${min}项`, trigger: 'onChange' }
+        min: { validator: (value: string) => validateMin(value, min), message: `${name}最少选${min}项`, trigger: 'onChange' }
       }
     }
   }
@@ -289,7 +289,7 @@ class ValidateService {
   maxNum (max = 0) {
     return function ({ name = '' } = {}) {
       return {
-        max: { max, validator: (value: string) => validateMax(Number(value) || 0, max), message: `${name}最大值为${max}`, trigger: 'onBlur' }
+        max: { validator: (value: string) => validateMax(Number(value) || 0, max), message: `${name}最大值为${max}`, trigger: 'onBlur' }
       }
     }
   }
@@ -297,7 +297,7 @@ class ValidateService {
   maxItem (max = 0) {
     return function ({ name = '' } = {}) {
       return {
-        max: { max, validator: (value: string) => validateMax(value, max), message: `${name}最多选${max}项`, trigger: 'onChange' }
+        max: { validator: (value: string) => validateMax(value, max), message: `${name}最多选${max}项`, trigger: 'onChange' }
       }
     }
   }
