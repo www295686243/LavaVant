@@ -33,14 +33,12 @@ export default class FormImage extends Mixins(FormMixins) {
     })
   }
 
-  private rules: any[] = []
-
   private handleUploadSuccess () {
     this.FormRenderElement().resetValidation(this.field.label)
   }
 
   created () {
-    this.rules = ([] as any[]).concat(this.fields.file.rules).concat(this.field.rules || [])
+    this.field.rules = ([] as any[]).concat(this.fields.file.rules).concat(this.field.rules || [])
   }
 }
 </script>
