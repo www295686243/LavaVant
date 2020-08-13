@@ -69,7 +69,7 @@ class RouterSerivce {
 
   query (name: string) {
     const param = this.router.app.$route.query[name]
-    return param as string
+    return param as string || ''
   }
 
   getPath () {
