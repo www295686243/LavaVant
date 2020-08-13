@@ -47,6 +47,7 @@ export default class FormRender extends Vue {
         if (Array.isArray(err) && err.length > 0) {
           this.formElement.scrollToField(err[0].name)
         }
+        throw err
       })
   }
 }
