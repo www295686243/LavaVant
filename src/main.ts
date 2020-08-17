@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { Button, Popup, Loading, Dialog, Row, Col, Icon } from 'vant'
+import { Button, Popup, Loading, Dialog, Row, Col, Icon, Cell, CellGroup } from 'vant'
 import 'amfe-flexible'
 
 import DataRender from './components/DataRender.vue'
 import PageContainer from './components/PageContainer.vue'
+import ListContainer from './components/ListContainer.vue'
 import ButtonSubmit from './components/Button/ButtonSubmit.vue'
 import ButtonStat from './components/Button/ButtonStat.vue'
 import FormRender from './components/Form/FormRender.vue'
@@ -30,9 +31,10 @@ import RouterService from '@/service/RouterService'
 import VersionService from '@/service/VersionService'
 import WXService from '@/service/WXService'
 
-Vue.use(Button).use(Popup).use(Loading).use(Dialog).use(Row).use(Col).use(Icon)
+Vue.use(Button).use(Popup).use(Loading).use(Dialog).use(Row).use(Col).use(Icon).use(Cell).use(CellGroup)
 Vue.component('DataRender', DataRender)
 Vue.component('PageContainer', PageContainer)
+Vue.component('ListContainer', ListContainer)
 Vue.component('ButtonSubmit', ButtonSubmit)
 Vue.component('ButtonStat', ButtonStat)
 Vue.component('FormRender', FormRender)

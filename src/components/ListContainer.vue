@@ -8,7 +8,7 @@
     @load="handleLoad"
     v-model="isLoading">
     <template v-for="(v, index) in list">
-      <slot :index="index" :v="v"></slot>
+      <div :key="index"><slot :index="index" :v="v"></slot></div>
     </template>
     <div class="List-empty" v-if="isEmpty">
       <slot name="empty">
@@ -50,6 +50,10 @@ export default class ListContainer2 extends Vue {
   private handleLoad () {
     return this.onLoad(this.page)
       .then((data: any[]) => {
+        if (!Array.isArray(data)) {
+          const err = { message: '返回的对象不是数组' }
+          return Promise.reject(err)
+        }
         if (data.length === 0 && this.page === 1) {
           this.isEmpty = true
           this.isFinished = true
@@ -61,7 +65,10 @@ export default class ListContainer2 extends Vue {
         this.isLoading = false
         this.page++
       })
-      .catch(() => {
+      .catch((err: { message: string }) => {
+        if (err && err.message) {
+          console.log(err.message)
+        }
         this.isLoading = false
         this.isError = true
       })

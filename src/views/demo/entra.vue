@@ -5,7 +5,8 @@
     <van-button @click="RouterService.push('/demo/form')">表单</van-button>
     <van-button @click="RouterService.push('/demo/wechat-share')">分享</van-button>
     <van-button @click="RouterService.push('/demo/wechat-pay')">支付</van-button>
-    <van-button @click="RouterService.push('/demo/wechat-notify')">通知</van-button>
+    <van-button @click="RouterService.push('/demo/wechat-notify')">微信通知</van-button>
+    <van-button @click="RouterService.push('/user/notify')">通知列表</van-button>
   </PageContainer>
 </template>
 
