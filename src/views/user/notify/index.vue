@@ -2,7 +2,7 @@
   <PageContainer class="view-user-notify">
     <ListContainer :onLoad="handleLoad">
       <template v-slot="{ v }">
-        <div class="list-item">
+        <div class="list-item" @click="handleLink(v)">
           <van-cell
             :title="v.title"
             :label="v.content"
@@ -16,7 +16,7 @@
             :border="false" />
           <van-cell
             class="remark"
-            title="版本备注："
+            title="备注："
             :value="v.tips"
             :border="false" />
           <van-cell
@@ -33,12 +33,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import axios from '@/plugins/axios'
+import RouterService from '@/service/RouterService'
+
+interface ListItem {
+  url: string;
+  url_params: { [key: string]: string };
+}
 
 @Component
 export default class UserNotify extends Vue {
   private handleLoad (page: number) {
     return axios.get('notify', { page })
       .then((res) => res.data.data)
+  }
+
+  private handleLink (v: ListItem) {
+    RouterService.push(v.url, v.url_params || {})
   }
 }
 </script>
