@@ -17,11 +17,12 @@
           <van-cell
             class="remark"
             title="备注："
-            :value="v.tips"
+            :value="v.remark"
             :border="false" />
           <van-cell
             class="link"
             title="查看详情"
+            :value="v.created_at"
             is-link
             :border="false" />
         </div>
@@ -55,8 +56,6 @@ export default class UserNotify extends Vue {
 
 <style lang="less">
 .view-user-notify {
-  background: @gray-1;
-  overflow: hidden;
   .list-item {
     background: @white;
     border: 1px solid @border-color;
