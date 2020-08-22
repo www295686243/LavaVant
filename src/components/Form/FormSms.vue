@@ -3,7 +3,7 @@
     class="FormSms"
     :placeholder="'请输入短信' + field.label"
     v-model="innerValue"
-    :maxlength="6"
+    :maxlength="4"
     :rules="smsField.code.rules"
     type="digit"
     required
@@ -59,7 +59,7 @@ export default class FormSms extends Mixins(FormMixins) {
   private smsField = {
     code: ValidateService.genRule({
       label: this.field.label,
-      rules: [ValidateService.required, ValidateService.len(6)]
+      rules: [ValidateService.required, ValidateService.len(4)]
     })
   }
 

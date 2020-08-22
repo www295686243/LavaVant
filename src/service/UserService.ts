@@ -70,12 +70,34 @@ class UserService {
       })
   }
 
-  update () {
-    return this.getUserInfo()
+  sendSmsCaptcha (params: { phone: string; type_name: string }) {
+    return axios.post('user/sendSmsCaptcha', params)
+  }
+
+  bindPhone (params: { phone: string; code: string }) {
+    return axios.post('user/bindPhone', params)
+      .then((res) => this.getBaseUserInfo().then(() => res))
+  }
+
+  updatePhone (params: { phone: string; code: string }) {
+    return axios.post('user/updatePhone', params)
+      .then((res) => this.getBaseUserInfo().then(() => res))
+  }
+
+  verifyPhone (params: { phone: string; code: string }) {
+    return axios.post('user/verifyPhone', params)
   }
 
   updateData (params: UserInfo) {
     Object.assign(this.info, params)
+  }
+
+  private getBaseUserInfo () {
+    return axios.get('user/getBaseUserInfo')
+      .then((res) => {
+        cache.user.setAll(res.data)
+        this.updateData(res.data)
+      })
   }
 
   private getUserInfo () {

@@ -41,7 +41,7 @@ export default class FormRender extends Vue {
   }
 
   private handleSubmit () {
-    return this.formElement.validate()
+    return this.validate()
       .then(() => this.onSubmit())
       .catch((err: { name: string; message: string }[]) => {
         if (Array.isArray(err) && err.length > 0) {
@@ -49,6 +49,10 @@ export default class FormRender extends Vue {
         }
         throw err
       })
+  }
+
+  public validate (name?: string) {
+    return this.formElement.validate(name)
   }
 }
 </script>
