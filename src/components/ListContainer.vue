@@ -67,7 +67,7 @@ export default class ListContainer2 extends Vue {
       })
       .catch((err: { message: string }) => {
         if (err && err.message) {
-          console.log(err.message)
+          window.console.log(err.message)
         }
         this.isLoading = false
         this.isError = true
