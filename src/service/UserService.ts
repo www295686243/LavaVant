@@ -100,7 +100,7 @@ class UserService {
       })
   }
 
-  private getUserInfo () {
+  getUserInfo () {
     return axios.get('user/getUserInfo')
       .then((res) => {
         this.cacheUserInfo(res)

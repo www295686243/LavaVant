@@ -61,6 +61,9 @@ class WXService {
       .then((res) => {
         cache.user.setAll(res.data)
         UserService.updateData(res.data)
+      })
+      .then(() => UserService.getUserInfo())
+      .then(() => {
         location.replace(RouterService.query('redirect_url'))
       })
   }
