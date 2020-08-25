@@ -1,6 +1,6 @@
 <template>
-  <PageContainer class="view-user-notify">
-    <ListContainer :onLoad="handleLoad">
+  <PageContainer class="view-user-notify" :onLoad="handleLoad">
+    <ListContainer :onLoad="handleListLoad">
       <template v-slot="{ v }">
         <div class="list-item" @click="handleLink(v)">
           <van-cell
@@ -35,6 +35,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import axios from '@/plugins/axios'
 import RouterService from '@/service/RouterService'
+import NotifyService from '@/service/NotifyService'
 
 interface ListItem {
   url: string;
@@ -43,7 +44,11 @@ interface ListItem {
 
 @Component
 export default class UserNotify extends Vue {
-  private handleLoad (page: number) {
+  private handleLoad () {
+    return NotifyService.checkMarkHaveRead()
+  }
+
+  private handleListLoad (page: number) {
     return axios.get('notify', { page })
       .then((res) => res.data.data)
   }

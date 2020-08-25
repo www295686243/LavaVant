@@ -2,6 +2,7 @@ import cache from '@/plugins/cache'
 import axios, { PromiseResult } from '@/plugins/axios'
 import VersionService from './VersionService'
 import { formatDate } from '@/plugins/tools'
+import RouterService from './RouterService'
 
 interface LoginParams {
   username: string;
