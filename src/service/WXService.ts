@@ -4,7 +4,6 @@ import { isWX, isIOS, isAndroid, isPCWX } from '@/plugins/tools'
 import RouterService from './RouterService'
 import cache from '@/plugins/cache'
 import UserService from './UserService'
-import VantService from './VantService'
 
 interface ShareParams {
   title: string;
@@ -68,11 +67,11 @@ class WXService {
       })
   }
 
-  pay (params: { id: string }) {
+  pay (params: { id: string; coupon_id: string }) {
     return axios.post('wechat/pay', params)
       .then((res) => this.chooseWXPay(res.data))
       .then(() => {
-        VantService.alert('支付成功')
+        return { message: '支付成功' }
       })
   }
 

@@ -105,5 +105,8 @@ export default class FormSms extends Mixins(FormMixins) {
       color: @gray-5;
     }
   }
+  .ButtonSubmit {
+    height: 42px;
+  }
 }
 </style>
