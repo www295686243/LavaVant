@@ -68,7 +68,7 @@ class WXService {
       })
   }
 
-  pay (params: { amount: string; [key: string]: any }) {
+  pay (params: { id: string }) {
     return axios.post('wechat/pay', params)
       .then((res) => this.chooseWXPay(res.data))
       .then(() => {

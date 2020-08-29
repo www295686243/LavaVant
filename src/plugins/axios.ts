@@ -46,7 +46,7 @@ function checkVersion (data: UrlParams, res: PromiseResult) {
 function checkStat (data: UrlParams) {
   return Promise.resolve()
     .then(() => {
-      if (!onceUrls.includes(data.url) && cache.user.get('api_token')) {
+      if (!onceUrls.includes(data.url) && UserService.isLogin()) {
         return StatService.submit()
       }
     })
@@ -56,7 +56,7 @@ function checkStat (data: UrlParams) {
 function checkTodayFirstLogin (data: UrlParams) {
   return Promise.resolve()
     .then(() => {
-      if (!onceUrls.includes(data.url) && cache.user.get('api_token')) {
+      if (!onceUrls.includes(data.url) && UserService.isLogin()) {
         return UserService.todayFirstLogin()
       }
     })
@@ -64,7 +64,7 @@ function checkTodayFirstLogin (data: UrlParams) {
 
 function ajax (data: any): Promise<PromiseResult> {
   axios.defaults.baseURL = process.env.VUE_APP_APIURL + '/api'
-  if (cache.user.get('api_token')) {
+  if (UserService.isLogin()) {
     axios.defaults.headers.common.Authorization = 'Bearer ' + cache.user.get('api_token')
   }
 

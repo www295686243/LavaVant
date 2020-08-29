@@ -1,31 +1,43 @@
 <template>
   <PageContainer>
-    <FormRender :onSubmit="handleSubmit">
-      <FormInput v-model="form.amount" :field="formFields.amount" />
-    </FormRender>
+    <van-radio-group v-model="id">
+      <van-cell-group>
+        <ListContainer :onLoad="handleLoad">
+          <template v-slot="{ v }">
+            <van-cell :title="v.text" clickable @click="id = v.id">
+              <template #right-icon>
+                <van-radio :name="v.id" />
+              </template>
+            </van-cell>
+          </template>
+        </ListContainer>
+      </van-cell-group>
+    </van-radio-group>
+    <ButtonSubmit :onClick="handleSubmit">支付</ButtonSubmit>
   </PageContainer>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import WXService from '@/service/WXService'
-import ValidateService from '@/service/ValidateService'
+import axios from '@/plugins/axios'
+import { RadioGroup, Radio } from 'vant'
 
-@Component
+@Component({
+  components: {
+    [RadioGroup.name]: RadioGroup,
+    [Radio.name]: Radio
+  }
+})
 export default class DemoWeChatShare extends Vue {
-  private form = {
-    amount: '0.01'
+  private id = ''
+  private handleLoad (page: number) {
+    return axios.get('news', { page })
+      .then((res) => res.data.data)
   }
 
-  private formFields = ValidateService.genRules({
-    amount: {
-      label: '金额',
-      rules: [ValidateService.maxNum(1)]
-    }
-  })
-
   private handleSubmit () {
-    return WXService.pay(this.form)
+    return WXService.pay({ id: this.id })
   }
 }
 </script>
