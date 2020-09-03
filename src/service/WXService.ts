@@ -69,9 +69,13 @@ class WXService {
 
   pay (params: { id: string; type: string; user_coupon_id: string }) {
     return axios.post('wechat/pay', params)
-      .then((res) => this.chooseWXPay(res.data))
-      .then(() => {
-        return { message: '支付成功' }
+      .then((res) => {
+        if (!res.data.pay_status) {
+          return this.chooseWXPay(res.data)
+            .then(() => {
+              return { message: '支付成功' }
+            })
+        }
       })
   }
 
