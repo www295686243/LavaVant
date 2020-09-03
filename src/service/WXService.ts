@@ -67,7 +67,7 @@ class WXService {
       })
   }
 
-  pay (params: { id: string; coupon_id: string }) {
+  pay (params: { id: string; type: string; user_coupon_id: string }) {
     return axios.post('wechat/pay', params)
       .then((res) => this.chooseWXPay(res.data))
       .then(() => {
@@ -77,15 +77,19 @@ class WXService {
 
   private chooseWXPay (params: IchooseWXPay) {
     return new Promise((resolve, reject) => {
-      wx.chooseWXPay({
-        ...params,
-        success: (res) => {
-          resolve(res)
-        },
-        fail: (res) => {
-          reject(res)
-        }
-      })
+      if (isWX) {
+        wx.chooseWXPay({
+          ...params,
+          success: (res) => {
+            resolve(res)
+          },
+          fail: (res) => {
+            reject(res)
+          }
+        })
+      } else {
+        resolve()
+      }
     })
   }
 

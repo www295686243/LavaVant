@@ -13,11 +13,11 @@
         </ListContainer>
       </van-cell-group>
     </van-radio-group>
-    <van-radio-group v-model="coupon_id">
+    <van-radio-group v-model="user_coupon_id">
       <van-cell-group>
         <ListContainer :onLoad="handleLoadUserCoupon">
           <template v-slot="{ v }">
-            <van-cell :title="v.display_name" clickable @click="coupon_id = v.id">
+            <van-cell :title="v.display_name" clickable @click="user_coupon_id = v.id">
               <template #right-icon>
                 <van-radio :name="v.id" />
               </template>
@@ -44,7 +44,7 @@ import { RadioGroup, Radio } from 'vant'
 })
 export default class DemoWeChatShare extends Vue {
   private id = ''
-  private coupon_id = ''
+  private user_coupon_id = ''
   private handleLoad (page: number) {
     return axios.get('news', { page })
       .then((res) => res.data.data)
@@ -56,7 +56,7 @@ export default class DemoWeChatShare extends Vue {
   }
 
   private handleSubmit () {
-    return WXService.pay({ id: this.id, coupon_id: this.coupon_id })
+    return WXService.pay({ id: this.id, type: 'News', user_coupon_id: this.user_coupon_id })
   }
 }
 </script>
