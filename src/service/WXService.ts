@@ -1,6 +1,6 @@
 import wx from 'wx-jssdk-ts'
 import axios from '@/plugins/axios'
-import { isWX, isIOS, isAndroid, isPCWX } from '@/plugins/tools'
+import { isWX, isIOS, isAndroid, isPCWX, toLowerLine } from '@/plugins/tools'
 import RouterService from './RouterService'
 import cache from '@/plugins/cache'
 import UserService from './UserService'
@@ -68,13 +68,15 @@ class WXService {
   }
 
   pay (params: { id: string; type: string; user_coupon_id: string }) {
-    return axios.post('wechat/pay', params)
+    return axios.post(`${toLowerLine(params.type)}/pay`, params)
       .then((res) => {
         if (!res.data.pay_status) {
           return this.chooseWXPay(res.data)
             .then(() => {
               return { message: '支付成功' }
             })
+        } else {
+          return res
         }
       })
   }
