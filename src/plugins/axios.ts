@@ -47,7 +47,7 @@ function checkStat (data: UrlParams) {
   return Promise.resolve()
     .then(() => {
       if (!onceUrls.includes(data.url) && UserService.isLogin()) {
-        return StatService.submit()
+        return StatService.queueSubmit()
       }
     })
 }
@@ -78,9 +78,9 @@ function ajax (data: any): Promise<PromiseResult> {
           if (res.data && res.data.api_token) {
             cache.user.set('api_token', res.data.api_token)
           }
+          checkStat(data)
           return checkVersion(data, res)
             .then(() => checkTodayFirstLogin(data))
-            .then(() => checkStat(data))
             .then(() => {
               resolve(res)
             })

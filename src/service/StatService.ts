@@ -18,6 +18,8 @@ interface StackItem {
 
 class StatService {
   stack: StackItem[] = []
+  queue: Promise<any>[] = []
+  isQueue = false
   constructor () {
     this.stack = cache.stat.get('stack') || []
   }
@@ -51,18 +53,33 @@ class StatService {
   submit () {
     return Promise.resolve()
       .then(() => {
-        if (this.stack.length > 0) {
-          return axios.post('api_log', { stack: this.stack })
+        const stack = this.stack.slice(0, this.stack.length)
+        this.stack = this.stack.slice(stack.length)
+        if (stack.length > 0) {
+          return axios.post('api_log', { stack })
             .then(() => {
-              this.forget()
+              cache.stat.set('stack', this.stack)
             })
         }
       })
   }
 
-  forget () {
-    this.stack = []
-    cache.stat.set('stack', this.stack)
+  queueSubmit () {
+    this.queue.push(this.submit())
+    return Promise.resolve()
+      .then(() => {
+        if (!this.isQueue) {
+          this.isQueue = true
+          return this.queueExec()
+        }
+      })
+      .then(() => {
+        this.isQueue = false
+      })
+  }
+
+  queueExec () {
+    return this.queue.reduce((acc, res) => acc.then(() => res))
   }
 }
 
