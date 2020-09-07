@@ -4,6 +4,7 @@ import router from '@/router'
 import VersionService, { Version } from '@/service/VersionService'
 import StatService from '@/service/StatService'
 import UserService from '@/service/UserService'
+import { getEnv } from './tools'
 
 export interface PromiseResult {
   message: string;
@@ -66,6 +67,10 @@ function ajax (data: any): Promise<PromiseResult> {
   axios.defaults.baseURL = process.env.VUE_APP_APIURL + '/api'
   if (UserService.isLogin()) {
     axios.defaults.headers.common.Authorization = 'Bearer ' + cache.user.get('api_token')
+  }
+
+  if (data.data) {
+    data.data._env = getEnv()
   }
 
   return new Promise((resolve, reject) => {

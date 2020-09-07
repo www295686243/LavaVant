@@ -1,4 +1,5 @@
 import areaList from '@/assets/json/area'
+import { UAParser } from 'ua-parser-js'
 
 const ua = window.navigator.userAgent
 export const isWX = /MicroMessenger/ig.test(ua)
@@ -97,4 +98,13 @@ export function toLowerLine (str: string) {
     temp = temp.slice(1)
   }
   return temp
+}
+
+export function getEnv () {
+  const parser = new UAParser()
+  const result: any = parser.getResult()
+  result.screen_width = document.documentElement.clientWidth
+  result.screen_height = document.documentElement.clientHeight
+  result.platform = isWX ? (isPCWX ? '微信公众号PC' : '微信公众号') : 'h5'
+  return result
 }

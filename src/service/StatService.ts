@@ -1,11 +1,12 @@
 import cache from '@/plugins/cache'
 import axios from '@/plugins/axios'
 import { Route } from 'vue-router'
-import { formatDate } from '@/plugins/tools'
+import { formatDate, getEnv } from '@/plugins/tools'
 import RouterService from './RouterService'
 
 interface StackInput {
   message?: string;
+  _env?: any;
 }
 
 interface StackItem {
@@ -24,15 +25,18 @@ class StatService {
     this.stack = cache.stat.get('stack') || []
   }
 
-  viewPush (route: Route) {
+  viewPush (route: Route, input: StackInput = {}) {
+    input._env = getEnv()
     this.push({
       path: route.path,
       desc: route.meta.title,
-      method: 'View'
+      method: 'View',
+      input: input
     })
   }
 
-  clickPush (name: string, input?: StackInput) {
+  clickPush (name: string, input: StackInput = {}) {
+    input._env = getEnv()
     this.push({
       path: RouterService.getPath(),
       desc: name,
