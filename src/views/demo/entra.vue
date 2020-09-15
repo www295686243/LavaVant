@@ -8,6 +8,7 @@
     <van-button @click="RouterService.push('/demo/wechat-notify')">微信通知</van-button>
     <van-button @click="RouterService.push('/user/notify')">通知列表</van-button>
     <van-button @click="RouterService.push('/user/personal-auth')">个人认证</van-button>
+    <van-button @click="RouterService.push('/user/enterprise-auth')">企业认证</van-button>
   </PageContainer>
 </template>
 

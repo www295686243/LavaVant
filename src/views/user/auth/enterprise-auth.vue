@@ -1,13 +1,12 @@
 <template>
   <PageContainer>
     <FormRender :form="form" :onLoad="handleLoad" :onSubmit="handleSubmit" :submitBtn="submitBtn" :disableSubmit="disableSubmit">
-      <FormInput v-model="form.name" :field="formFields.name" />
       <FormInput v-model="form.company" :field="formFields.company" />
-      <FormInput v-model="form.position" :field="formFields.position" />
+      <FormInput v-model="form.business_license" :field="formFields.business_license" />
       <FormArea v-model="form.city" :field="formFields.city"/>
       <FormInput v-model="form.address" :field="formFields.address" />
       <FormTextarea v-model="form.intro" :field="formFields.intro" />
-      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ type: 'User/UserPersonalAuth', info_id: form.user_id }" />
+      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ type: UserEnterpriseAuth.name, info_id: form.user_id }" />
     </FormRender>
   </PageContainer>
 </template>
@@ -17,15 +16,15 @@ import { Component, Vue } from 'vue-property-decorator'
 import ValidateService, { FormFields } from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import UserService from '@/service/UserService'
-import UserPersonalAuth from '@/service/User/UserPersonalAuth'
+import UserEnterpriseAuth from '@/service/User/UserEnterpriseAuth'
 import { getOptionsValue } from '@/service/ConstService'
 
 @Component
-export default class ViewUserPersonalAuth extends Vue {
+export default class ViewUserEnterpriseAuth extends Vue {
+  private UserEnterpriseAuth = UserEnterpriseAuth
   private form = {
-    name: '',
     company: '',
-    position: '',
+    business_license: '',
     city: '',
     address: '',
     intro: '',
@@ -39,23 +38,18 @@ export default class ViewUserPersonalAuth extends Vue {
   private disableSubmit = false
 
   private formFields: FormFields = ValidateService.genRules({
-    name: {
-      label: '姓名',
-      rules: [ValidateService.required, ValidateService.fullname],
-      disabled: false
-    },
     company: {
       label: '公司名',
       rules: [ValidateService.required, ValidateService.max(60)],
       disabled: false
     },
-    position: {
-      label: '职位',
-      rules: [ValidateService.required, ValidateService.max(60)],
+    business_license: {
+      label: '营业执照',
+      rules: [ValidateService.required, ValidateService.max(18)],
       disabled: false
     },
     city: {
-      label: '城市',
+      label: '所在城市',
       rules: [ValidateService.required],
       disabled: false
     },
@@ -67,19 +61,19 @@ export default class ViewUserPersonalAuth extends Vue {
     intro: {
       label: '简介',
       rules: [ValidateService.required, ValidateService.max(255)],
-      placeholder: '介绍擅长的产品、技术、加工方式，以及做人，对人态度，广交朋友，多做生意，财源滚滚！',
+      placeholder: '介绍公司供应的产品，或者加能力，设备以及其他的环保证件等',
       disabled: false
     },
     certificates: {
       label: '证件图片',
       rules: [ValidateService.uploadRequired, ValidateService.max(3)],
-      placeholder: '请上传名片或工牌',
+      placeholder: '请上传营业执照等相关证件',
       disabled: false
     }
   })
 
   private handleLoad () {
-    return UserPersonalAuth.show()
+    return UserEnterpriseAuth.show()
       .then((res) => {
         this.isSubmitted = !!(res.data && res.data.id)
         this.handleToggleFormDisabled(this.isSubmitted)
@@ -107,7 +101,7 @@ export default class ViewUserPersonalAuth extends Vue {
         if (this.isSubmitted && this.form.auth_status !== getOptionsValue(41, '审核中')) {
           this.init()
         } else {
-          return UserPersonalAuth.store(this.form)
+          return UserEnterpriseAuth.store(this.form)
             .then((res) => {
               RouterService.go()
               return res
