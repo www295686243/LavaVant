@@ -1,10 +1,10 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { FormField } from '@/service/ValidateService'
+import { FormFieldItem } from '@/service/ValidateService'
 
 @Component
 export default class FormMixins extends Vue {
   @Prop()
-  field!: FormField
+  field!: FormFieldItem
 
   @Prop()
   value!: any

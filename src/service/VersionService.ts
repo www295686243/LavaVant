@@ -1,5 +1,6 @@
 import cache from '@/plugins/cache'
 import axios from '@/plugins/axios'
+import { ConfigItem, OptionItem } from './ConstService'
 
 export interface Version {
   app: number;
@@ -43,12 +44,13 @@ class VersionService {
       .then((res) => {
         if (Array.isArray(res.data) && res.data.length === 0) {
           res.data = {
-            guard_name: []
+            [guard_name]: []
           }
         }
         Object.keys(res.data).forEach((key: string) => {
           cache.config.set(key, res.data[key])
         })
+        this.setOptionList(res.data)
       })
   }
 
@@ -56,6 +58,22 @@ class VersionService {
     Object.keys(this.version).forEach((key) => {
       this.version[key as keyof Version] = 0
     })
+  }
+
+  private setOptionList (data: { [key: string]: ConfigItem[] }) {
+    const options_list: OptionItem[] = cache.config.get('options_list') || []
+    Object.values(data)
+      .flat()
+      .reduce((acc, res) => acc.concat(res.options), [] as OptionItem[])
+      .forEach((res) => {
+        const item = options_list.find((row) => row.id === res.id)
+        if (item) {
+          Object.assign(item, res)
+        } else {
+          options_list.push(res)
+        }
+      })
+    cache.config.set('options_list', options_list)
   }
 }
 

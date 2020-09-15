@@ -1,9 +1,12 @@
 <template>
   <FormInput
-    class="FormImage"
+    class="FormImages"
     :field="field">
     <template #input>
-      <ImagesBox v-model="innerValue" :uploadParmas="uploadParmas" @success="handleUploadSuccess"></ImagesBox>
+      <div>
+        <ImagesBox :disabled="field.disabled" v-model="innerValue" :uploadParmas="uploadParmas" :max-count="maxlength" @success="handleUploadSuccess"></ImagesBox>
+        <p v-if="field.placeholder" class="tips">{{field.placeholder}}</p>
+      </div>
     </template>
   </FormInput>
 </template>
@@ -19,12 +22,21 @@ import ValidateService from '@/service/ValidateService'
     ImagesBox
   }
 })
-export default class FormImage extends Mixins(FormMixins) {
+export default class FormImages extends Mixins(FormMixins) {
   @Prop()
   uploadParmas!: { type: string; info_id: string }
 
   @Inject()
   FormRenderElement!: Function
+
+  private maxlength = null
+
+  private genMaxLength () {
+    const rule = (this.field.rules || []).find((res) => res.max || res.len)
+    if (rule) {
+      this.maxlength = rule.max || rule.len
+    }
+  }
 
   private fields = {
     file: ValidateService.genRule({
@@ -39,6 +51,17 @@ export default class FormImage extends Mixins(FormMixins) {
 
   created () {
     this.field.rules = ([] as any[]).concat(this.fields.file.rules).concat(this.field.rules || [])
+    this.genMaxLength()
   }
 }
 </script>
+
+<style lang="less">
+.FormImages {
+  .tips {
+    margin: 0;
+    color: @gray-7;
+    font-size: @font-size-sm;
+  }
+}
+</style>

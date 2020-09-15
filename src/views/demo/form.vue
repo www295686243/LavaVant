@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <FormRender :onSubmit="handleSubmit">
+    <FormRender :onSubmit="handleSubmit" :form="form">
       <FormInput v-model="form.text" :field="formFields.text" />
       <FormTextarea v-model="form.textarea" :field="formFields.textarea" />
       <FormSwitch v-model="form.switch" :field="formFields.switch" />

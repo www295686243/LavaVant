@@ -1,18 +1,18 @@
 <template>
   <FormInput
     class="FormArea"
+    :class="{ enable: isEnable }"
     v-model="innerName"
     :field="field"
     :placeholder="'请选择' + this.field.label"
-    clear-trigger="always"
-    is-link
-    @click="handleOpenSelect"
-    disabled />
+    :clear-trigger="isEnable ? 'always' : null"
+    :is-link="isEnable"
+    @click="handleOpenSelect" />
 </template>
 
 <script lang="ts">
 import FormMixins from './FormMixins'
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import PopupAreaService from '@/components/Popup/PopupAreaService'
 import { getCityName } from '@/plugins/tools'
 
@@ -20,8 +20,15 @@ import { getCityName } from '@/plugins/tools'
 export default class FormArea extends Mixins(FormMixins) {
   private PopupArea = new PopupAreaService()
   private innerName = ''
+  private isEnable = true
+
+  @Watch('value')
+  onValue2 () {
+    this.init()
+  }
 
   private handleOpenSelect () {
+    if (this.isEnable === false) return
     this.PopupArea.open(this.innerValue)
       .then((code: string) => {
         this.innerValue = code
@@ -34,8 +41,18 @@ export default class FormArea extends Mixins(FormMixins) {
     this.innerName = cityName === '--' ? '' : cityName
   }
 
-  created () {
+  private init () {
+    this.innerValue = this.innerValue ? this.innerValue.toString() : ''
+    this.isEnable = true
+    if (this.field.disabled) {
+      this.isEnable = false
+    }
+    this.field.disabled = true
     this.initCityName()
+  }
+
+  created () {
+    this.init()
   }
 
   beforeDestroy () {
@@ -45,7 +62,7 @@ export default class FormArea extends Mixins(FormMixins) {
 </script>
 
 <style lang="less">
-.FormArea {
+.FormArea.enable {
   .van-field__label {
     color: @gray-7;
   }

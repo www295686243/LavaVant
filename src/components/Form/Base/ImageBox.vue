@@ -43,7 +43,7 @@ export default class FormBaseImageBox extends Mixins(FormMixins) {
       .then((res) => {
         file.status = 'success'
         file.message = ''
-        this.innerValue = res.data.url
+        this.innerValue = res.data.full_url
         this.$emit('success')
       })
       .catch((err) => {

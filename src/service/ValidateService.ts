@@ -1,9 +1,14 @@
-export interface FormField {
+export interface FormFieldItem {
   label: string;
   placeholder?: string;
   rules?: any[];
   options?: any[];
+  disabled?: boolean;
   minDate?: Date; // 日期表单用到
+}
+
+export interface FormFields {
+  [key: string]: FormFieldItem;
 }
 
 function checkIdcard (e: any) {
@@ -190,7 +195,7 @@ function validateUploadRequired (arr: { status: string; url: string }[]) {
 }
 
 class ValidateService {
-  genRule (field: FormField) {
+  genRule (field: FormFieldItem) {
     const innerRules = field.rules || []
     const rules = innerRules
       .reduce((res, callback: Function | object) => {
@@ -202,7 +207,7 @@ class ValidateService {
     return field
   }
 
-  genRules (fields: { [key: string]: FormField }) {
+  genRules (fields: { [key: string]: FormFieldItem }) {
     Object.keys(fields).forEach((key) => {
       fields[key] = this.genRule(fields[key])
     })
@@ -297,7 +302,7 @@ class ValidateService {
   maxItem (max = 0) {
     return function ({ name = '' } = {}) {
       return {
-        max: { validator: (value: string) => validateMax(value, max), message: `${name}最多选${max}项`, trigger: 'onChange' }
+        max: { max, validator: (value: string) => validateMax(value, max), message: `${name}最多选${max}项`, trigger: 'onChange' }
       }
     }
   }
@@ -381,7 +386,7 @@ class ValidateService {
 
   uploadRequired ({ name = '' } = {}) {
     return {
-      upload: { validator: validateUploadRequired, message: `请上传${name}`, trigger: 'onBlur' }
+      upload: { required: true, validator: validateUploadRequired, message: `请上传${name}`, trigger: 'onBlur' }
     }
   }
 }

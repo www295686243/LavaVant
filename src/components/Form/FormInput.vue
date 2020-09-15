@@ -11,6 +11,7 @@
     @click="handleClick"
     @clear="handleClear"
     clearable
+    :disabled="field.disabled"
     v-bind="$attrs">
     <slot name="input" slot="input"></slot>
   </van-field>

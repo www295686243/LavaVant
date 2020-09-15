@@ -3,7 +3,7 @@
     class="FormImage"
     :field="field">
     <template #input>
-      <ImageBox v-model="innerValue" :uploadParmas="uploadParmas" @success="handleUploadSuccess"></ImageBox>
+      <ImageBox v-model="innerValue" :disabled="field.disabled" :uploadParmas="uploadParmas" @success="handleUploadSuccess"></ImageBox>
     </template>
   </FormInput>
 </template>

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import FormMixins from '../FormMixins'
-import { Component, Mixins, Prop } from 'vue-property-decorator'
+import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
 import { Uploader } from 'vant'
 import axios from '@/plugins/axios'
 import RouterService from '@/service/RouterService'
@@ -26,6 +26,11 @@ interface FileItem {
 export default class FormBaseImagesBox extends Mixins(FormMixins) {
   @Prop()
   uploadParmas!: { type: string; info_id: string }
+
+  @Watch('value')
+  onValue2 () {
+    this.init()
+  }
 
   private fileList: FileItem[] = []
 
@@ -52,7 +57,7 @@ export default class FormBaseImagesBox extends Mixins(FormMixins) {
             .then((res) => {
               file.status = 'success'
               file.message = ''
-              file.url = res.data.url
+              file.url = res.data.full_url
             })
             .catch(() => {
               file.status = 'failed'
@@ -64,6 +69,21 @@ export default class FormBaseImagesBox extends Mixins(FormMixins) {
         this.innerValue = this.fileList.filter((res) => res.url).map((res) => res.url)
         this.$emit('success')
       })
+  }
+
+  private init () {
+    this.fileList = (this.innerValue || []).map((res: string) => {
+      return {
+        url: res,
+        status: 'success',
+        message: '',
+        content: ''
+      }
+    })
+  }
+
+  created () {
+    this.init()
   }
 }
 </script>

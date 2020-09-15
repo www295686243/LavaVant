@@ -1,17 +1,18 @@
 <template>
-  <div class="FormRender">
+  <DataRender :onLoad="handleLoad" class="FormRender">
     <van-form ref="formElement" :label-width="66" label-align="right">
       <slot></slot>
       <div class="FormRender-btn">
-        <ButtonSubmit :onClick="handleSubmit" block round>{{submitBtn}}</ButtonSubmit>
+        <ButtonSubmit :onClick="handleSubmit" block round :disabled="disableSubmit">{{submitBtn}}</ButtonSubmit>
       </div>
     </van-form>
-  </div>
+  </DataRender>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Ref, Prop, Provide } from 'vue-property-decorator'
 import { Form } from 'vant'
+import { PromiseResult } from '@/plugins/axios'
 
 export interface FormElement {
   submit: Function;
@@ -32,8 +33,17 @@ export default class FormRender extends Vue {
   @Prop({ default: () => () => Promise.resolve() })
   onSubmit!: Function
 
-  @Prop({ default: '提交' })
+  @Prop()
+  onLoad!: Function
+
+  @Prop()
+  form!: { [key: string]: any }
+
+  @Prop({ default: '提 交' })
   submitBtn!: string
+
+  @Prop({ default: false })
+  disableSubmit!: boolean
 
   @Provide()
   FormRenderElement = () => {
@@ -48,6 +58,20 @@ export default class FormRender extends Vue {
           this.formElement.scrollToField(err[0].name)
         }
         throw err
+      })
+  }
+
+  private handleLoad () {
+    return Promise.resolve()
+      .then(() => {
+        if (this.onLoad) {
+          return this.onLoad()
+            .then((res: PromiseResult) => {
+              Object.keys(this.form).forEach((key) => {
+                this.form[key] = res.data[key] || this.form[key]
+              })
+            })
+        }
       })
   }
 

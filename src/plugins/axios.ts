@@ -78,6 +78,7 @@ function ajax (data: any): Promise<PromiseResult> {
       .then(res => res.data)
       .then(res => {
         if (res.status === 'success') {
+          res.data = res.data || {}
           // 如果本地有token但是失效了，然后直接走login接口，这个时候login方法还没有结束，token还没有更新，会直接走下面的check方法
           // 如果接口返回有api_token这个属性则一律更新token，这个需要观察下
           if (res.data && res.data.api_token) {
