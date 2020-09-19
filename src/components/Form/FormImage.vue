@@ -21,7 +21,7 @@ import ValidateService from '@/service/ValidateService'
 })
 export default class FormImage extends Mixins(FormMixins) {
   @Prop()
-  uploadParmas!: { type: string; info_id: string }
+  uploadParmas!: { _type: string; info_id: string }
 
   @Inject()
   FormRenderElement!: Function

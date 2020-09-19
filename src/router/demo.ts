@@ -5,6 +5,7 @@ import wechatLogin from '@/views/demo/wechat-login.vue'
 import wechatShare from '@/views/demo/wechat-share.vue'
 import wechatPay from '@/views/demo/wechat-pay.vue'
 import wechatNotify from '@/views/demo/wechat-notify.vue'
+import infoCheck from '@/views/demo/info-check.vue'
 
 export default [
   {
@@ -54,6 +55,13 @@ export default [
     component: wechatNotify,
     meta: {
       title: '微信通知'
+    }
+  },
+  {
+    path: '/demo/info-check',
+    component: infoCheck,
+    meta: {
+      title: '信息审核'
     }
   }
 ]

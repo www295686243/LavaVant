@@ -67,8 +67,8 @@ class WXService {
       })
   }
 
-  pay (params: { id: string; type: string; user_coupon_id: string }) {
-    return axios.post(`${toLowerLine(params.type)}/pay`, params)
+  pay (params: { id: string; _type: string; user_coupon_id: string }) {
+    return axios.post(`${toLowerLine(params._type)}/pay`, params)
       .then((res) => {
         if (!res.data.pay_status) {
           return this.chooseWXPay(res.data)

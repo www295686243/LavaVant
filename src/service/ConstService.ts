@@ -99,6 +99,7 @@ export function getOptions (name: string) {
   return config ? config.options : []
 }
 
+// eslint-disable-next-line
 export function getOptionsValue (id: number, _displayName?: string) {
   const configs: OptionItem[] = cache.config.get('options_list') || []
   const item = configs.find((res) => res.id === id)

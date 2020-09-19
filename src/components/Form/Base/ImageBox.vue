@@ -26,7 +26,7 @@ interface FileItem {
 })
 export default class FormBaseImageBox extends Mixins(FormMixins) {
   @Prop()
-  uploadParmas!: { type: string; info_id: string }
+  uploadParmas!: { _type: string; info_id: string }
 
   private fileList = []
 

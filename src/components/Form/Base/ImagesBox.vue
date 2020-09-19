@@ -25,7 +25,7 @@ interface FileItem {
 })
 export default class FormBaseImagesBox extends Mixins(FormMixins) {
   @Prop()
-  uploadParmas!: { type: string; info_id: string }
+  uploadParmas!: { _type: string; info_id: string }
 
   @Watch('value')
   onValue2 () {
