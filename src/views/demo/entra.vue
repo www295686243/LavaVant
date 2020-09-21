@@ -9,7 +9,7 @@
     <van-button @click="RouterService.push('/user/notify')">通知列表</van-button>
     <van-button @click="RouterService.push('/user/personal-auth')">个人认证</van-button>
     <van-button @click="RouterService.push('/user/enterprise-auth')">企业认证</van-button>
-    <van-button @click="RouterService.push('/demo/info-check')">信息审核</van-button>
+    <van-button @click="RouterService.push('/user/hr/form')">发布hr</van-button>
   </PageContainer>
 </template>
 

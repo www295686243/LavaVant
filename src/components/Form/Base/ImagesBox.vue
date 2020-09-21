@@ -51,7 +51,7 @@ export default class FormBaseImagesBox extends Mixins(FormMixins) {
           const form = new FormData()
           form.append('file', file.file)
           form.append('info_id', this.uploadParmas.info_id)
-          form.append('type', this.uploadParmas.type)
+          form.append('type', this.uploadParmas._type)
           form.append('marking', RouterService.query('marking') as string)
           return axios.upload('image', form)
             .then((res) => {

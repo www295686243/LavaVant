@@ -1,6 +1,7 @@
 import notify from '@/views/user/notify/index.vue'
 import personalAuth from '@/views/user/auth/personal-auth.vue'
 import enterpriseAuth from '@/views/user/auth/enterprise-auth.vue'
+import hr from './user/hr'
 
 export default [
   {
@@ -23,5 +24,6 @@ export default [
     meta: {
       title: '企业认证'
     }
-  }
+  },
+  ...hr
 ]
