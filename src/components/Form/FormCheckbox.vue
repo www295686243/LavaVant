@@ -9,7 +9,7 @@
             <Checkbox :name="v.id" v-for="v in field.options" :key="v.id">{{v.display_name}}</Checkbox>
           </van-checkbox-group>
         </div>
-        <div class="import" v-if="isDisableIport === false">
+        <div class="import" v-if="isDisableImport === false">
           <FormInput v-model="innerText" colon :field="fields.import" :label-width="40" :style="{ width: '150px' }"></FormInput>
         </div>
       </div>
@@ -32,7 +32,7 @@ import ValidateService from '@/service/ValidateService'
 })
 export default class FormCheckbox extends Mixins(FormMixins) {
   @Prop({ default: false })
-  isDisableIport!: boolean
+  isDisableImport!: boolean
 
   @Prop()
   text!: string
