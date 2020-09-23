@@ -3,11 +3,14 @@
     class="FormRangeDate"
     v-model="innerValue"
     :field="field"
-    placeholder="开始时间 ~ 结束时间"
-    clear-trigger="always"
-    is-link
-    @click="handleOpenSelect"
-    disabled />
+    :clear-trigger="field.disabled ? null : 'always'"
+    :is-link="!field.disabled"
+    @click="handleOpenSelect">
+    <template #input>
+      <div class="field" v-if="innerValue">{{innerValue}}</div>
+      <div class="placeholder" v-else>开始时间 ~ 结束时间</div>
+    </template>
+  </FormInput>
 </template>
 
 <script lang="ts">
@@ -72,11 +75,11 @@ export default class FormRangeDate extends Mixins(FormMixins) {
 
 <style lang="less">
 .FormRangeDate {
-  .van-field__label {
-    color: @gray-7;
+  .placeholder {
+    color: @gray-6;
   }
-  .van-field__control:disabled {
-    color: @gray-8;
+  &.van-field--disabled .field {
+    color: @gray-5;
   }
 }
 </style>

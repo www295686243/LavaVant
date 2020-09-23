@@ -1,10 +1,10 @@
 <template>
   <FormInput
     class="FormSalary"
+    v-model="innerValue"
     :field="field">
     <template #input>
       <div class="range-input-container">
-        <van-checkbox-group v-model="innerValue"></van-checkbox-group>
         <template v-if="innerIsNegotiable === 0">
           <FormInput v-model.number="innerMinValue" :field="{ label: '' }" class="min-salary" placeholder="最小薪资" type="digit"></FormInput>
           <div class="range-input-line">~</div>
@@ -107,16 +107,16 @@ export default class FormSalary extends Mixins(FormMixins) {
   }
 
   private validateSalaryRequired () {
-    return this.innerIsNegotiable > 0 || !!this.innerMinValue || !!this.innerMaxValue
+    return this.innerIsNegotiable > 0 || (!!this.innerMinValue && !!this.innerMaxValue)
   }
 
   created () {
     const isRequired = (this.field.rules || []).find((res) => res.required)
     if (isRequired) {
-      this.innerRules = this.innerRules.concat([{ required: true, message: `请输入${this.field.label}` }]).concat([{ validator: this.validateSalaryRequired, message: `请输入${this.field.label}` }])
+      this.innerRules = this.innerRules.concat([{ validator: this.validateSalaryRequired, message: `请输入${this.field.label}` }])
     }
     this.field.rules = this.innerRules
-    this.innerValue = [1]
+    this.innerValue = '1'
   }
 }
 </script>

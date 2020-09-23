@@ -1,11 +1,11 @@
-import form from '@/views/user/hr/form.vue'
+import jobForm from '@/views/user/hr/job/form.vue'
 
 export default [
   {
-    path: '/user/hr/form',
-    component: form,
+    path: '/user/hr/job/form',
+    component: jobForm,
     meta: {
-      title: '发布'
+      title: '发布招聘'
     }
   }
 ]

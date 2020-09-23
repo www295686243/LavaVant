@@ -2,7 +2,6 @@
   <van-checkbox
     v-model="innerValue"
     :checked-color="checkedColor"
-    shape="square"
     v-bind="$attrs">
     <slot></slot>
   </van-checkbox>

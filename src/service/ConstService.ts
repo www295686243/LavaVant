@@ -105,3 +105,9 @@ export function getOptionsValue (id: number, _displayName?: string) {
   const item = configs.find((res) => res.id === id)
   return item ? item.id : null
 }
+
+export function getGlobalOptions (name: string) {
+  const configs: ConfigItem[] = cache.config.get('options') || []
+  const config = configs.find((res) => res.name === '_global:' + name)
+  return config ? config.options : []
+}

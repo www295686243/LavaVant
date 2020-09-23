@@ -3,7 +3,9 @@
     <van-form ref="formElement" :label-width="66" label-align="right">
       <slot></slot>
       <div class="FormRender-btn">
-        <ButtonSubmit :onClick="handleSubmit" block round :disabled="disableSubmit">{{submitBtn}}</ButtonSubmit>
+        <slot name="footer">
+          <ButtonSubmit :onClick="handleSubmit" block round :disabled="disableSubmit">{{submitBtn}}</ButtonSubmit>
+        </slot>
       </div>
     </van-form>
   </DataRender>
@@ -21,6 +23,18 @@ export interface FormElement {
   scrollToField: Function;
 }
 
+export interface Service {
+  index: Function;
+  show: Function;
+  store: Function;
+  update: Function;
+  destroy: Function;
+  refresh: Function;
+  getPermissionName: Function;
+  getModelName: Function;
+  getControllerName: Function;
+}
+
 @Component({
   components: {
     [Form.name]: Form
@@ -30,11 +44,14 @@ export default class FormRender extends Vue {
   @Ref()
   formElement!: FormElement
 
-  @Prop({ default: () => () => Promise.resolve() })
+  @Prop()
   onSubmit!: Function
 
   @Prop()
   onLoad!: Function
+
+  @Prop()
+  onSubmitAfter!: Function
 
   @Prop()
   form!: { [key: string]: any }
@@ -45,6 +62,12 @@ export default class FormRender extends Vue {
   @Prop({ default: false })
   disableSubmit!: boolean
 
+  @Prop()
+  Service!: Service
+
+  @Provide()
+  formService = this.Service
+
   @Provide()
   FormRenderElement = () => {
     return this.$refs.formElement
@@ -52,7 +75,22 @@ export default class FormRender extends Vue {
 
   private handleSubmit () {
     return this.validate()
-      .then(() => this.onSubmit())
+      .then(() => {
+        if (this.onSubmit) {
+          return this.onSubmit()
+        } else if (this.Service) {
+          if (this.form.id) {
+            return this.Service.update(this.form)
+          } else {
+            return this.Service.store(this.form)
+          }
+        }
+      })
+      .then(() => {
+        if (this.onSubmitAfter) {
+          return this.onSubmitAfter()
+        }
+      })
       .catch((err: { name: string; message: string }[]) => {
         if (Array.isArray(err) && err.length > 0) {
           this.formElement.scrollToField(err[0].name)
@@ -66,6 +104,8 @@ export default class FormRender extends Vue {
       .then(() => {
         if (this.onLoad) {
           return this.onLoad()
+        } else if (this.form.id && this.Service && this.Service.show) {
+          return this.Service.show(this.form.id)
             .then((res: PromiseResult) => {
               Object.keys(this.form).forEach((key) => {
                 this.form[key] = res.data[key] || this.form[key]
@@ -83,7 +123,7 @@ export default class FormRender extends Vue {
 
 <style lang="less">
 .FormRender {
-  &-btn {
+  .FormRender-btn {
     padding: @padding-md;
   }
   .van-field__label--right {

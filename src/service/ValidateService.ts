@@ -1,10 +1,15 @@
 export interface FormFieldItem {
+  prop?: string;
   label: string;
   placeholder?: string;
   rules?: any[];
   options?: any[];
   disabled?: boolean;
   minDate?: Date; // 日期表单用到
+  props?: {
+    label: string;
+    value: string;
+  };
 }
 
 export interface FormFields {
@@ -194,6 +199,22 @@ function validateUploadRequired (arr: { status: string; url: string }[]) {
   return arr.some((res) => res.status === 'success')
 }
 
+function validatePhone (value: string) {
+  if (value) {
+    return /^(1)\d{10}$/.test(value) || /^(([0+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/.test(value)
+  } else {
+    return true
+  }
+}
+
+function validateFullName (value: string) {
+  if (value) {
+    return /^([\u2e80-\u9fff.·•]{2,20})$/.test(value)
+  } else {
+    return true
+  }
+}
+
 class ValidateService {
   genRule (field: FormFieldItem) {
     const innerRules = field.rules || []
@@ -361,19 +382,31 @@ class ValidateService {
   }
 
   phone ({ name = '手机号' } = {}) {
+    return {
+      phone: { validator: validatePhone, message: `${name}格式不正确`, trigger: 'onBlur' }
+    }
+  }
+
+  telephone ({ name = '联系电话' } = {}) {
+    return {
+      telephone: { pattern: new RegExp(/^(([0+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/), message: `${name}格式不正确`, trigger: 'onBlur' }
+    }
+  }
+
+  mobile () {
     return Object.assign({}, this.max(11)({ name }), {
-      phone: { pattern: new RegExp(/^(1)\d{10}$/), message: `${name}格式不正确`, trigger: 'onBlur' }
+      mobile: { pattern: new RegExp(/^(1)\d{10}$/), message: `${name}格式不正确`, trigger: 'onBlur' }
     })
   }
 
   fullname ({ name = '姓名' } = {}) {
-    return Object.assign({}, this.required()({ name }), this.max(20)({ name }), {
-      fullname: { pattern: new RegExp(/^([\u2e80-\u9fff.·•]{2,20})$/), message: `${name}格式不正确`, trigger: 'onBlur' }
+    return Object.assign({}, this.max(20)({ name }), {
+      fullname: { validator: validateFullName, message: `${name}格式不正确`, trigger: 'onBlur' }
     })
   }
 
   email ({ name = '邮箱' } = {}) {
-    return Object.assign({}, this.required()({ name }), {
+    return Object.assign({}, {
       email: { validator: validateEmail, message: `请输入正确的${name}`, trigger: 'onBlur' }
     })
   }

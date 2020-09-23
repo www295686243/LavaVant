@@ -1,5 +1,5 @@
 <template>
-  <FormRender :onSubmit="handleSubmit" :submit-btn="typeMode.btn" ref="formElement">
+  <FormRender :onSubmit="handleSubmit" :submit-btn="typeMode.btn" :form="form" ref="formElement">
     <FormInput v-model="form.phone" :field="formFields.phone" />
     <FormSms :onClick="sendSmsCaptcha" v-model="form.code" :field="formFields.code"/>
   </FormRender>
@@ -52,7 +52,7 @@ export default class BusinessSmsCaptcha extends Vue {
   private formFields = ValidateService.genRules({
     phone: {
       label: '手机号',
-      rules: [ValidateService.required, ValidateService.phone]
+      rules: [ValidateService.required, ValidateService.mobile]
     },
     code: {
       label: '验证码'

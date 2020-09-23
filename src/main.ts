@@ -14,6 +14,7 @@ import FormInput from './components/Form/FormInput.vue'
 import FormTextarea from './components/Form/FormTextarea.vue'
 import FormSwitch from './components/Form/FormSwitch.vue'
 import FormCheckbox from './components/Form/FormCheckbox.vue'
+import FormCheckboxGroup from './components/Form/FormCheckboxGroup.vue'
 import FormSelect from './components/Form/FormSelect.vue'
 import FormDateTime from './components/Form/FormDateTime.vue'
 import FormStepper from './components/Form/FormStepper.vue'
@@ -41,6 +42,7 @@ Vue.component('FormRender', FormRender)
 Vue.component('FormInput', FormInput)
 Vue.component('FormTextarea', FormTextarea)
 Vue.component('FormSwitch', FormSwitch)
+Vue.component('FormCheckboxGroup', FormCheckboxGroup)
 Vue.component('FormCheckbox', FormCheckbox)
 Vue.component('FormSelect', FormSelect)
 Vue.component('FormDateTime', FormDateTime)

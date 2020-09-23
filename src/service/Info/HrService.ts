@@ -1,5 +1,5 @@
 import axios from '@/plugins/axios'
-import BaseModelService from '@/service/BaseService'
+import BaseModelService from '@/service/BaseModelService'
 import RouterService from '@/service/RouterService'
 
 class HrService extends BaseModelService {

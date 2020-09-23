@@ -4,7 +4,7 @@
     v-model="innerValue"
     :label="field.label"
     :name="field.label"
-    :placeholder="placeholder ? placeholder : '请输入' + field.label"
+    :placeholder="innerPlaceholder"
     :rules="field.rules || []"
     :maxlength="maxlength"
     :required="required"
@@ -34,6 +34,7 @@ export default class FormInput extends Mixins(FormMixins) {
 
   private maxlength = null
   private required = false
+  private innerPlaceholder = ''
 
   private genMaxLength () {
     const rule = (this.field.rules || []).find((res) => res.max || res.len)
@@ -55,6 +56,13 @@ export default class FormInput extends Mixins(FormMixins) {
   }
 
   created () {
+    if (this.placeholder) {
+      this.innerPlaceholder = this.placeholder
+    } else if (this.field.placeholder) {
+      this.innerPlaceholder = this.field.placeholder
+    } else {
+      this.innerPlaceholder = '请输入' + this.field.label
+    }
     this.genMaxLength()
     this.genRequired()
   }
