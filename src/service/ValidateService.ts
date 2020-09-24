@@ -10,6 +10,7 @@ export interface FormFieldItem {
     label: string;
     value: string;
   };
+  valueFormat?: string; // 显示的值格式化
 }
 
 export interface FormFields {

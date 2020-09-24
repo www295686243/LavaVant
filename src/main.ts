@@ -1,8 +1,10 @@
+import './class-component-hooks'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import { Button, Popup, Loading, Dialog, Row, Col, Icon, Cell, CellGroup } from 'vant'
 import 'amfe-flexible'
+import './assets/styles/iconfont.less'
 
 import DataRender from './components/DataRender.vue'
 import PageContainer from './components/PageContainer.vue'
@@ -11,6 +13,7 @@ import ButtonSubmit from './components/Button/ButtonSubmit.vue'
 import ButtonStat from './components/Button/ButtonStat.vue'
 import FormRender from './components/Form/FormRender.vue'
 import FormInput from './components/Form/FormInput.vue'
+import FormText from './components/Form/FormText.vue'
 import FormTextarea from './components/Form/FormTextarea.vue'
 import FormSwitch from './components/Form/FormSwitch.vue'
 import FormCheckbox from './components/Form/FormCheckbox.vue'
@@ -26,6 +29,7 @@ import FormImage from './components/Form/FormImage.vue'
 import FormImages from './components/Form/FormImages.vue'
 import FormClassify from './components/Form/FormClassify.vue'
 import FormGroupRender from './components/Form/FormGroupRender.vue'
+import FormGroupPopup from './components/Form/FormGroupPopup.vue'
 import { getCityName } from './plugins/tools'
 
 import RouterService from '@/service/RouterService'
@@ -40,6 +44,7 @@ Vue.component('ButtonSubmit', ButtonSubmit)
 Vue.component('ButtonStat', ButtonStat)
 Vue.component('FormRender', FormRender)
 Vue.component('FormInput', FormInput)
+Vue.component('FormText', FormText)
 Vue.component('FormTextarea', FormTextarea)
 Vue.component('FormSwitch', FormSwitch)
 Vue.component('FormCheckboxGroup', FormCheckboxGroup)
@@ -55,6 +60,7 @@ Vue.component('FormImage', FormImage)
 Vue.component('FormImages', FormImages)
 Vue.component('FormClassify', FormClassify)
 Vue.component('FormGroupRender', FormGroupRender)
+Vue.component('FormGroupPopup', FormGroupPopup)
 
 Vue.config.productionTip = false
 

@@ -44,11 +44,17 @@ export default class FormRangeDate extends Mixins(FormMixins) {
   @Watch('minValue')
   onMinValue (val: string) {
     this.innerMinValue = val
+    if (!val) {
+      this.innerValue = ''
+    }
   }
 
   @Watch('maxValue')
   onMaxValue (val: string) {
     this.innerMaxValue = val
+    if (!val) {
+      this.innerValue = ''
+    }
   }
 
   private handleOpenSelect () {

@@ -1,17 +1,17 @@
 <template>
-  <van-uploader v-model="fileList" :max-count="1" :after-read="handleAfterRead" v-bind="$attrs" />
+  <van-uploader v-model="fileList" :max-count="1" :after-read="handleAfterRead" @delete="handleDelete" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
 import FormMixins from '../FormMixins'
-import { Component, Mixins, Prop } from 'vue-property-decorator'
+import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
 import { Uploader } from 'vant'
 import axios from '@/plugins/axios'
 import VantService from '@/service/VantService'
 import RouterService from '@/service/RouterService'
 
 interface FileItem {
-  file: File;
+  file?: File;
   status: string;
   message: string;
   content: string;
@@ -28,14 +28,19 @@ export default class FormBaseImageBox extends Mixins(FormMixins) {
   @Prop()
   uploadParmas!: { _type: string; info_id: string }
 
-  private fileList = []
+  @Watch('value')
+  onValue2 () {
+    this.init()
+  }
+
+  private fileList: FileItem[] = []
 
   private handleAfterRead (file: FileItem) {
     file.status = 'uploading'
     file.message = '上传中...'
 
     const form = new FormData()
-    form.append('file', file.file)
+    form.append('file', file.file as File)
     form.append('info_id', this.uploadParmas.info_id)
     form.append('type', this.uploadParmas._type)
     form.append('marking', RouterService.query('marking') as string)
@@ -53,6 +58,25 @@ export default class FormBaseImageBox extends Mixins(FormMixins) {
           VantService.toast.fail(err.message)
         }
       })
+  }
+
+  private handleDelete () {
+    this.innerValue = ''
+  }
+
+  private init () {
+    if (this.innerValue) {
+      this.fileList = [{
+        url: this.innerValue,
+        status: 'success',
+        message: '',
+        content: ''
+      }]
+    }
+  }
+
+  created () {
+    this.init()
   }
 }
 </script>

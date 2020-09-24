@@ -1,6 +1,7 @@
 <template>
   <FormInput
     class="FormCheckboxGroup"
+    :border="border"
     :field="field">
     <template #input>
       <div>
@@ -43,6 +44,9 @@ export default class FormCheckboxGroup extends Vue {
 
   @Prop()
   text!: string
+
+  @Prop()
+  border!: boolean
 
   // value-array, label-array, value-string, label-string
   @Prop({ default: 'value-array' })

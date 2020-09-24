@@ -1,5 +1,5 @@
 <template>
-  <van-uploader v-model="fileList" multiple :after-read="handleAfterRead" v-bind="$attrs" />
+  <van-uploader v-model="fileList" multiple :after-read="handleAfterRead" @delete="handleDelete" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
@@ -69,6 +69,10 @@ export default class FormBaseImagesBox extends Mixins(FormMixins) {
         this.innerValue = this.fileList.filter((res) => res.url).map((res) => res.url)
         this.$emit('success')
       })
+  }
+
+  private handleDelete () {
+    this.innerValue = this.fileList.filter((res) => res.url).map((res) => res.url)
   }
 
   private init () {
