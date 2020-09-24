@@ -11,6 +11,7 @@
     <van-button @click="RouterService.push('/user/enterprise-auth')">企业认证</van-button>
     <van-button @click="RouterService.push('/user/hr/job/form')">发布招聘</van-button>
     <van-button @click="RouterService.push('/user/personal/base')">个人资料</van-button>
+    <van-button @click="RouterService.push('/user/enterprise/base')">企业资料</van-button>
   </PageContainer>
 </template>
 

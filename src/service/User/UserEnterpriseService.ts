@@ -3,47 +3,46 @@ import cache from '@/plugins/cache'
 import BaseModelService from '../BaseModelService'
 import RouterService from '../RouterService'
 
-class UserPersonalService extends BaseModelService {
-  name = 'User/UserPersonal'
+class UserEnterpriseService extends BaseModelService {
+  name = 'User/UserEnterprise'
   info = {
     avatar: '',
-    name: '',
-    id_card: '',
-    seniority: '',
-    intro: '',
     company: '',
-    position: '',
+    business_license: '',
     city: '',
     address: '',
+    intro: '',
     email: '',
-    phone: '',
-    tags: [],
-    education_experience: [],
-    work_experience: [],
-    honorary_certificate: []
+    tags: '',
+    company_images: [],
+    company_scale: '',
+    name: '',
+    id_card: '',
+    position: '',
+    phone: ''
   }
 
   constructor () {
     super()
-    Object.assign(this.info, cache.user_personal.getAll())
+    Object.assign(this.info, cache.user_enterprise.getAll())
   }
 
   show () {
-    return axios.get('user_personal/show')
+    return axios.get('user_enterprise/show')
       .then((res) => {
-        cache.user_personal.setAll(res.data)
+        cache.user_enterprise.setAll(res.data)
         this.updateData(res.data)
         return res
       })
   }
 
   update (form: object) {
-    return axios.put('user_personal/update', form)
+    return axios.put('user_enterprise/update', form)
       .then((res) => this.show().then(() => res))
       .then((res) => {
         const path = RouterService.query('source')
-        if (path === '/user/hr/resume/form') {
-          RouterService.replace('/user/hr/resume/success')
+        if (path === '/user/hr/job/form') {
+          RouterService.replace('/user/hr/job/success')
         } else {
           return res
         }
@@ -55,4 +54,4 @@ class UserPersonalService extends BaseModelService {
   }
 }
 
-export default new UserPersonalService()
+export default new UserEnterpriseService()

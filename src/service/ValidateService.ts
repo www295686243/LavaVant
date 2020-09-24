@@ -366,7 +366,7 @@ class ValidateService {
   }
 
   idcard ({ name = '身份证' } = {}) {
-    return Object.assign({}, this.required()({ name }), this.max(18)({ name }), {
+    return Object.assign({}, this.max(18)({ name }), {
       idcard: { validator: validateIdcard, message: `请输入正确的${name}号`, trigger: 'onBlur' },
       adult: { validator: validateAdult, message: '不支持18岁以下用户', trigger: 'onBlur' }
     })

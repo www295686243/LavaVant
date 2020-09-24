@@ -86,9 +86,11 @@ export default class FormRender extends Vue {
           }
         }
       })
-      .then(() => {
+      .then((res: PromiseResult) => {
         if (this.onSubmitAfter) {
-          return this.onSubmitAfter()
+          return this.onSubmitAfter(res)
+        } else {
+          return res
         }
       })
       .catch((err: { name: string; message: string }[]) => {

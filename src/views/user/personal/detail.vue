@@ -1,5 +1,5 @@
 <template>
-  <FormRender :Service="UserPersonalService" :form="form">
+  <FormRender :Service="UserPersonalService" :onSubmitAfter="handleSubmitAfter" :form="form">
     <FormImage v-model="form.avatar" :field="formFields.avatar" :uploadParmas="{ _type: UserPersonalService.name, info_id: form.user_id }" />
     <FormCheckboxGroup v-model="form.tags" :field="formFields.tags" type="label-string" :border="false"/>
     <FormGroupPopup
@@ -49,6 +49,7 @@
 import ValidateService from '@/service/ValidateService'
 import { Component, Vue } from 'vue-property-decorator'
 import UserPersonalService from '@/service/User/UserPersonalService'
+import RouterService from '@/service/RouterService'
 
 @Component
 export default class UserPersonalDetail extends Vue {
@@ -156,6 +157,16 @@ export default class UserPersonalDetail extends Vue {
       rules: [ValidateService.uploadRequired, ValidateService.max(6)]
     }
   })
+
+  private handleSubmitAfter (res: any) {
+    return Promise.resolve()
+      .then(() => {
+        if (!RouterService.query('source')) {
+          RouterService.go(-2)
+        }
+        return res
+      })
+  }
 }
 </script>
 

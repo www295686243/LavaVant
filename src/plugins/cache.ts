@@ -8,9 +8,12 @@ const prefix = process.env.VUE_APP_BASEURL + '/'
  */
 export default {
   user: store.namespace(prefix + 'user'),
+  user_personal: store.namespace(prefix + 'user_personal'),
+  user_enterprise: store.namespace(prefix + 'user_enterprise'),
   config: store.namespace(prefix + 'config'),
   version: store.namespace(prefix + 'version'),
   stat: store.namespace(prefix + 'stat'),
+  hr: store.namespace(prefix + 'hr'),
   clearAll () {
     store.clearAll()
   }

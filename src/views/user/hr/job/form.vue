@@ -22,7 +22,7 @@
       <FormSelect v-model="form.seniority" :field="formFields.seniority" />
       <FormArea v-model="form.city" :field="formFields.city" />
       <FormInput v-model="form.address" :field="formFields.address" />
-      <FormDateTime v-model="form.end_time" :field="formFields.end_time" :min-date="new Date()" />
+      <FormDateTime v-model="form.end_time" :field="formFields.end_time" :min-date="minDate" />
       <FormInput v-model="form.contacts" :field="formFields.contacts" />
       <FormInput v-model="form.phone" :field="formFields.phone" />
     </FormRender>
@@ -34,6 +34,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import HrJobService from '@/service/User/Info/HrJobService'
+import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 
 @Component
 export default class UserHrJobForm extends Vue {
@@ -44,13 +45,16 @@ export default class UserHrJobForm extends Vue {
     } else {
       this.submitBtnText = '发布并完善企业资料'
     }
+    this.initDefaultData()
   }
 
   private HrJobService = HrJobService
+  private isCreate = !!RouterService.query('id')
+  private minDate!: Date
   private form = {
     id: RouterService.query('id'),
     title: '',
-    is_other_user: 1,
+    is_other_user: 0,
     company_name: '',
     monthly_pay_min: '',
     monthly_pay_max: '',
@@ -145,6 +149,27 @@ export default class UserHrJobForm extends Vue {
       rules: [ValidateService.required, ValidateService.phone]
     }
   })
+
+  private initDefaultData () {
+    if (this.isCreate && this.form.is_other_user === 0) {
+      this.form.company_name = UserEnterpriseService.info.company
+      this.form.city = UserEnterpriseService.info.city
+      this.form.contacts = UserEnterpriseService.info.name
+      this.form.phone = UserEnterpriseService.info.phone
+      this.form.address = UserEnterpriseService.info.address
+    } else {
+      this.form.company_name = ''
+      this.form.city = ''
+      this.form.contacts = ''
+      this.form.phone = ''
+      this.form.address = ''
+    }
+  }
+
+  created () {
+    this.minDate = new Date()
+    this.minDate.setDate(this.minDate.getDate() + 3)
+  }
 }
 </script>
 

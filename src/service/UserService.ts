@@ -2,6 +2,8 @@ import cache from '@/plugins/cache'
 import axios, { PromiseResult } from '@/plugins/axios'
 import VersionService from './VersionService'
 import { formatDate } from '@/plugins/tools'
+import UserPersonalService from './User/UserPersonalService'
+import UserEnterpriseService from './User/UserEnterpriseService'
 
 interface LoginParams {
   username: string;
@@ -20,6 +22,7 @@ interface UserInfo {
   phone: string;
   roles: RoleItem[];
   permissions: string[];
+  is_follow_official_account: number;
 }
 
 class UserService {
@@ -29,7 +32,8 @@ class UserService {
     username: '',
     phone: '',
     roles: [],
-    permissions: []
+    permissions: [],
+    is_follow_official_account: 0
   }
 
   constructor () {
@@ -108,6 +112,8 @@ class UserService {
     return axios.get('user/getUserInfo')
       .then((res) => {
         this.cacheUserInfo(res)
+        UserPersonalService.show()
+        UserEnterpriseService.show()
       })
   }
 

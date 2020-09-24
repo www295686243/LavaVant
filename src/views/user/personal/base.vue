@@ -1,6 +1,7 @@
 <template>
   <FormRender :Service="UserPersonalService" :onSubmitAfter="handleSubmitAfter" :form="form" submitBtn="下一步">
     <FormInput v-model="form.name" :field="formFields.name" />
+    <FormInput v-model="form.phone" :field="formFields.phone" />
     <FormInput v-model="form.company" :field="formFields.company" />
     <FormInput v-model="form.position" :field="formFields.position" />
     <FormSelect v-model="form.seniority" :field="formFields.seniority" />
@@ -15,6 +16,7 @@
 import ValidateService from '@/service/ValidateService'
 import { Component, Vue } from 'vue-property-decorator'
 import UserPersonalService from '@/service/User/UserPersonalService'
+import UserService from '@/service/UserService'
 import RouterService from '@/service/RouterService'
 
 @Component
@@ -23,6 +25,7 @@ export default class UserPersonalBase extends Vue {
   private form = {
     id: 1,
     name: '',
+    phone: UserPersonalService.info.phone || UserService.info.phone,
     id_card: '',
     seniority: '',
     intro: '',
@@ -38,6 +41,11 @@ export default class UserPersonalBase extends Vue {
       prop: 'name',
       label: '姓名',
       rules: [ValidateService.fullname, ValidateService.max(20)]
+    },
+    phone: {
+      prop: 'phone',
+      label: '联系电话',
+      rules: [ValidateService.phone]
     },
     company: {
       prop: 'company',
