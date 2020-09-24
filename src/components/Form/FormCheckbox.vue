@@ -1,7 +1,6 @@
 <template>
   <FormInput
     class="FormCheckbox"
-    v-model="innerValue"
     :field="field">
     <template #input>
       <Checkbox v-model="innerValue" :checked-color="checkedColor"><slot></slot></Checkbox>

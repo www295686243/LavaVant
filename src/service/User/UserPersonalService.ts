@@ -1,7 +1,6 @@
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
 import BaseModelService from '../BaseModelService'
-import RouterService from '../RouterService'
 
 class UserPersonalService extends BaseModelService {
   name = 'User/UserPersonal'
@@ -31,7 +30,6 @@ class UserPersonalService extends BaseModelService {
   show () {
     return axios.get('user_personal/show')
       .then((res) => {
-        cache.user_personal.setAll(res.data)
         this.updateData(res.data)
         return res
       })
@@ -39,18 +37,14 @@ class UserPersonalService extends BaseModelService {
 
   update (form: object) {
     return axios.put('user_personal/update', form)
-      .then((res) => this.show().then(() => res))
       .then((res) => {
-        const path = RouterService.query('source')
-        if (path === '/user/hr/resume/form') {
-          RouterService.replace('/user/hr/resume/success')
-        } else {
-          return res
-        }
+        this.updateData(form)
+        return res
       })
   }
 
   updateData (params: any) {
+    cache.user_personal.setAll(params)
     Object.assign(this.info, params)
   }
 }

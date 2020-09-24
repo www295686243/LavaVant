@@ -161,7 +161,9 @@ export default class UserPersonalDetail extends Vue {
   private handleSubmitAfter (res: any) {
     return Promise.resolve()
       .then(() => {
-        if (!RouterService.query('source')) {
+        if (RouterService.query('toPath')) {
+          RouterService.replace(RouterService.query('toPath'))
+        } else {
           RouterService.go(-2)
         }
         return res

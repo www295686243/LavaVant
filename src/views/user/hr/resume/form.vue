@@ -1,11 +1,10 @@
 <template>
   <PageContainer class="view-user-hr-job-form">
-    <FormRender :Service="HrJobService" :form="form" :onSubmitAfter="handleSubmitAfter" :submitBtn="submitBtnText">
+    <FormRender :Service="HrResumeService" :form="form" :onSubmitAfter="handleSubmitAfter" :submitBtn="submitBtnText">
       <FormInput v-model="form.title" :field="formFields.title" />
       <FormCheckbox v-model="form.is_other_user" :field="formFields.is_other_user">
-        帮人发布的<span class="tips">(选中后不显示注册企业信息)</span>
+        帮人发布的<span class="tips">(选中后不显示当前账号的工作经历等认证)</span>
       </FormCheckbox>
-      <FormInput v-model="form.company_name" :field="formFields.company_name" />
       <FormSalary
         :isNegotiable.sync="form.is_negotiate"
         :min-value.sync="form.monthly_pay_min"
@@ -16,15 +15,16 @@
         :text.sync="form.treatment_input"
         v-model="form.treatment"
         :field="formFields.treatment" />
-      <FormStepper v-model="form.recruiter_number" :field="formFields.recruiter_number" />
       <FormTextarea v-model="form.description" :field="formFields.description" />
       <FormSelect v-model="form.education" :field="formFields.education" />
       <FormSelect v-model="form.seniority" :field="formFields.seniority" />
       <FormArea v-model="form.city" :field="formFields.city" />
-      <FormInput v-model="form.address" :field="formFields.address" />
       <FormDateTime v-model="form.end_time" :field="formFields.end_time" :min-date="minDate" />
       <FormInput v-model="form.contacts" :field="formFields.contacts" />
       <FormInput v-model="form.phone" :field="formFields.phone" />
+      <FormCheckbox v-model="form.is_force_show_user_info" :field="formFields.is_force_show_user_info" v-if="form.is_other_user === 0">
+        直接公开个人详情(包括工作经历、教育经历)
+      </FormCheckbox>
     </FormRender>
   </PageContainer>
 </template>
@@ -33,8 +33,8 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
-import HrJobService from '@/service/User/Info/HrJobService'
-import UserEnterpriseService from '@/service/User/UserEnterpriseService'
+import HrResumeService from '@/service/User/Info/HrResumeService'
+import UserPersonalService from '@/service/User/UserPersonalService'
 
 @Component
 export default class UserHrJobForm extends Vue {
@@ -43,52 +43,44 @@ export default class UserHrJobForm extends Vue {
     if (val > 0) {
       this.submitBtnText = '立即发布'
     } else {
-      this.submitBtnText = '发布并完善企业资料'
+      this.submitBtnText = '发布并完善个人资料'
     }
     this.initDefaultData()
   }
 
-  private HrJobService = HrJobService
+  private HrResumeService = HrResumeService
   private isCreate = !!RouterService.query('id')
   private minDate!: Date
   private form = {
     id: RouterService.query('id'),
     title: '',
-    is_other_user: 0,
-    company_name: '',
     monthly_pay_min: '',
     monthly_pay_max: '',
     is_negotiate: 0,
-    recruiter_number: 1,
+    treatment: '',
+    treatment_input: '',
     education: '',
     seniority: '',
     city: '',
-    address: '',
     end_time: '',
     contacts: '',
     phone: '',
-    treatment: '',
-    treatment_input: '',
-    description: ''
+    is_force_show_user_info: 0,
+    description: '',
+    is_other_user: 0
   }
 
-  private submitBtnText = '发布并完善企业资料'
+  private submitBtnText = '发布并完善个人资料'
 
   private formFields = ValidateService.genRules({
     title: {
       prop: 'title',
-      label: '招聘标题',
-      rules: [ValidateService.required, ValidateService.max(42)],
-      placeholder: '请输入招聘岗位名称'
+      label: '求职标题',
+      rules: [ValidateService.required, ValidateService.max(42)]
     },
     is_other_user: {
       prop: 'is_other_user',
       label: ''
-    },
-    company_name: {
-      prop: 'company_name',
-      label: '企业名称',
-      rules: [ValidateService.max(60)]
     },
     rangeSalary: {
       prop: 'rangeSalary',
@@ -97,23 +89,18 @@ export default class UserHrJobForm extends Vue {
     },
     treatment: {
       prop: 'treatment',
-      label: '待遇情况',
+      label: '要求待遇',
       rules: [ValidateService.required({ trigger: 'onChange' })]
-    },
-    recruiter_number: {
-      prop: 'recruiter_number',
-      label: '招聘人数',
-      rules: [ValidateService.minNum(1)]
     },
     description: {
       prop: 'description',
-      label: '岗位描述',
-      placeholder: '岗位要求、技能、工作经验描述，以及公司生产的产品和要求',
+      label: '自我介绍',
+      placeholder: '自我介绍，描述求职的岗位，擅长做什么设备，做过什么工艺、产品、参与过什么项目，有多少年的工作经验等，给招聘企业提供匹配参考（不低于50字）',
       rules: [ValidateService.required, ValidateService.max(2000)]
     },
     education: {
       prop: 'education',
-      label: '学历要求',
+      label: '学历',
       rules: [ValidateService.required({ trigger: 'onChange' })]
     },
     seniority: {
@@ -123,14 +110,8 @@ export default class UserHrJobForm extends Vue {
     },
     city: {
       prop: 'city',
-      label: '工作城市',
+      label: '期望城市',
       rules: [ValidateService.required({ trigger: 'onChange' })]
-    },
-    address: {
-      prop: 'address',
-      label: ' ',
-      placeholder: '请输入街道地址',
-      rules: [ValidateService.max(60)]
     },
     end_time: {
       prop: 'end_time',
@@ -145,24 +126,23 @@ export default class UserHrJobForm extends Vue {
     phone: {
       prop: 'phone',
       label: '联系电话',
-      placeholder: '请输入移动或固定电话',
-      rules: [ValidateService.required, ValidateService.phone]
+      rules: [ValidateService.required, ValidateService.mobile]
+    },
+    is_force_show_user_info: {
+      prop: 'is_force_show_user_info',
+      label: ''
     }
   })
 
   private initDefaultData () {
     if (this.isCreate && this.form.is_other_user === 0) {
-      this.form.company_name = UserEnterpriseService.info.company
-      this.form.city = UserEnterpriseService.info.city
-      this.form.contacts = UserEnterpriseService.info.name
-      this.form.phone = UserEnterpriseService.info.phone
-      this.form.address = UserEnterpriseService.info.address
+      this.form.city = UserPersonalService.info.city
+      this.form.contacts = UserPersonalService.info.name
+      this.form.phone = UserPersonalService.info.phone
     } else {
-      this.form.company_name = ''
       this.form.city = ''
       this.form.contacts = ''
       this.form.phone = ''
-      this.form.address = ''
     }
   }
 
@@ -170,9 +150,9 @@ export default class UserHrJobForm extends Vue {
     return Promise.resolve()
       .then(() => {
         if (this.form.is_other_user > 0) {
-          RouterService.replace('/user/hr/job/' + (this.form.id ? 'update-success' : 'create-success'))
+          RouterService.replace('/user/hr/resume/' + (this.form.id ? 'update-success' : 'create-success'))
         } else {
-          RouterService.replace('/user/enterprise/detail', { toPath: '/user/hr/job/' + (this.form.id ? 'update-success' : 'create-success') })
+          RouterService.replace('/user/personal/detail', { toPath: '/user/hr/resume/' + (this.form.id ? 'update-success' : 'create-success') })
         }
       })
   }

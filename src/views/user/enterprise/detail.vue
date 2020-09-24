@@ -48,14 +48,16 @@ export default class UserEnterpriseDetail extends Vue {
       prop: 'company_images',
       label: '公司图片',
       placeholder: '上传公司介绍相片',
-      rules: [ValidateService.uploadRequired, ValidateService.max(20)]
+      rules: [ValidateService.max(20)]
     }
   })
 
   private handleSubmitAfter (res: any) {
     return Promise.resolve()
       .then(() => {
-        if (!RouterService.query('source')) {
+        if (RouterService.query('toPath')) {
+          RouterService.replace(RouterService.query('toPath'))
+        } else {
           RouterService.go(-2)
         }
         return res

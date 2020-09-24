@@ -15,17 +15,6 @@ class HrJobService extends BaseModelService {
 
   store (form: { is_other_user: number; id: number }) {
     return axios.post('user/hr_job', form)
-      .then(() => {
-        if (form.is_other_user > 0) {
-          if (form.id > 0) {
-            RouterService.replace('/user/hr/job/success', { update: 1 })
-          } else {
-            RouterService.replace('/user/hr/job/success')
-          }
-        } else {
-          RouterService.replace('/user/enterprise/detail', { source: RouterService.getPath() })
-        }
-      })
   }
 
   destroy (id: string) {

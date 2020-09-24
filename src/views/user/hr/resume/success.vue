@@ -1,5 +1,5 @@
 <template>
-  <PageContainer class="view-user-hr-job-success">
+  <PageContainer class="view-user-hr-resume-success">
     <div class="status">
       <div class="status-icon"><van-icon name="checked" color="#07c160" size="80px" /></div>
       <p class="status-text">已{{isUpdate > 0 ? '更新' : '发布'}}成功</p>
@@ -11,7 +11,7 @@
         <p><img src="@/assets/images/yuancao.jpg" alt="原草网公众号" width="200" height="200"></p>
         <p>检测到您未关注【原草互助】公众号</p>
         <p>请长按二维码识别关注</p>
-        <p>才能获得公众号即时求职信息推送、进度推送！</p>
+        <p>才能获得公众号即时招聘信息推送、进度推送！</p>
       </div>
     </div>
   </PageContainer>
@@ -23,7 +23,7 @@ import UserService from '@/service/UserService'
 import RouterService from '@/service/RouterService'
 
 @Component
-export default class UserHrJobSuccess extends Vue {
+export default class UserHrResumeSuccess extends Vue {
   private UserService = UserService
 
   private isUpdate = RouterService.getPath().includes('update-success')
@@ -31,7 +31,7 @@ export default class UserHrJobSuccess extends Vue {
 </script>
 
 <style lang="less">
-.view-user-hr-job-success {
+.view-user-hr-resume-success {
   p {
     font-size: @font-size-md;
   }
