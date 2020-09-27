@@ -7,6 +7,14 @@ export interface Version {
   [key: string]: number;
 }
 
+interface Res {
+  data: {
+    options?: ConfigItem[];
+    industry?: any[];
+    [key: string]: any;
+  };
+}
+
 class VersionService {
   [key: string]: any
   private version: Version = {
@@ -41,7 +49,7 @@ class VersionService {
 
   getAppConfig (guard_name = '') {
     return axios.get('app/getAppConfig', { guard_name })
-      .then((res) => {
+      .then((res: Res) => {
         if (Array.isArray(res.data) && res.data.length === 0) {
           res.data = {
             [guard_name]: []
@@ -50,7 +58,9 @@ class VersionService {
         Object.keys(res.data).forEach((key: string) => {
           cache.config.set(key, res.data[key])
         })
-        this.setOptionList(res.data)
+        if (res.data.options) {
+          this.setOptionList(res.data.options)
+        }
       })
   }
 
@@ -60,10 +70,9 @@ class VersionService {
     })
   }
 
-  private setOptionList (data: { [key: string]: ConfigItem[] }) {
+  private setOptionList (data: ConfigItem[]) {
     const options_list: OptionItem[] = cache.config.get('options_list') || []
     Object.values(data)
-      .flat()
       .reduce((acc, res) => acc.concat(res.options), [] as OptionItem[])
       .forEach((res) => {
         const item = options_list.find((row) => row.id === res.id)

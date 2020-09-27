@@ -3,7 +3,9 @@
     <FormInput v-model="form.name" :field="formFields.name" />
     <FormInput v-model="form.phone" :field="formFields.phone" />
     <FormInput v-model="form.company" :field="formFields.company" />
+    <FormClassify v-model="form.industry" :field="formFields.industry" />
     <FormInput v-model="form.position" :field="formFields.position" />
+    <FormSelect v-model="form.position_attr" :field="formFields.position_attr" />
     <FormSelect v-model="form.seniority" :field="formFields.seniority" />
     <FormArea v-model="form.city" :field="formFields.city" />
     <FormInput v-model="form.address" :field="formFields.address" />
@@ -30,7 +32,9 @@ export default class UserPersonalBase extends Vue {
     seniority: '',
     intro: '',
     company: '',
+    industry: [],
     position: '',
+    position_attr: '',
     city: '',
     address: '',
     email: ''
@@ -52,10 +56,18 @@ export default class UserPersonalBase extends Vue {
       label: '公司名',
       rules: [ValidateService.max(60)]
     },
+    industry: {
+      prop: 'industry',
+      label: '行业'
+    },
     position: {
       prop: 'position',
       label: '职位',
       rules: [ValidateService.max(30)]
+    },
+    position_attr: {
+      prop: 'position_attr',
+      label: '职位属性'
     },
     seniority: {
       prop: 'seniority',

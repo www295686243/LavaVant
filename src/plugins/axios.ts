@@ -104,6 +104,7 @@ function ajax (data: any): Promise<PromiseResult> {
           }
           reject(res.response.data)
         } else {
+          console.error(res)
           reject(new Error('网络错误'))
         }
       })

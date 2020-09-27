@@ -2,6 +2,7 @@
   <FormRender :Service="UserEnterpriseService" :onSubmitAfter="handleSubmitAfter" :form="form" submitBtn="下一步">
     <van-panel title="基本信息">
       <FormInput v-model="form.company" :field="formFields.company" />
+      <FormSelect v-model="form.industry_attr" :field="formFields.industry_attr" />
       <FormArea v-model="form.city" :field="formFields.city" />
       <FormInput v-model="form.address" :field="formFields.address" />
     </van-panel>
@@ -38,7 +39,8 @@ export default class UserEnterpriseBase extends Vue {
     id_card: '',
     position: '',
     phone: '',
-    email: ''
+    email: '',
+    industry_attr: ''
   }
 
   private formFields = ValidateService.genRules({
@@ -46,6 +48,10 @@ export default class UserEnterpriseBase extends Vue {
       prop: 'company',
       label: '公司名',
       rules: [ValidateService.max(60)]
+    },
+    industry_attr: {
+      prop: 'industry_attr',
+      label: '行业属性'
     },
     city: {
       prop: 'city',

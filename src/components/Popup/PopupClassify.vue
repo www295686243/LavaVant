@@ -60,18 +60,16 @@ export default class PopupClassify extends Vue {
   @Prop()
   options!: Options[]
 
-  @Prop()
-  defaultValue!: number[]
-
   private isShow = false
   private resolve!: Function
   private reject!: Function
   private activeKey = 0
   private sidebarData = [] as { id: number; display_name: string; info: number | string }[]
   private panelData: Options[] = []
-  private innerValue: number[] = this.defaultValue || []
+  private innerValue: number[] = []
 
-  public open () {
+  public open (defaultValue: number[]) {
+    this.innerValue = defaultValue
     this.isShow = true
     return new Promise((resolve, reject) => {
       this.resolve = resolve

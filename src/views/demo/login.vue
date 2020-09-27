@@ -23,8 +23,8 @@ import BusinessSmsCaptcha from '@/components/Business/BusinessSmsCaptcha.vue'
 })
 export default class DemoForm extends Vue {
   private form = {
-    username: '',
-    password: ''
+    username: 'wanxin',
+    password: '111111'
   }
 
   private formFields = ValidateService.genRules({

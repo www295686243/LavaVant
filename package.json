@@ -20,7 +20,7 @@
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^8.4.2",
-    "vue-router": "^3.4.3",
+    "vue-router": "^3.4.5",
     "wx-jssdk-ts": "^1.1.1"
   },
   "devDependencies": {

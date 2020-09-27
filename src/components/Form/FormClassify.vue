@@ -1,19 +1,16 @@
 <template>
   <FormInput
     class="FormClassify"
-    :field="field">
+    @click="handleOpenSelect"
+    :field="field"
+    :clear-trigger="field.disabled ? null : 'always'"
+    @clear="handleClear"
+    v-model="innerName"
+    :is-link="!field.disabled">
     <template #input>
       <van-checkbox-group v-model="innerValue"></van-checkbox-group>
-      <FormInput
-        class="FormClassify-input"
-        v-model="innerName"
-        :field="{ label: '' }"
-        :placeholder="'请选择' + field.label"
-        clear-trigger="always"
-        is-link
-        @click="handleOpenSelect"
-        @clear="handleClear"
-        disabled />
+      <div class="field" v-if="innerName">{{innerName}}</div>
+      <div class="placeholder" v-else>{{'请选择' + field.label}}</div>
     </template>
   </FormInput>
 </template>
@@ -23,6 +20,7 @@ import FormMixins from './FormMixins'
 import { Component, Mixins } from 'vue-property-decorator'
 import PopupClassifyService, { Options } from '@/components/Popup/PopupClassifyService'
 import { CheckboxGroup } from 'vant'
+import cache from '@/plugins/cache'
 
 @Component({
   components: {
@@ -34,7 +32,7 @@ export default class FormClassify extends Mixins(FormMixins) {
   private innerName = ''
 
   private handleOpenSelect () {
-    this.PopupClassify.open(this.field.options as any[], this.innerValue)
+    this.PopupClassify.open(cache.config.get('industry') as any[], this.innerValue)
       .then((res: Options[]) => {
         this.innerValue = res
         this.initName()
@@ -46,6 +44,7 @@ export default class FormClassify extends Mixins(FormMixins) {
   }
 
   private handleClear () {
+    this.innerName = ''
     this.innerValue = []
   }
 
@@ -61,14 +60,11 @@ export default class FormClassify extends Mixins(FormMixins) {
 
 <style lang="less">
 .FormClassify {
-  .van-field__label {
-    color: @gray-7;
+  .placeholder {
+    color: @gray-6;
   }
-  .van-field__control:disabled {
-    color: @gray-8;
-  }
-  .FormClassify-input {
-    padding: 0;
+  &.van-field--disabled .field {
+    color: @gray-5;
   }
 }
 </style>

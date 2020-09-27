@@ -16,12 +16,11 @@ export default class PopupClassifyService {
       const Constructor = Vue.extend(PopupClassify)
       this.instance = new Constructor({
         propsData: {
-          options,
-          defaultValue
+          options
         }
       }).$mount(el)
     }
-    return this.instance.open()
+    return this.instance.open(defaultValue)
   }
 
   destroy () {

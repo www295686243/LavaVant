@@ -87,8 +87,8 @@ export function getClassifyOptions () {
   ]
 }
 
-export function getAppValue (name: string) {
-  const configs = cache.config.get('app') || []
+export function getValue (name: string) {
+  const configs = cache.config.get('options') || []
   const item = configs.find((res: { name: string }) => res.name === name)
   return item ? item.value : ''
 }
