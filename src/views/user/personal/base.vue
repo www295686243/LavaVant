@@ -79,7 +79,8 @@ export default class UserPersonalBase extends Vue {
     },
     address: {
       prop: 'address',
-      label: '街道地址',
+      label: ' ',
+      placeholder: '请输入街道地址',
       rules: [ValidateService.max(60)]
     },
     email: {

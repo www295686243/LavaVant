@@ -16,24 +16,36 @@
 </template>
 
 <script lang="ts">
-import FormMixins from './FormMixins'
-import { Component, Mixins } from 'vue-property-decorator'
-import PopupClassifyService, { Options } from '@/components/Popup/PopupClassifyService'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import PopupClassifyService from '@/components/Popup/PopupClassifyService'
 import { CheckboxGroup } from 'vant'
 import cache from '@/plugins/cache'
+import { FormFieldItem } from '@/service/ValidateService'
 
 @Component({
   components: {
     [CheckboxGroup.name]: CheckboxGroup
   }
 })
-export default class FormClassify extends Mixins(FormMixins) {
+export default class FormClassify extends Vue {
+  @Prop()
+  field!: FormFieldItem
+
+  @Prop()
+  value!: any
+
+  @Watch('innerValue')
+  onInnerValue (val: any) {
+    this.$emit('input', val)
+  }
+
   private PopupClassify = new PopupClassifyService()
+  public innerValue: number[] = []
   private innerName = ''
 
   private handleOpenSelect () {
     this.PopupClassify.open(cache.config.get('industry') as any[], this.innerValue)
-      .then((res: Options[]) => {
+      .then((res: number[]) => {
         this.innerValue = res
         this.initName()
       })
@@ -48,7 +60,18 @@ export default class FormClassify extends Mixins(FormMixins) {
     this.innerValue = []
   }
 
+  private setInnerValue () {
+    this.innerValue = (this.value || []).map((res: number | { id: number }) => {
+      if (typeof res === 'object' && res.id) {
+        return res.id
+      } else {
+        return res
+      }
+    })
+  }
+
   created () {
+    this.setInnerValue()
     this.initName()
   }
 

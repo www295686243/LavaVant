@@ -2,6 +2,7 @@
   <FormRender :Service="UserEnterpriseService" :onSubmitAfter="handleSubmitAfter" :form="form" submitBtn="下一步">
     <van-panel title="基本信息">
       <FormInput v-model="form.company" :field="formFields.company" />
+      <FormClassify v-model="form.industry" :field="formFields.industry" />
       <FormSelect v-model="form.industry_attr" :field="formFields.industry_attr" />
       <FormArea v-model="form.city" :field="formFields.city" />
       <FormInput v-model="form.address" :field="formFields.address" />
@@ -33,6 +34,7 @@ export default class UserEnterpriseBase extends Vue {
   private form = {
     id: 1,
     company: '',
+    industry: [],
     city: '',
     address: '',
     name: '',
@@ -49,6 +51,10 @@ export default class UserEnterpriseBase extends Vue {
       label: '公司名',
       rules: [ValidateService.max(60)]
     },
+    industry: {
+      prop: 'industry',
+      label: '行业'
+    },
     industry_attr: {
       prop: 'industry_attr',
       label: '行业属性'
@@ -59,7 +65,8 @@ export default class UserEnterpriseBase extends Vue {
     },
     address: {
       prop: 'address',
-      label: '街道地址',
+      label: ' ',
+      placeholder: '请输入街道地址',
       rules: [ValidateService.max(60)]
     },
     name: {
