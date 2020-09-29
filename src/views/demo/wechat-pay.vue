@@ -56,7 +56,7 @@ export default class DemoWeChatShare extends Vue {
   }
 
   private handleSubmit () {
-    return WXService.pay({ id: this.id, _type: 'News', user_coupon_id: this.user_coupon_id })
+    return WXService.pay({ id: this.id, _model: 'News', user_coupon_id: this.user_coupon_id })
   }
 }
 </script>

@@ -35,12 +35,16 @@ class UserPersonalService extends BaseModelService {
       })
   }
 
-  update (form: object) {
-    return axios.put('user_personal/update', form)
+  update (form: { id: string }) {
+    return axios.put(`user_personal/${form.id}`, form)
       .then((res) => {
         this.updateData(form)
         return res
       })
+  }
+
+  check (form: object) {
+    return axios.post('user_personal/check', form)
   }
 
   updateData (params: any) {

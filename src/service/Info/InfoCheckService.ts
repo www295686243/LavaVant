@@ -5,7 +5,7 @@ import RouterService from '../RouterService'
 class InfoCheckService extends BaseModelService {
   name = 'Info/InfoCheck'
 
-  index (params: { _type: string }) {
+  index (params: { _model: string }) {
     return axios.get('info_check', params)
   }
 

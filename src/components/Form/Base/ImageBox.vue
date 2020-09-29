@@ -26,7 +26,7 @@ interface FileItem {
 })
 export default class FormBaseImageBox extends Mixins(FormMixins) {
   @Prop()
-  uploadParmas!: { _type: string; info_id: string }
+  uploadParmas!: { _model: string; info_id: string }
 
   @Watch('value')
   onValue2 () {
@@ -42,7 +42,7 @@ export default class FormBaseImageBox extends Mixins(FormMixins) {
     const form = new FormData()
     form.append('file', file.file as File)
     form.append('info_id', this.uploadParmas.info_id)
-    form.append('type', this.uploadParmas._type)
+    form.append('_model', this.uploadParmas._model)
     form.append('marking', RouterService.query('marking') as string)
     axios.upload('image', form)
       .then((res) => {

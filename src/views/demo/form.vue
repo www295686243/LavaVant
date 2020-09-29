@@ -19,8 +19,8 @@
         :field="formFields.rangeSalary" />
       <FormArea v-model="form.area" :field="formFields.area"/>
       <FormSms v-model="form.code" :field="formFields.code"/>
-      <FormImage v-model="form.image" :field="formFields.image" :uploadParmas="{ _type: 'News', info_id: 1 }" />
-      <FormImages v-model="form.images" :field="formFields.images" :uploadParmas="{ _type: 'News', info_id: 1 }" />
+      <FormImage v-model="form.image" :field="formFields.image" :uploadParmas="{ _model: 'News', info_id: 1 }" />
+      <FormImages v-model="form.images" :field="formFields.images" :uploadParmas="{ _model: 'News', info_id: 1 }" />
       <FormClassify v-model="form.classify" :field="formFields.classify"/>
       <FormGroupRender v-model="form.group" :initData="groupForm" title="组合">
         <template v-slot="{ v }">

@@ -1,10 +1,10 @@
 <template>
   <FormRender :Service="UserEnterpriseService" :onSubmitAfter="handleSubmitAfter" :form="form">
-    <FormImage v-model="form.avatar" :field="formFields.avatar" :uploadParmas="{ _type: UserEnterpriseService.name, info_id: form.user_id }" />
+    <FormImage v-model="form.avatar" :field="formFields.avatar" :uploadParmas="{ _model: UserEnterpriseService.name, info_id: form.user_id }" />
     <FormSelect v-model="form.company_scale" :field="formFields.company_scale" />
     <FormTextarea v-model="form.intro" :field="formFields.intro" />
     <FormCheckboxGroup v-model="form.tags" :field="formFields.tags" type="label-string" :border="false"/>
-    <FormImages v-model="form.company_images" :field="formFields.company_images" :uploadParmas="{ _type: UserEnterpriseService.name, info_id: form.user_id }" />
+    <FormImages v-model="form.company_images" :field="formFields.company_images" :uploadParmas="{ _model: UserEnterpriseService.name, info_id: form.user_id }" />
   </FormRender>
 </template>
 

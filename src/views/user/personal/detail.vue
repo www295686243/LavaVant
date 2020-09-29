@@ -1,6 +1,6 @@
 <template>
-  <FormRender :Service="UserPersonalService" :onSubmitAfter="handleSubmitAfter" :form="form">
-    <FormImage v-model="form.avatar" :field="formFields.avatar" :uploadParmas="{ _type: UserPersonalService.name, info_id: form.user_id }" />
+  <FormRender :Service="UserPersonalService" :onSubmit="handleSubmit" :onSubmitAfter="handleSubmitAfter" :form="form">
+    <FormImage v-model="form.avatar" :field="formFields.avatar" :uploadParmas="{ _model: UserPersonalService.name, info_id: form.user_id }" />
     <FormCheckboxGroup v-model="form.tags" :field="formFields.tags" type="label-string" :border="false"/>
     <FormGroupPopup
       v-model="form.education_experience"
@@ -39,7 +39,7 @@
       title="荣誉证书">
       <template v-slot="{ v }">
         <FormInput v-model="v.name" :field="honoraryCertificateFields.name" />
-        <FormImages v-model="v.images" :field="honoraryCertificateFields.images" :uploadParmas="{ _type: UserPersonalService.name, info_id: form.user_id }" />
+        <FormImages v-model="v.images" :field="honoraryCertificateFields.images" :uploadParmas="{ _model: UserPersonalService.name, info_id: form.user_id }" />
       </template>
     </FormGroupPopup>
   </FormRender>
@@ -157,6 +157,10 @@ export default class UserPersonalDetail extends Vue {
       rules: [ValidateService.uploadRequired, ValidateService.max(6)]
     }
   })
+
+  private handleSubmit () {
+    return UserPersonalService.check(this.form)
+  }
 
   private handleSubmitAfter (res: any) {
     return Promise.resolve()

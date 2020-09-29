@@ -6,7 +6,7 @@
       <FormArea v-model="form.city" :field="formFields.city"/>
       <FormInput v-model="form.address" :field="formFields.address" />
       <FormTextarea v-model="form.intro" :field="formFields.intro" />
-      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ _type: UserEnterpriseAuth.name, info_id: form.user_id }" />
+      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ _model: UserEnterpriseAuth.name, info_id: form.user_id }" />
     </FormRender>
   </PageContainer>
 </template>
