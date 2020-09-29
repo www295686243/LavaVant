@@ -33,7 +33,7 @@ import { List, Empty } from 'vant'
     [Empty.name]: Empty
   }
 })
-export default class ListContainer2 extends Vue {
+export default class ListContainer extends Vue {
   @Prop({ default: () => () => Promise.resolve() })
   onLoad!: Function
 
@@ -99,7 +99,7 @@ export default class ListContainer2 extends Vue {
 </script>
 
 <style lang="less">
-.ListContainer2 {
+.ListContainer {
   .List-finished,
   .List-empty {
     padding-bottom: 60px;

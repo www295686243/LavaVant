@@ -106,6 +106,12 @@ export function getOptionsValue (id: number, _displayName?: string) {
   return item ? item.id : null
 }
 
+export function getOptionsLabel (id: number) {
+  const configs: OptionItem[] = cache.config.get('options_list') || []
+  const item = configs.find((res) => res.id === id)
+  return item ? item.display_name : null
+}
+
 export function getGlobalOptions (name: string) {
   const configs: ConfigItem[] = cache.config.get('options') || []
   const config = configs.find((res) => res.name === '_global:' + name)

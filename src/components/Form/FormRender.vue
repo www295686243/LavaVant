@@ -1,6 +1,6 @@
 <template>
   <DataRender :onLoad="handleLoad" class="FormRender">
-    <van-form ref="formElement" :label-width="66" label-align="right">
+    <van-form ref="formElement" :label-width="labelWidth" label-align="right">
       <slot></slot>
       <div class="FormRender-btn">
         <slot name="footer">
@@ -15,6 +15,7 @@
 import { Component, Vue, Ref, Prop, Provide } from 'vue-property-decorator'
 import { Form } from 'vant'
 import { PromiseResult } from '@/plugins/axios'
+import RouterService from '@/service/RouterService'
 
 export interface FormElement {
   submit: Function;
@@ -65,6 +66,9 @@ export default class FormRender extends Vue {
   @Prop()
   Service!: Service
 
+  @Prop({ default: 66 })
+  labelWidth!: number
+
   @Provide()
   formService = this.Service
 
@@ -90,6 +94,7 @@ export default class FormRender extends Vue {
         if (this.onSubmitAfter) {
           return this.onSubmitAfter(res)
         } else {
+          RouterService.go()
           return res
         }
       })

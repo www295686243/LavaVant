@@ -1,6 +1,11 @@
 import notify from '@/views/user/notify/index.vue'
 import personalAuth from '@/views/user/auth/personal-auth.vue'
 import enterpriseAuth from '@/views/user/auth/enterprise-auth.vue'
+// 我的钱包
+import wallet from '@/views/user/wallet/index.vue'
+import bill from '@/views/user/wallet/bill.vue'
+import cash from '@/views/user/wallet/cash.vue'
+import cashLog from '@/views/user/wallet/cash-log.vue'
 // 个人信息
 import personal from '@/views/user/personal/personal.vue'
 import personalBase from '@/views/user/personal/base.vue'
@@ -72,6 +77,34 @@ export default [
         }
       }
     ]
+  },
+  {
+    path: '/user/wallet',
+    component: wallet,
+    meta: {
+      title: '我的钱包'
+    }
+  },
+  {
+    path: '/user/bill',
+    component: bill,
+    meta: {
+      title: '我的账单'
+    }
+  },
+  {
+    path: '/user/cash',
+    component: cash,
+    meta: {
+      title: '提现金额'
+    }
+  },
+  {
+    path: '/user/cash-log',
+    component: cashLog,
+    meta: {
+      title: '提现记录'
+    }
   },
   ...hr
 ]

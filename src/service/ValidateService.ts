@@ -423,6 +423,12 @@ class ValidateService {
       upload: { required: true, validator: validateUploadRequired, message: `请上传${name}`, trigger: 'onBlur' }
     }
   }
+
+  money ({ name = '金额' } = {}) {
+    return {
+      money: { pattern: new RegExp(/^\d+\.?\d{0,2}$/), message: `请输入正确的${name}`, trigger: 'onBlur' }
+    }
+  }
 }
 
 export default new ValidateService()

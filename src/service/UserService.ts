@@ -117,6 +117,14 @@ class UserService {
       })
   }
 
+  getWallet () {
+    return axios.get('user/getWallet')
+  }
+
+  getBill (page: number) {
+    return axios.get('user/getBill', { page })
+  }
+
   private cacheUserInfo (res: PromiseResult) {
     cache.user.setAll(res.data.user)
     this.updateData(res.data.user)

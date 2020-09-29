@@ -13,6 +13,7 @@
     <van-button @click="RouterService.push('/user/hr/resume/form')">发布简历</van-button>
     <van-button @click="RouterService.push('/user/personal/base')">个人资料</van-button>
     <van-button @click="RouterService.push('/user/enterprise/base')">企业资料</van-button>
+    <van-button @click="RouterService.push('/user/wallet')">我的钱包</van-button>
   </PageContainer>
 </template>
 
