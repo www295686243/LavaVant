@@ -117,3 +117,14 @@ export function getGlobalOptions (name: string) {
   const config = configs.find((res) => res.name === '_global:' + name)
   return config ? config.options : []
 }
+
+const modelNames = {
+  hrJob: 'Info/Hr/HrJob',
+  hrResume: 'Info/Hr/HrResume'
+} as {
+  [key: string]: string;
+}
+
+export function getModel (name: string) {
+  return modelNames[name]
+}

@@ -5,6 +5,7 @@ import wechatLogin from '@/views/demo/wechat-login.vue'
 import wechatShare from '@/views/demo/wechat-share.vue'
 import wechatPay from '@/views/demo/wechat-pay.vue'
 import wechatNotify from '@/views/demo/wechat-notify.vue'
+import infoComplaint from '@/views/demo/info-complaint.vue'
 
 export default [
   {
@@ -54,6 +55,13 @@ export default [
     component: wechatNotify,
     meta: {
       title: '微信通知'
+    }
+  },
+  {
+    path: '/demo/info-complaint',
+    component: infoComplaint,
+    meta: {
+      title: '信息投诉'
     }
   }
 ]

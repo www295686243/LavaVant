@@ -5,6 +5,7 @@ import router from './router'
 import { Button, Popup, Loading, Dialog, Row, Col, Icon, Cell, CellGroup } from 'vant'
 import 'amfe-flexible'
 import './assets/styles/iconfont.less'
+import './assets/styles/index.less'
 
 import DataRender from './components/DataRender.vue'
 import PageContainer from './components/PageContainer.vue'
@@ -18,6 +19,7 @@ import FormTextarea from './components/Form/FormTextarea.vue'
 import FormSwitch from './components/Form/FormSwitch.vue'
 import FormCheckbox from './components/Form/FormCheckbox.vue'
 import FormCheckboxGroup from './components/Form/FormCheckboxGroup.vue'
+import FormRadioGroup from './components/Form/FormRadioGroup.vue'
 import FormSelect from './components/Form/FormSelect.vue'
 import FormDateTime from './components/Form/FormDateTime.vue'
 import FormStepper from './components/Form/FormStepper.vue'
@@ -47,6 +49,7 @@ Vue.component('FormInput', FormInput)
 Vue.component('FormText', FormText)
 Vue.component('FormTextarea', FormTextarea)
 Vue.component('FormSwitch', FormSwitch)
+Vue.component('FormRadioGroup', FormRadioGroup)
 Vue.component('FormCheckboxGroup', FormCheckboxGroup)
 Vue.component('FormCheckbox', FormCheckbox)
 Vue.component('FormSelect', FormSelect)

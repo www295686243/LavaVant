@@ -94,7 +94,9 @@ export default class FormRender extends Vue {
         if (this.onSubmitAfter) {
           return this.onSubmitAfter(res)
         } else {
-          RouterService.go()
+          if (this.isInPopup() === false) {
+            RouterService.go()
+          }
           return res
         }
       })
@@ -124,6 +126,20 @@ export default class FormRender extends Vue {
 
   public validate (name?: string) {
     return this.formElement.validate(name)
+  }
+
+  private isInPopup () {
+    function getParent ($node: Vue): boolean {
+      const result = $node ? $node.$el.className.includes('van-popup') : false
+      if (result) {
+        return result
+      } else if ($node.$parent) {
+        return getParent($node.$parent)
+      } else {
+        return false
+      }
+    }
+    return getParent(this.$parent)
   }
 }
 </script>
