@@ -13,14 +13,14 @@
     "amfe-flexible": "^2.2.1",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "eruda": "^2.4.0",
+    "eruda": "^2.4.1",
     "store2": "^2.12.0",
     "ua-parser-js": "^0.7.22",
-    "vant": "^2.10.8",
+    "vant": "^2.10.9",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^8.4.2",
-    "vue-router": "^3.4.5",
+    "vue-router": "^3.4.6",
     "wx-jssdk-ts": "^1.1.1"
   },
   "devDependencies": {
