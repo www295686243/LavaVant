@@ -106,6 +106,18 @@ export function getOptionsValue (id: number, _displayName?: string) {
   return item ? item.id : null
 }
 
+/**
+ * @param name Model:field
+ * @param displayName
+ */
+export function getOptionsValue2 (name: string, displayName: string) {
+  const item = (getOptions(name) || []).find((res) => res.display_name === displayName)
+  if (!item) {
+    console.error('选项不存在')
+  }
+  return item ? item.id : null
+}
+
 export function getOptionsLabel (id: number) {
   const configs: OptionItem[] = cache.config.get('options_list') || []
   const item = configs.find((res) => res.id === id)
@@ -119,10 +131,22 @@ export function getGlobalOptions (name: string) {
 }
 
 const modelNames = {
-  hrJob: 'Info/Hr/HrJob',
-  hrResume: 'Info/Hr/HrResume'
+  hrJob: {
+    model: 'Info/Hr/HrJob',
+    text: '招聘',
+    path: 'hr/job'
+  },
+  hrResume: {
+    model: 'Info/Hr/HrResume',
+    text: '简历',
+    path: 'hr/resume'
+  }
 } as {
-  [key: string]: string;
+  [key: string]: {
+    model: string;
+    text: string;
+    path: string;
+  };
 }
 
 export function getModel (name: string) {

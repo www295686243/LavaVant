@@ -11,7 +11,7 @@
     </ButtonSubmit>
     <van-popup
       class="InfoComplaint-popup"
-      v-model="isShowComplaintPopup"
+      v-model="isShowPopup"
       closeable
       round
       close-on-popstate
@@ -72,7 +72,7 @@ export default class InfoComplaint extends Vue {
   _model!: string
 
   private InfoComplaintService = InfoComplaintService
-  private isShowComplaintPopup = false
+  private isShowPopup = false
   private isShowOfficialAccount = false
   private isShowCustomerService = false
   private isLoad = false
@@ -102,7 +102,7 @@ export default class InfoComplaint extends Vue {
   })
 
   private handleShowPopup () {
-    this.isShowComplaintPopup = true
+    this.isShowPopup = true
   }
 
   private handleLoad () {
@@ -120,7 +120,7 @@ export default class InfoComplaint extends Vue {
   private handleSubmit () {
     return InfoComplaintService.store(this.form)
       .then((res) => {
-        this.isShowComplaintPopup = false
+        this.isShowPopup = false
         this.isShowOfficialAccount = UserService.info.is_follow_official_account === 0
         this.form.id = res.data.id
         this.handleToggleFormDisabled(!!this.form.id)

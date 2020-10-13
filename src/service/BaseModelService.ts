@@ -1,4 +1,4 @@
-import { getOptions } from './ConstService'
+import { getOptions, getOptionsValue2 } from './ConstService'
 
 export default abstract class BaseModelService {
   abstract name: string
@@ -20,11 +20,7 @@ export default abstract class BaseModelService {
     return getOptions(this.name + ':' + fieldName)
   }
 
-  public getOptionsValue (fieldName: string, displayName: string) {
-    const item = (this.getOptions(fieldName) || []).find((res) => res.display_name === displayName)
-    if (!item) {
-      console.error('选项不存在')
-    }
-    return item ? item.id : null
+  public getOptionsValue2 (fieldName: string, displayName: string) {
+    return getOptionsValue2(this.name + ':' + fieldName, displayName)
   }
 }

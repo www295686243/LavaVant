@@ -37,6 +37,7 @@ import { getCityName } from './plugins/tools'
 import RouterService from '@/service/RouterService'
 import VersionService from '@/service/VersionService'
 import WXService from '@/service/WXService'
+import { getOptionsLabel } from './service/ConstService'
 
 Vue.use(Button).use(Popup).use(Loading).use(Dialog).use(Row).use(Col).use(Icon).use(Cell).use(CellGroup)
 Vue.component('DataRender', DataRender)
@@ -73,6 +74,10 @@ Vue.filter('cityName', (value: string) => {
 
 Vue.filter('empty', (value: string) => {
   return value || '--'
+})
+
+Vue.filter('getOptionsLabel', (value: number) => {
+  return getOptionsLabel(value)
 })
 
 RouterService.init(router)

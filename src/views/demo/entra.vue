@@ -15,6 +15,7 @@
     <van-button @click="RouterService.push('/user/enterprise/base')">企业资料</van-button>
     <van-button @click="RouterService.push('/user/wallet')">我的钱包</van-button>
     <van-button @click="RouterService.push('/demo/info-complaint')">信息投诉</van-button>
+    <van-button @click="RouterService.push('/demo/info-delivery')">信息投递</van-button>
   </PageContainer>
 </template>
 
