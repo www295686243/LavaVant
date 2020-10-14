@@ -12,7 +12,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import PopupInfoDelivery from '@/views/components/Popup/PopupInfoDelivery.vue'
-import { getModel } from '@/service/ConstService'
 
 @Component({
   components: {
@@ -26,10 +25,10 @@ export default class DemoInfoComplaint extends Vue {
   private receive_info_id = ''
 
   created () {
-    this.send_info_type = getModel('hrResume')
-    this.send_info_id = '48803489131925504'
-    this.receive_info_type = getModel('hrJob')
-    this.receive_info_id = '48803489064816640'
+    this.send_info_type = 'hrResume'
+    this.send_info_id = '49178949229613056'
+    this.receive_info_type = 'hrJob'
+    this.receive_info_id = '49178949158309888'
   }
 }
 </script>

@@ -65,6 +65,7 @@ import InfoComplaintService from '@/service/Info/InfoComplaintService'
 import RouterService from '@/service/RouterService'
 import UserService from '@/service/UserService'
 import ValidateService from '@/service/ValidateService'
+import { getModel } from '@/service/ConstService'
 
 @Component
 export default class InfoComplaint extends Vue {
@@ -78,7 +79,7 @@ export default class InfoComplaint extends Vue {
   private isLoad = false
   private form = {
     id: '',
-    _model: this._model,
+    _model: getModel(this._model).model,
     info_id: RouterService.query('id'),
     complaint_type: '',
     complaint_content: '',

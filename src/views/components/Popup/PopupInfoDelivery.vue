@@ -7,7 +7,7 @@
       size="small"
       plain
       round>
-      投递
+      投递{{sendModel.text}}
     </ButtonSubmit>
     <van-popup
       class="InfoDelivery-popup"
@@ -17,17 +17,29 @@
       close-on-popstate
       position="bottom">
       <DataRender class="delivery-container" :onLoad="handleLoad">
-        <van-cell-group :title="'我的' + sendModel.text">
-          <van-cell :title="v.title" :label="v.status | getOptionsLabel" v-for="v in list" :key="v.id" @click="handleSelect(v)">
-            <template v-if="v.active">
-              <template slot="right-icon" >
-                <van-icon name="passed" class="text-color-success right-icon" size="20" v-if="v.selected"/>
-                <van-icon name="circle" class="text-color-disable right-icon" size="20" v-else />
+        <div class="delivery-info" v-if="deliveryInfo.id">
+          <p>您已投递{{sendModel.text}}。</p>
+          <div class="title">{{deliveryInfo.title}}</div>
+        </div>
+        <template v-else>
+          <van-cell-group :title="'我的' + sendModel.text">
+            <van-cell :title="v.title" :label="v.status | getOptionsLabel" v-for="v in list" :key="v.id" @click="handleSelect(v)">
+              <template v-if="v.active">
+                <template slot="right-icon" >
+                  <van-icon name="passed" class="text-color-success right-icon" size="20" v-if="v.selected"/>
+                  <van-icon name="circle" class="text-color-disable right-icon" size="20" v-else />
+                </template>
               </template>
-            </template>
-            <van-button size="mini" type="primary" @click="gotoEdit(v)" v-else>编辑</van-button>
-          </van-cell>
-        </van-cell-group>
+              <van-button size="mini" type="primary" @click="gotoForm(v)" v-else>编辑</van-button>
+            </van-cell>
+          </van-cell-group>
+          <div class="btn-container">
+            <ButtonSubmit :onClick="handleSubmit" block>投递{{sendModel.text}}</ButtonSubmit>
+          </div>
+          <div class="empty-container" v-if="list.length === 0">
+            <ButtonSubmit icon="add-o" :onClick="() => gotoForm()">新增{{sendModel.text}}</ButtonSubmit>
+          </div>
+        </template>
       </DataRender>
     </van-popup>
   </div>
@@ -38,6 +50,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import InfoDeliveryService from '@/service/Info/InfoDeliveryService'
 import { getOptionsValue2, getModel } from '@/service/ConstService'
 import RouterService from '@/service/RouterService'
+import VantService from '@/service/VantService'
 
 interface ListItem {
   id: string;
@@ -119,8 +132,33 @@ export default class InfoDelivery extends Vue {
     })
   }
 
-  private gotoEdit (v: any) {
+  private gotoForm (v: any = {}) {
     RouterService.push('/user/' + this.sendModel.path + '/form', { id: v.id })
+  }
+
+  private handleSubmit () {
+    const item = this.list.find((res) => res.selected) as ListItem
+    return Promise.resolve()
+      .then(() => {
+        if (!item) {
+          const obj = { message: '请选择一份' + this.sendModel.text, status: 'error' }
+          return Promise.reject(obj)
+        }
+        return InfoDeliveryService.store({
+          send_info_type: this.sendModel.model,
+          send_info_id: this.send_info_id,
+          receive_info_type: getModel(this.receive_info_type).model,
+          receive_info_id: this.receive_info_id
+        })
+      })
+      .then((res) => {
+        VantService.toast.success(res.message)
+        this.isShowPopup = false
+        Object.assign(this.deliveryInfo, {
+          id: item.id,
+          title: item.title
+        })
+      })
   }
 
   created () {
@@ -136,9 +174,21 @@ export default class InfoDelivery extends Vue {
   }
   .delivery-container {
     .right-icon {
-      margin-left: 8px;
+      margin-left: @padding-xs;
       display: flex;
       align-items: center;
+    }
+  }
+  .btn-container {
+    padding: @padding-md;
+  }
+  .delivery-info {
+    padding: 40px;
+    .title {
+      margin-top: 8px;
+      background: #f8f8f8;
+      padding: 8px;
+      font-size: 14px;
     }
   }
 }
