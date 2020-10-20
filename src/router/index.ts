@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
 import demo from './demo'
 import user from './user'
+import hr from './hr'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,8 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   ...demo,
-  ...user
+  ...user,
+  ...hr
 ]
 
 const router = new VueRouter({
