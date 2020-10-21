@@ -30,7 +30,7 @@ export default class ViewUserPersonalAuth extends Vue {
     address: '',
     intro: '',
     certificates: [],
-    auth_status: 0,
+    status: 0,
     user_id: UserService.info.id
   }
 
@@ -84,7 +84,7 @@ export default class ViewUserPersonalAuth extends Vue {
         this.isSubmitted = !!(res.data && res.data.id)
         this.handleToggleFormDisabled(this.isSubmitted)
         if (this.isSubmitted) {
-          if (res.data.auth_status !== getOptionsValue(41, '审核中')) {
+          if (res.data.status !== getOptionsValue(41, '审核中')) {
             this.submitBtn = '更新认证'
           } else {
             this.submitBtn = '请等待审核'
@@ -104,7 +104,7 @@ export default class ViewUserPersonalAuth extends Vue {
   private handleSubmit () {
     return Promise.resolve()
       .then(() => {
-        if (this.isSubmitted && this.form.auth_status !== getOptionsValue(41, '审核中')) {
+        if (this.isSubmitted && this.form.status !== getOptionsValue(41, '审核中')) {
           this.init()
         } else {
           return UserPersonalAuth.store(this.form)
