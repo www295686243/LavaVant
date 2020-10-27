@@ -1,6 +1,6 @@
 <template>
   <PageContainer class="view-user-my-coupon">
-    <SwiperTabMenu v-model="coupon_template_id" :data="couponList"></SwiperTabMenu>
+    <SwiperTabMenu v-model="coupon_template_id" :data="couponList" :disabled="tabDisabled"></SwiperTabMenu>
     <CouponList :onLoad="handleLoad" ref="couponListElement"></CouponList>
     <div class="fixed-sell-entra">
       <van-button plain type="info" @click="RouterService.push('/user/coupon/sell-coupon')"><van-icon name="after-sale" />出售</van-button>
@@ -30,6 +30,7 @@ export default class UserMyCoupon extends Vue {
   private RouterService = RouterService
   private couponList = cache.config.get('coupon_template')
   private coupon_template_id = ''
+  private tabDisabled = false
 
   @Watch('coupon_template_id')
   onReload () {
@@ -37,7 +38,16 @@ export default class UserMyCoupon extends Vue {
   }
 
   private handleLoad (page: number) {
+    this.tabDisabled = true
     return UserCouponService.index({ page, coupon_template_id: this.coupon_template_id })
+      .then((res) => {
+        this.tabDisabled = false
+        return res
+      })
+      .catch((res) => {
+        this.tabDisabled = false
+        return Promise.reject(res)
+      })
   }
 }
 </script>

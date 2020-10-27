@@ -3,7 +3,7 @@
     <div class="container">
       <div class="menu">
         <van-tabs @change="handleTabChange" :swipe-threshold="2">
-          <van-tab v-for="v in data" :title="v[innerProps.label]" :key="v[innerProps.value]" :name="v[innerProps.value]"></van-tab>
+          <van-tab v-for="v in data" :title="v[innerProps.label]" :key="v[innerProps.value]" :name="v[innerProps.value]" :disabled="disabled"></van-tab>
         </van-tabs>
       </div>
       <div class="filter" v-if="filters && filters.length > 0">
@@ -39,6 +39,9 @@ export default class SwiperTabMenu extends Vue {
 
   @Prop()
   props!: { value: string; label: string }
+
+  @Prop({ default: false })
+  disabled!: boolean
 
   @Watch('value')
   onValue (val: string) {
