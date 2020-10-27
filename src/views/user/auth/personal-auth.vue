@@ -18,7 +18,6 @@ import ValidateService, { FormFields } from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import UserService from '@/service/UserService'
 import UserPersonalAuth from '@/service/User/UserPersonalAuth'
-import { getOptionsValue } from '@/service/ConstService'
 
 @Component
 export default class ViewUserPersonalAuth extends Vue {
@@ -84,7 +83,7 @@ export default class ViewUserPersonalAuth extends Vue {
         this.isSubmitted = !!(res.data && res.data.id)
         this.handleToggleFormDisabled(this.isSubmitted)
         if (this.isSubmitted) {
-          if (res.data.status !== getOptionsValue(41, '审核中')) {
+          if (res.data.status !== UserPersonalAuth.getStatusValue(1, '审核中')) {
             this.submitBtn = '更新认证'
           } else {
             this.submitBtn = '请等待审核'
@@ -104,7 +103,7 @@ export default class ViewUserPersonalAuth extends Vue {
   private handleSubmit () {
     return Promise.resolve()
       .then(() => {
-        if (this.isSubmitted && this.form.status !== getOptionsValue(41, '审核中')) {
+        if (this.isSubmitted && this.form.status !== UserPersonalAuth.getStatusValue(1, '审核中')) {
           this.init()
         } else {
           return UserPersonalAuth.store(this.form)

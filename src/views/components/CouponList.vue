@@ -23,7 +23,12 @@
         </div>
       </template>
     </ListContainer>
-    <van-submit-bar :button-text="buttonText" @submit="handleSubmit" class="footer-action" v-if="select">
+    <van-submit-bar
+      :button-text="buttonText"
+      @submit="handleSubmit"
+      class="footer-action"
+      v-if="select">
+      <slot name="tip" slot="tip"></slot>
       <Checkbox v-model="isAllChecked" checkedColor="#ee0a24">全选</Checkbox>
     </van-submit-bar>
   </div>
@@ -33,6 +38,8 @@
 import { Component, Vue, Prop, Watch, Ref } from 'vue-property-decorator'
 import { SubmitBar } from 'vant'
 import Checkbox from '@/components/Form/Base/Checkbox.vue'
+import { PromiseResult } from '@/plugins/axios'
+import VantService from '@/service/VantService'
 
 @Component({
   components: {
@@ -66,12 +73,22 @@ export default class ViewCouponList extends Vue {
 
   private isAllChecked = false
 
-  private handleSubmit () {
-    return this.onSubmit()
-  }
-
   private handleClick (v: { active: boolean }) {
     v.active = !v.active
+  }
+
+  private handleSubmit () {
+    return this.onSubmit()
+      .then((res: PromiseResult) => {
+        if (res && res.message) {
+          VantService.toast.fail(res.message)
+        }
+      })
+      .catch((res: PromiseResult) => {
+        if (res && res.message) {
+          VantService.toast.fail(res.message)
+        }
+      })
   }
 
   private getSelectedIds () {

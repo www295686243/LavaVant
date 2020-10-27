@@ -24,7 +24,6 @@ import { CheckboxGroup } from 'vant'
 import Checkbox from './Base/Checkbox.vue'
 import ValidateService, { FormFieldItem } from '@/service/ValidateService'
 import { Service } from './FormRender.vue'
-import { getGlobalOptions, getOptions } from '@/service/ConstService'
 
 @Component({
   components: {
@@ -116,10 +115,7 @@ export default class FormCheckboxGroup extends Vue {
     if (this.field.options) {
       this.options = this.field.options
     } else {
-      this.options = getOptions(this.formService.getModelName() + ':' + this.field.prop)
-      if (this.options.length === 0) {
-        this.options = getGlobalOptions(this.field.prop as string)
-      }
+      this.options = this.formService.getOptions(this.field.prop)
     }
   }
 }

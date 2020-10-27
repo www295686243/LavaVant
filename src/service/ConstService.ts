@@ -1,13 +1,17 @@
 import cache from '@/plugins/cache'
 
 export interface OptionItem {
-  id: number;
+  id: string;
   config_id: number;
   display_name: string;
+  value: number;
+  name: string;
+  disabled: boolean;
+  [key: string]: any;
 }
 
 export interface ConfigItem {
-  id: number;
+  id: string;
   name: string;
   display_name: string;
   guard_name: string;
@@ -93,41 +97,38 @@ export function getValue (name: string) {
   return item ? item.value : ''
 }
 
-export function getOptions (name: string) {
+export function getOptions (className: string, field: string) {
   const configs: ConfigItem[] = cache.config.get('options') || []
-  const config = configs.find((res) => res.name === name)
+  let config = configs.find((res) => res.name === className + ':' + field)
+  if (!config) {
+    config = configs.find((res) => res.name === '_global:' + field)
+  }
   return config ? config.options : []
+}
+
+export function getOptionsItem (className: string, field: string, value: number) {
+  const options = getOptions(className, field)
+  const item = options.find((res) => res.value === value)
+  return item
+}
+
+export function getOptionsLabel (className: string, field: string, value: number) {
+  const item = getOptionsItem(className, field, value)
+  return item ? item.display_name : ''
 }
 
 // eslint-disable-next-line
-export function getOptionsValue (id: number, _displayName?: string) {
-  const configs: OptionItem[] = cache.config.get('options_list') || []
-  const item = configs.find((res) => res.id === id)
-  return item ? item.id : null
+export function getOptionsValue (className: string, field: string, value: number, _display_name?: string) {
+  const item = getOptionsItem(className, field, value)
+  return item ? item.value : 0
 }
 
-/**
- * @param name Model:field
- * @param displayName
- */
-export function getOptionsValue2 (name: string, displayName: string) {
-  const item = (getOptions(name) || []).find((res) => res.display_name === displayName)
-  if (!item) {
-    console.error('选项不存在')
-  }
-  return item ? item.id : null
+export function getStatusLabel (className: string, value: number) {
+  return getOptionsLabel(className, 'status', value)
 }
 
-export function getOptionsLabel (id: number) {
-  const configs: OptionItem[] = cache.config.get('options_list') || []
-  const item = configs.find((res) => res.id === id)
-  return item ? item.display_name : null
-}
-
-export function getGlobalOptions (name: string) {
-  const configs: ConfigItem[] = cache.config.get('options') || []
-  const config = configs.find((res) => res.name === '_global:' + name)
-  return config ? config.options : []
+export function getStatusValue (className: string, value: number, _display_name?: string) {
+  return getOptionsValue(className, 'status', value, _display_name)
 }
 
 const modelNames = {

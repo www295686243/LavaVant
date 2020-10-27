@@ -15,7 +15,6 @@
 import { Component, Mixins, Inject, Prop } from 'vue-property-decorator'
 import { RadioGroup, Radio } from 'vant'
 import { Service } from './FormRender.vue'
-import { getGlobalOptions, getOptions } from '@/service/ConstService'
 import FormMixins from './FormMixins'
 import { Options } from '../Popup/PopupPickerService'
 
@@ -44,10 +43,7 @@ export default class FormRadioGroup extends Mixins(FormMixins) {
     if (this.field.options) {
       this.options = this.field.options
     } else {
-      this.options = getOptions(this.formService.getModelName() + ':' + this.field.prop)
-      if (this.options.length === 0) {
-        this.options = getGlobalOptions(this.field.prop as string)
-      }
+      this.options = this.formService.getOptions(this.field.prop)
     }
   }
 }

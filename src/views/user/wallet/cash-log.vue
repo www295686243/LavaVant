@@ -4,7 +4,7 @@
       <template v-slot="{ v }">
         <div class="list-item van-hairline--bottom">
           <p class="amount">提现金额：<span>{{v.amount}}</span>元</p>
-          <p class="status">状态：<span>{{getOptionsLabel(v.status)}}</span></p>
+          <p class="status">状态：<span>{{UserCashService.getStatusLabel(v.status)}}</span></p>
           <p>申请日期：{{v.created_at}}</p>
           <van-button @click="handleRecall(v)" class="button" size="small" type="warning" plain v-if="v.status === applyStatus">撤回</van-button>
         </div>
@@ -17,14 +17,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import VantService from '@/service/VantService'
 import UserCashService from '@/service/User/UserCashService'
-import { getOptionsValue, getOptionsLabel } from '@/service/ConstService'
 
 @Component({
   name: 'UserCashLog'
 })
 export default class UserCashLog extends Vue {
-  private applyStatus = getOptionsValue(84, '申请中')
-  private getOptionsLabel = getOptionsLabel
+  private UserCashService = UserCashService
+  private applyStatus = UserCashService.getStatusValue(1, '申请中')
 
   private handleLoad (page: number) {
     return UserCashService.index(page)
@@ -36,7 +35,7 @@ export default class UserCashLog extends Vue {
       .then(() => UserCashService.update(v))
       .then((res) => {
         VantService.toast.success(res.message)
-        v.status = getOptionsValue(87, '已撤回') as number
+        v.status = UserCashService.getStatusValue(4, '已撤回')
       })
   }
 }

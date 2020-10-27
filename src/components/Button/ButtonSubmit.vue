@@ -47,7 +47,9 @@ export default class ButtonSubmit extends Vue {
               message = res.data.map((res: any) => res.text).join('\n')
             }
           }
-          VantService.toast.fail(message)
+          if (message) {
+            VantService.toast.fail(message)
+          }
         })
     } else {
       this.loading = false

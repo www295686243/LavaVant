@@ -18,7 +18,6 @@
 import FormMixins from './FormMixins'
 import { Component, Mixins, Inject } from 'vue-property-decorator'
 import PopupPickerService, { Options } from '@/components/Popup/PopupPickerService'
-import { getGlobalOptions, getOptions } from '@/service/ConstService'
 import { Service } from './FormRender.vue'
 
 @Component
@@ -56,10 +55,7 @@ export default class FormSelect extends Mixins(FormMixins) {
     if (this.field.options) {
       this.options = this.field.options
     } else {
-      this.options = getOptions(this.formService.getModelName() + ':' + this.field.prop)
-      if (this.options.length === 0) {
-        this.options = getGlobalOptions(this.field.prop as string)
-      }
+      this.options = this.formService.getOptions(this.field.prop)
     }
     this.initName()
   }

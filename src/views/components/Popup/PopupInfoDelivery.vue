@@ -23,7 +23,7 @@
         </div>
         <template v-else>
           <van-cell-group :title="'我的' + sendModel.text">
-            <van-cell :title="v.title" :label="v.status | getOptionsLabel" v-for="v in list" :key="v.id" @click="handleSelect(v)">
+            <van-cell :title="v.title" :label="getStatusLabel(sendModel.model, v.status)" v-for="v in list" :key="v.id" @click="handleSelect(v)">
               <template v-if="v.active">
                 <template slot="right-icon" >
                   <van-icon name="passed" class="text-color-success right-icon" size="20" v-if="v.selected"/>
@@ -48,7 +48,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import InfoDeliveryService from '@/service/Info/InfoDeliveryService'
-import { getOptionsValue2, getModel } from '@/service/ConstService'
+import { getStatusLabel, getStatusValue, getModel } from '@/service/ConstService'
 import RouterService from '@/service/RouterService'
 import VantService from '@/service/VantService'
 
@@ -74,6 +74,7 @@ export default class InfoDelivery extends Vue {
   @Prop()
   receive_info_id!: string
 
+  private getStatusLabel = getStatusLabel
   private isShowPopup = false
   private list: ListItem[] = []
   private deliveryInfo = {
@@ -116,7 +117,7 @@ export default class InfoDelivery extends Vue {
         const datas = res.data.data || []
         this.list = datas.map((item: any) => {
           item.selected = false
-          item.active = item.status === getOptionsValue2(this.sendModel.model + ':status', '已发布')
+          item.active = item.status === getStatusValue(this.sendModel.model, 1, '已发布')
           return item
         })
       })

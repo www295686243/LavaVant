@@ -34,6 +34,11 @@ export interface Service {
   getPermissionName: Function;
   getModelName: Function;
   getControllerName: Function;
+  getOptions: Function;
+  getOptionsValue: Function;
+  getStatusValue: Function;
+  getStatusLabel: Function;
+  getOptionsItem: Function;
 }
 
 @Component({

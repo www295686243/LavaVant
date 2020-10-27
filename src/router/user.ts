@@ -15,6 +15,7 @@ import enterprise from '@/views/user/enterprise/enterprise.vue'
 import enterpriseBase from '@/views/user/enterprise/base.vue'
 import enterpriseDetail from '@/views/user/enterprise/detail.vue'
 import hr from './user/hr'
+import coupon from './user/coupon'
 
 export default [
   {
@@ -106,5 +107,6 @@ export default [
       title: '提现记录'
     }
   },
-  ...hr
+  ...hr,
+  ...coupon
 ]
