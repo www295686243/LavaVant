@@ -2,7 +2,7 @@
   <DataRender :onLoad="handleLoad" class="FormRender">
     <van-form ref="formElement" :label-width="labelWidth" label-align="right">
       <slot></slot>
-      <div class="FormRender-btn">
+      <div class="FormRender-btn" v-if="disableFooter === false">
         <slot name="footer">
           <ButtonSubmit :onClick="handleSubmit" block round :disabled="disableSubmit">{{submitBtn}}</ButtonSubmit>
         </slot>
@@ -68,6 +68,9 @@ export default class FormRender extends Vue {
 
   @Prop({ default: 66 })
   labelWidth!: number
+
+  @Prop({ default: false })
+  disableFooter!: boolean
 
   @Provide()
   formService = this.Service

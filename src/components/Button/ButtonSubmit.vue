@@ -41,15 +41,13 @@ export default class ButtonSubmit extends Vue {
         })
         .catch((res: PromiseResult) => {
           this.loading = false
-          if (res.status === 'error') {
-            let message = res.message
-            if (res.code === 422) {
-              if (Array.isArray(res.data) && res.data.length > 0) {
-                message = res.data.map((res: any) => res.text).join('\n')
-              }
+          let message = res.message
+          if (res.status === 'error' && res.code === 422) {
+            if (Array.isArray(res.data) && res.data.length > 0) {
+              message = res.data.map((res: any) => res.text).join('\n')
             }
-            VantService.toast.fail(message)
           }
+          VantService.toast.fail(message)
         })
     } else {
       this.loading = false

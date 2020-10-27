@@ -7,6 +7,8 @@ import wechatPay from '@/views/demo/wechat-pay.vue'
 import wechatNotify from '@/views/demo/wechat-notify.vue'
 import infoComplaint from '@/views/demo/info-complaint.vue'
 import infoDelivery from '@/views/demo/info-delivery.vue'
+import couponList from '@/views/demo/coupon-list.vue'
+import sellCouponList from '@/views/demo/sell-coupon-list.vue'
 
 export default [
   {
@@ -70,6 +72,20 @@ export default [
     component: infoDelivery,
     meta: {
       title: '信息投递'
+    }
+  },
+  {
+    path: '/demo/coupon-list',
+    component: couponList,
+    meta: {
+      title: '优惠券列表'
+    }
+  },
+  {
+    path: '/demo/sell-coupon-list',
+    component: sellCouponList,
+    meta: {
+      title: '出售优惠券'
     }
   }
 ]

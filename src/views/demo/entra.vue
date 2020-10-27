@@ -17,6 +17,8 @@
     <van-button @click="RouterService.push('/demo/info-complaint')">信息投诉</van-button>
     <van-button @click="RouterService.push('/demo/info-delivery')">信息投递</van-button>
     <van-button @click="RouterService.push('/hr/resume/show')">简历详情</van-button>
+    <van-button @click="RouterService.push('/demo/coupon-list')">优惠券列表</van-button>
+    <van-button @click="RouterService.push('/demo/sell-coupon-list')">出售优惠券</van-button>
   </PageContainer>
 </template>
 

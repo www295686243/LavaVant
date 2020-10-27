@@ -49,7 +49,15 @@ export default class ListContainer extends Vue {
 
   private handleLoad () {
     return this.onLoad(this.page)
-      .then((data: any[]) => {
+      .then((res: any) => {
+        let data: any[] = []
+        if (res.data && res.data.data) {
+          data = res.data.data
+        } else if (Array.isArray(res.data)) {
+          data = res.data
+        } else if (Array.isArray(res)) {
+          data = res
+        }
         if (!Array.isArray(data)) {
           const err = { message: '返回的对象不是数组' }
           return Promise.reject(err)
@@ -92,7 +100,21 @@ export default class ListContainer extends Vue {
     }
   }
 
-  filter (ids: number[]) {
+  toggleSelectAll (bool: boolean) {
+    this.list.forEach((item) => {
+      item.active = bool
+    })
+  }
+
+  getSelectedIds () {
+    return this.list.filter((res) => res.active).map((res) => res.id)
+  }
+
+  getSelectedItem () {
+    return this.list.filter((res) => res.active)
+  }
+
+  filter (ids: string[]) {
     this.list = this.list.filter((res) => !ids.includes(res.id))
   }
 }
