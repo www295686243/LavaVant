@@ -4,30 +4,36 @@
       <template v-slot="{ v }">
         <div class="coupon-item" @click="handleClick(v)">
           <div class="item-left">
-            <div>
+            <div v-if="market">
+              <h2>{{v.sell_amount}}</h2>
+              <h3>售价</h3>
+            </div>
+            <div v-else>
               <h2>{{v.amount}}</h2>
               <h3>{{v.display_name}}</h3>
             </div>
           </div>
           <div class="item-right">
-            <!-- <p class="title">{{v.amount}}元{{v.display_name}}</p> -->
+            <p class="title" v-if="market">{{v.amount}}元{{v.display_name}}</p>
             <p class="desc">说明：{{v.desc}}</p>
             <p class="time">截止日期：{{v.end_at}}</p>
-            <!-- <p class="sell van-ellipsis">出售人：文身断发逻辑梳理副驾驶的副驾驶的副驾驶的</p> -->
+            <p class="sell van-ellipsis" v-if="market">出售人：{{v.sell_user.nickname}}</p>
           </div>
-          <div class="item-action" v-if="select">
+          <div class="item-action" v-if="select || market">
             <van-icon name="checked" v-if="v.active" />
             <van-icon name="circle" v-else />
           </div>
-          <span class="tag" :class="{ bind: v.is_trade === 0 }" v-if="select === false">{{v.is_trade > 0 ? '可交易' : '绑定'}}</span>
+          <span class="tag" :class="{ bind: v.is_trade === 0 }" v-if="select === false && market === false">{{v.is_trade > 0 ? '可交易' : '绑定'}}</span>
         </div>
       </template>
     </ListContainer>
     <van-submit-bar
+      :price="totalAmount"
       :button-text="buttonText"
       @submit="handleSubmit"
-      class="footer-action"
-      v-if="select">
+      class="footer-action van-hairline--top"
+      :loading="submitLoading"
+      v-if="select || market">
       <slot name="tip" slot="tip"></slot>
       <Checkbox v-model="isAllChecked" checkedColor="#ee0a24">全选</Checkbox>
     </van-submit-bar>
@@ -69,26 +75,44 @@ export default class ViewCouponList extends Vue {
   @Watch('isAllChecked')
   onIsAllChecked (val: boolean) {
     this.listElement.toggleSelectAll(val)
+    this.computeTotalAmount()
   }
 
   private isAllChecked = false
+  private totalAmount = this.market ? 0 : null
+  private submitLoading = false
 
   private handleClick (v: { active: boolean }) {
     v.active = !v.active
+    this.computeTotalAmount()
   }
 
   private handleSubmit () {
+    this.submitLoading = true
     return this.onSubmit()
       .then((res: PromiseResult) => {
         if (res && res.message) {
-          VantService.toast.fail(res.message)
+          VantService.toast.success(res.message)
         }
+        this.submitLoading = false
       })
       .catch((res: PromiseResult) => {
         if (res && res.message) {
           VantService.toast.fail(res.message)
         }
+        this.submitLoading = false
       })
+  }
+
+  private computeTotalAmount () {
+    if (this.market) {
+      const totalAmount = this.getSelectedItem()
+        .reduce((acc: number, res: any) => {
+          acc += res.sell_amount
+          return acc
+        }, 0)
+      this.totalAmount = totalAmount * 100
+    }
   }
 
   private getSelectedIds () {
@@ -114,6 +138,7 @@ export default class ViewCouponList extends Vue {
     position: relative;
     box-shadow: @coupon-box-shadow;
     margin-bottom: @padding-md;
+    border-radius: 8px;
     .item-left {
       flex: 0 0 auto;
       text-align: center;

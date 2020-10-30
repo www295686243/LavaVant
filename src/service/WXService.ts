@@ -81,7 +81,7 @@ class WXService {
       })
   }
 
-  private chooseWXPay (params: IchooseWXPay) {
+  chooseWXPay (params: IchooseWXPay) {
     return new Promise((resolve, reject) => {
       if (isWX) {
         wx.chooseWXPay({

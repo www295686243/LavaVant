@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import demo from './demo'
 import user from './user'
 import hr from './hr'
+import CouponMarket from '@/views/coupon-market/coupon-market.vue'
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,13 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/coupon-market',
+    component: CouponMarket,
+    meta: {
+      title: '交易市场'
+    }
   },
   ...demo,
   ...user,
