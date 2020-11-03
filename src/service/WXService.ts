@@ -3,7 +3,7 @@ import axios from '@/plugins/axios'
 import { isWX, isIOS, isAndroid, isPCWX, toLowerLine } from '@/plugins/tools'
 import RouterService from './RouterService'
 import cache from '@/plugins/cache'
-import UserService from './UserService'
+import UserService from './User/UserService'
 
 interface ShareParams {
   title: string;

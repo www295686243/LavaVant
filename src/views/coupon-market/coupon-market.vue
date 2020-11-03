@@ -18,7 +18,7 @@ import { Component, Vue, Ref } from 'vue-property-decorator'
 import CouponList from '@/views/components/CouponList.vue'
 import CouponMarketService from '@/service/Coupon/CouponMarketService'
 import CouponOrderService from '@/service/Coupon/CouponOrderService'
-import nicknameList from './nickname'
+// import nicknameList from './nickname'
 import VantService from '@/service/VantService'
 
 @Component({

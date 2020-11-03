@@ -1,6 +1,6 @@
 import RouterService from './RouterService'
 import axios from '@/plugins/axios'
-import UserService from './UserService'
+import UserService from './User/UserService'
 
 class NotifyService {
   private isGetUnread = false

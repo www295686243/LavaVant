@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import WXService from '@/service/WXService'
 import ValidateService from '@/service/ValidateService'
 import BusinessSmsCaptcha from '@/components/Business/BusinessSmsCaptcha.vue'

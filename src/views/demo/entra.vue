@@ -29,7 +29,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import RouterService from '@/service/RouterService'
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import VantService from '@/service/VantService'
 
 @Component

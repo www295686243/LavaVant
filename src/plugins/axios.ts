@@ -3,7 +3,7 @@ import cache from './cache'
 import router from '@/router'
 import VersionService, { Version } from '@/service/VersionService'
 import StatService from '@/service/StatService'
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import { getEnv } from './tools'
 
 export interface PromiseResult {

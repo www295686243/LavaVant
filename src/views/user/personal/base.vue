@@ -18,7 +18,7 @@
 import ValidateService from '@/service/ValidateService'
 import { Component, Vue } from 'vue-property-decorator'
 import UserPersonalService from '@/service/User/UserPersonalService'
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import RouterService from '@/service/RouterService'
 
 @Component

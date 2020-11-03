@@ -11,14 +11,15 @@ class UserEnterpriseService extends BaseModelService {
     city: '',
     address: '',
     intro: '',
-    email: '',
+    industry_attr: '',
     tags: '',
     company_images: [],
     company_scale: '',
     name: '',
     id_card: '',
     position: '',
-    phone: ''
+    phone: '',
+    email: ''
   }
 
   constructor () {

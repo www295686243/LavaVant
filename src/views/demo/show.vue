@@ -1,6 +1,7 @@
 <template>
   <PageContainer :onLoad="handleLoad">
     {{info.title}}
+    <PopupQueryContacts></PopupQueryContacts>
   </PageContainer>
 </template>
 
@@ -10,8 +11,13 @@ import HrJobService from '@/service/Info/Hr/HrJobService'
 import { Component, Vue } from 'vue-property-decorator'
 import RouterService from '@/service/RouterService'
 import InfoViewService from '@/service/Info/InfoViewService'
+import PopupQueryContacts from '@/views/components/Popup/PopupQueryContacts.vue'
 
-@Component
+@Component({
+  components: {
+    PopupQueryContacts
+  }
+})
 export default class DemoShow extends Vue {
   private info = {
     title: ''

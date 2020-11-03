@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({

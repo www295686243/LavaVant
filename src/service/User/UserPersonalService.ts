@@ -12,11 +12,12 @@ class UserPersonalService extends BaseModelService {
     intro: '',
     company: '',
     position: '',
+    position_attr: '',
     city: '',
     address: '',
     email: '',
     phone: '',
-    tags: [],
+    tags: '',
     education_experience: [],
     work_experience: [],
     honorary_certificate: []

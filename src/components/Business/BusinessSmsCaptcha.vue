@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Ref } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import { FormElement } from '../Form/FormRender.vue'
 
 interface TypeNameItem {

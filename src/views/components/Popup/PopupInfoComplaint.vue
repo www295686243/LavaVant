@@ -1,5 +1,5 @@
 <template>
-  <div class="InfoComplaint">
+  <div class="PopupInfoComplaint">
     <ButtonSubmit
       type="warning"
       :onClick="handleShowPopup"
@@ -10,7 +10,7 @@
       投诉
     </ButtonSubmit>
     <van-popup
-      class="InfoComplaint-popup"
+      class="PopupInfoComplaint-popup"
       v-model="isShowPopup"
       closeable
       round
@@ -39,7 +39,7 @@
       </div>
     </van-popup>
     <van-popup
-      class="InfoComplaint-official-account"
+      class="PopupInfoComplaint-official-account"
       get-container="body"
       closeable
       v-model="isShowOfficialAccount">
@@ -50,7 +50,7 @@
       </div>
     </van-popup>
     <van-popup
-      class="InfoComplaint-service"
+      class="PopupInfoComplaint-service"
       v-model="isShowCustomerService"
       closeable
       get-container="body">
@@ -63,12 +63,12 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import InfoComplaintService from '@/service/Info/InfoComplaintService'
 import RouterService from '@/service/RouterService'
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import ValidateService from '@/service/ValidateService'
 import { getModel } from '@/service/ConstService'
 
 @Component
-export default class InfoComplaint extends Vue {
+export default class PopupInfoComplaint extends Vue {
   @Prop()
   _model!: string
 
@@ -138,11 +138,11 @@ export default class InfoComplaint extends Vue {
 </script>
 
 <style lang="less">
-.InfoComplaint {
+.PopupInfoComplaint {
   display: flex;
   margin-left: 12px;
 }
-.InfoComplaint-popup {
+.PopupInfoComplaint-popup {
   .complaint-container {
     padding: 16px 0;
     .complaint-result {
@@ -167,7 +167,7 @@ export default class InfoComplaint extends Vue {
     }
   }
 }
-.InfoComplaint-official-account {
+.PopupInfoComplaint-official-account {
   max-width: 300px;
   .official-account {
     padding-top: 28px;
@@ -180,7 +180,7 @@ export default class InfoComplaint extends Vue {
     right: 8px;
   }
 }
-.InfoComplaint-service {
+.PopupInfoComplaint-service {
   .service-img {
     padding: 10px;
   }

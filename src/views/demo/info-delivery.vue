@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import PopupInfoDelivery from '@/views/components/Popup/PopupInfoDelivery.vue'
+import PopupInfoDelivery from '@/views/hr/components/PopupInfoDelivery.vue'
 
 @Component({
   components: {

@@ -15,7 +15,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import ValidateService, { FormFields } from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
-import UserService from '@/service/UserService'
+import UserService from '@/service/User/UserService'
 import UserEnterpriseAuth from '@/service/User/UserEnterpriseAuth'
 
 @Component
