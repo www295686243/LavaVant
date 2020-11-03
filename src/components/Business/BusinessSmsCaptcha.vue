@@ -28,6 +28,10 @@ const TYPE_NAME: { [key: string]: TypeNameItem } = {
   'verify-phone': {
     code: 'verify-phone',
     btn: '验证手机号'
+  },
+  'invite-user': {
+    code: 'bind-phone',
+    btn: '立即加入'
   }
 }
 
@@ -62,12 +66,15 @@ export default class BusinessSmsCaptcha extends Vue {
   private handleSubmit () {
     return Promise.resolve()
       .then(() => {
-        if (this.typeMode.code === 'bind-phone') {
+        if (this.typeName === 'bind-phone') {
           return UserService.bindPhone(this.form)
-        } else if (this.typeMode.code === 'update-phone') {
+        } else if (this.typeName === 'update-phone') {
           return UserService.updatePhone(this.form)
-        } else if (this.typeMode.code === 'verify-phone') {
+        } else if (this.typeName === 'verify-phone') {
           return UserService.verifyPhone(this.form)
+        } else if (this.typeName === 'invite-user') {
+          return UserService.bindPhone(this.form)
+            .then(() => UserService.setInviteUser())
         }
       })
   }
@@ -76,7 +83,7 @@ export default class BusinessSmsCaptcha extends Vue {
     return this.formElement.validate(this.formFields.phone.label)
       .then(() => UserService.sendSmsCaptcha({
         phone: this.form.phone,
-        type_name: this.typeName
+        type_name: this.typeMode.code
       }))
   }
 

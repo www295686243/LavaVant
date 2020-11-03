@@ -4,6 +4,7 @@ import VersionService from './VersionService'
 import { formatDate } from '@/plugins/tools'
 import UserPersonalService from './User/UserPersonalService'
 import UserEnterpriseService from './User/UserEnterpriseService'
+import RouterService from './RouterService'
 
 interface LoginParams {
   username: string;
@@ -123,6 +124,10 @@ class UserService {
 
   getBill (page: number) {
     return axios.get('user/getBill', { page })
+  }
+
+  setInviteUser () {
+    return axios.post('user/setInviteUser', { iu: RouterService.query('iu') })
   }
 
   private cacheUserInfo (res: PromiseResult) {
