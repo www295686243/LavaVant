@@ -21,11 +21,14 @@
           <span class="amount" v-if="totalAmount > 0">{{totalAmount}}<small> 元</small><span class="original-amount">{{originalAmount}}元</span></span>
           <span class="free" v-else>免费查看</span>
         </div>
-        <div class="flex van-hairline--top">
-          <h5 class="coupon">互助券</h5>
-          <h5 :class="[UserCouponService.usableCouponInfo.id ? 'coupon-name' : 'none']">{{ UserCouponService.usableCouponInfo.display_name }}</h5>
-        </div>
-        <div class="flex van-hairline--top">
+        <van-cell
+          :to="'/user/coupon/select-coupon?model=' + model"
+          class="coupon-container"
+          :class="{ none: !UserCouponService.usableCouponInfo.id }"
+          title="使用互助券"
+          :value="UserCouponService.usableCouponInfo.display_name"
+          is-link />
+        <div class="flex">
           <h6>完成互助任务，获得互助券</h6>
           <h6>进入互助券市场</h6>
         </div>
@@ -79,7 +82,7 @@ export default class PopupQueryContacts extends Vue {
             return Promise.reject(err)
           })
       })
-      .then(() => UserCouponService.getUsableCoupon(this.innerModel.model))
+      .then(() => UserCouponService.getFirstUsableCoupon(this.innerModel.model))
       .then(() => {
         this.totalAmount = this.amount - UserCouponService.usableCouponInfo.amount
         this.totalAmount = this.totalAmount < 0 ? 0 : this.totalAmount
@@ -94,6 +97,11 @@ export default class PopupQueryContacts extends Vue {
 </script>
 
 <style lang="less">
+.PopupQueryContacts {
+  .ButtonSubmit {
+    display: block;
+  }
+}
 .PopupQueryContacts-popup {
   .container {
     h2 {
@@ -127,22 +135,23 @@ export default class PopupQueryContacts extends Vue {
         text-decoration: line-through;
       }
     }
+    .coupon-container {
+      .van-cell__title {
+        color: @text-link-color;
+      }
+      .van-cell__value {
+        color: @orange-dark;
+      }
+      &.none {
+        .van-cell__value {
+          color: @gray-6;
+        }
+      }
+    }
     .flex {
       display: flex;
       justify-content: space-between;
       padding: @padding-md;
-      h5 {
-        font-size: @font-size-md;
-      }
-      .coupon {
-        color: @text-link-color;
-      }
-      .coupon-name {
-        color: @orange-dark;
-      }
-      .none {
-        color: @gray-6;
-      }
       h6 {
         font-size: @font-size-sm;
         color: @blue;

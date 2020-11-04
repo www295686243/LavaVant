@@ -1,5 +1,5 @@
 <template>
-  <div class="InfoDelivery">
+  <div class="PopupInfoDelivery">
     <ButtonSubmit
       type="warning"
       :onClick="handleShowPopup"
@@ -10,7 +10,7 @@
       投递{{sendModel.text}}
     </ButtonSubmit>
     <van-popup
-      class="InfoDelivery-popup"
+      class="PopupInfoDelivery-popup"
       v-model="isShowPopup"
       closeable
       round
@@ -61,7 +61,7 @@ interface ListItem {
 }
 
 @Component
-export default class InfoDelivery extends Vue {
+export default class PopupInfoDelivery extends Vue {
   @Prop()
   send_info_type!: string
 
@@ -169,7 +169,7 @@ export default class InfoDelivery extends Vue {
 </script>
 
 <style lang="less">
-.InfoDelivery-popup {
+.PopupInfoDelivery-popup {
   .DataRender .render-loading {
     padding-bottom: 20%;
   }

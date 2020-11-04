@@ -1,6 +1,7 @@
 import myCoupon from '@/views/user/coupon/my-coupon.vue'
 import sellCoupon from '@/views/user/coupon/sell-coupon.vue'
 import mySellCoupon from '@/views/user/coupon/my-sell-coupon.vue'
+import selectCoupon from '@/views/user/coupon/select-coupon.vue'
 
 export default [
   {
@@ -22,6 +23,13 @@ export default [
     component: mySellCoupon,
     meta: {
       title: '在售互助券'
+    }
+  },
+  {
+    path: '/user/coupon/select-coupon',
+    component: selectCoupon,
+    meta: {
+      title: '选择互助券'
     }
   }
 ]

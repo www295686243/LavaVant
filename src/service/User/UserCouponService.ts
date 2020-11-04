@@ -18,11 +18,17 @@ class UserCouponService extends BaseModelService {
     return axios.post('user_coupon/recall', { user_coupon_ids })
   }
 
-  getUsableCoupon (_model: string) {
-    return axios.get('user_coupon/getUsableCoupon', { _model })
+  getUsableCoupon (params: { page: number; _model: string }) {
+    return axios.get('user_coupon/getUsableCoupon', params)
+  }
+
+  getFirstUsableCoupon (_model: string) {
+    return this.getUsableCoupon({ page: 1, _model })
       .then((res) => {
-        Object.assign(this.usableCouponInfo, res.data)
-        this.usableCouponInfo.display_name = this.usableCouponInfo.display_name || '暂无可用的互助券'
+        if (res.data && res.data.data.length > 0) {
+          Object.assign(this.usableCouponInfo, res.data.data[0])
+          this.usableCouponInfo.display_name = this.usableCouponInfo.display_name || '暂无可用的互助券'
+        }
       })
   }
 }
