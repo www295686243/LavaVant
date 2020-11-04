@@ -32,7 +32,7 @@ import RouterService from '@/service/RouterService'
 export default class UserEnterpriseBase extends Vue {
   private UserEnterpriseService = UserEnterpriseService
   private form = {
-    id: 1,
+    id: 1, // 表示走update方法
     company: '',
     industry: [],
     city: '',

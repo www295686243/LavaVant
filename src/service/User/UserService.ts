@@ -52,7 +52,6 @@ class UserService {
   login (params: LoginParams) {
     return axios.post('user/login', params)
       .then((res) => {
-        cache.user.setAll(res.data)
         this.updateData(res.data)
       })
       .then(() => this.getUserInfo())
@@ -101,14 +100,14 @@ class UserService {
     return axios.post('user/verifyPhone', params)
   }
 
-  updateData (params: UserInfo) {
+  updateData (params: UserInfo | any) {
+    cache.user.setAll(params)
     Object.assign(this.info, params)
   }
 
   private getBaseUserInfo () {
     return axios.get('user/getBaseUserInfo')
       .then((res) => {
-        cache.user.setAll(res.data)
         this.updateData(res.data)
       })
   }
@@ -135,7 +134,6 @@ class UserService {
   }
 
   private cacheUserInfo (res: PromiseResult) {
-    cache.user.setAll(res.data.user)
     this.updateData(res.data.user)
     cache.user.set('roles', res.data.roles || [])
     cache.user.set('permissions', res.data.permissions || [])
@@ -143,6 +141,43 @@ class UserService {
 
   hasPermission (name: string) {
     return this.info.permissions.includes(name)
+  }
+
+  hasRole (name: string) {
+    return this.info.roles.some((res) => res.name === name)
+  }
+
+  checkBaseInfo () {
+    let attr = ''
+    let industry: any[] = []
+    if (this.hasRole('Enterprise Member')) {
+      attr = UserEnterpriseService.info.industry_attr
+      industry = UserEnterpriseService.info.industry
+    } else {
+      attr = UserPersonalService.info.position_attr
+      industry = UserPersonalService.info.industry
+    }
+    return Promise.resolve()
+      .then(() => {
+        if (!this.info.phone) {
+          return Promise.reject(new Error('请先登录'))
+        } else if (!(this.info.city && attr && industry.length > 0)) {
+          return Promise.reject(new Error('请先完善基本信息'))
+        }
+      })
+      .catch((err) => {
+        RouterService.push('/user/register')
+        return Promise.reject(err)
+      })
+  }
+
+  checkOfficialAccounts () {
+    return Promise.resolve()
+      .then(() => {
+        if (!this.info.is_follow_official_account) {
+          return axios.get('user/checkOfficialAccounts')
+        }
+      })
   }
 }
 

@@ -1,4 +1,4 @@
-import { getOptions, getOptionsItem, getOptionsValue, getStatusValue, getStatusLabel } from './ConstService'
+import { getOptions, getOptionsItem, getOptionsValue, getStatusValue, getStatusLabel, getValue } from './ConstService'
 
 export default abstract class BaseModelService {
   abstract name: string
@@ -36,5 +36,9 @@ export default abstract class BaseModelService {
 
   public getStatusLabel (value: number) {
     return getStatusLabel(this.name, value)
+  }
+
+  public getValue (fieldName: string) {
+    return getValue(this.name + '@' + fieldName)
   }
 }

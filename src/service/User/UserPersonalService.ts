@@ -1,6 +1,7 @@
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
 import BaseModelService from '../BaseModelService'
+import UserService from './UserService'
 
 class UserPersonalService extends BaseModelService {
   name = 'User/UserPersonal'
@@ -20,7 +21,8 @@ class UserPersonalService extends BaseModelService {
     tags: '',
     education_experience: [],
     work_experience: [],
-    honorary_certificate: []
+    honorary_certificate: [],
+    industry: []
   }
 
   constructor () {
@@ -36,10 +38,11 @@ class UserPersonalService extends BaseModelService {
       })
   }
 
-  update (form: { id: string }) {
-    return axios.put(`user_personal/${form.id}`, form)
+  update (form: { city: number }) {
+    return axios.put('user_personal/update', form)
       .then((res) => {
         this.updateData(form)
+        UserService.updateData({ city: form.city })
         return res
       })
   }

@@ -17,7 +17,7 @@
       <div class="classify-content-container">
         <div class="classify-content-box">
           <van-sidebar v-model="activeKey" @change="handleChangeSidebar" class="sidebar">
-            <van-sidebar-item :title="v.display_name" v-for="v in sidebarData" :key="v.id" :info="v.info" />
+            <van-sidebar-item :title="v.display_name" v-for="v in sidebarData" :key="v.id" :badge="v.badge" />
           </van-sidebar>
           <div class="panel-container">
             <van-panel :title="v.display_name" v-for="v in panelData" :key="v.id" class="panel-item">
@@ -64,7 +64,7 @@ export default class PopupClassify extends Vue {
   private resolve!: Function
   private reject!: Function
   private activeKey = 0
-  private sidebarData = [] as { id: number; display_name: string; info: number | string }[]
+  private sidebarData = [] as { id: number; display_name: string; badge: number | string }[]
   private panelData: Options[] = []
   private innerValue: number[] = []
 
@@ -109,9 +109,9 @@ export default class PopupClassify extends Vue {
   }
 
   private resetSidebarDataInfo (num: number) {
-    this.sidebarData[this.activeKey].info = Number(this.sidebarData[this.activeKey].info) + num
-    if (this.sidebarData[this.activeKey].info === 0) {
-      this.sidebarData[this.activeKey].info = ''
+    this.sidebarData[this.activeKey].badge = Number(this.sidebarData[this.activeKey].badge) + num
+    if (this.sidebarData[this.activeKey].badge === 0) {
+      this.sidebarData[this.activeKey].badge = ''
     }
   }
 
@@ -138,7 +138,7 @@ export default class PopupClassify extends Vue {
       return {
         id: res.id,
         display_name: res.display_name,
-        info: this.getSidebarInfo(res.children)
+        badge: this.getSidebarInfo(res.children)
       }
     })
     this.initPanelData()

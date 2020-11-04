@@ -1,7 +1,7 @@
 <template>
   <PageContainer :onLoad="handleLoad">
     {{info.title}}
-    <PopupQueryContacts></PopupQueryContacts>
+    <PopupQueryContacts :model="model"></PopupQueryContacts>
   </PageContainer>
 </template>
 
@@ -23,6 +23,8 @@ export default class DemoShow extends Vue {
     title: ''
   }
 
+  private model = ''
+
   private handleLoad () {
     return Promise.resolve()
       .then(() => {
@@ -43,6 +45,10 @@ export default class DemoShow extends Vue {
       .then((res) => {
         Object.assign(this.info, res.data)
       })
+  }
+
+  created () {
+    this.model = RouterService.query('type') === 'job' ? 'hrJob' : 'hrResume'
   }
 }
 </script>

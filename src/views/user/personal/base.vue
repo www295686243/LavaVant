@@ -25,7 +25,7 @@ import RouterService from '@/service/RouterService'
 export default class UserPersonalBase extends Vue {
   private UserPersonalService = UserPersonalService
   private form = {
-    id: 1,
+    id: 1, // 表示走update方法
     name: '',
     phone: UserPersonalService.info.phone || UserService.info.phone,
     id_card: '',

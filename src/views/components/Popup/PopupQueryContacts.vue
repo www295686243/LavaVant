@@ -17,10 +17,13 @@
       position="bottom">
       <div class="container">
         <h2>打赏支付</h2>
-        <p class="amount">3<small> 元</small></p>
+        <div class="amount-container">
+          <span class="amount" v-if="totalAmount > 0">{{totalAmount}}<small> 元</small><span class="original-amount">{{originalAmount}}元</span></span>
+          <span class="free" v-else>免费查看</span>
+        </div>
         <div class="flex van-hairline--top">
           <h5 class="coupon">互助券</h5>
-          <h5 class="none">暂无可用的互助券</h5>
+          <h5 :class="[UserCouponService.usableCouponInfo.id ? 'coupon-name' : 'none']">{{ UserCouponService.usableCouponInfo.display_name }}</h5>
         </div>
         <div class="flex van-hairline--top">
           <h6>完成互助任务，获得互助券</h6>
@@ -31,23 +34,61 @@
         </div>
       </div>
     </van-popup>
+    <van-popup
+      v-model="isShowOfficialAccounts"
+      get-container="body"
+      closeable
+      position="bottom">
+      <div class="QueryContact-official-accounts">
+        <span>您未关注【原草互助】公众号，关注后才能查看！</span><br>
+        <p>关注后，获得优先特权：获取岗位资讯推送！</p>
+        <p>按行业、按地区精准推送，可设定关闭推送！</p>
+        <div class="service-img"><img src="@/assets/images/yuancao.jpg" alt="原草网公众号" width="240" height="240"></div>
+        <p>长按二维码关注</p>
+        <p class="tips">（若已关注，还提示未关注，请取消关注，再关注即可）</p>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script lang="ts">
+import { getModel, getValue } from '@/service/ConstService'
+import UserCouponService from '@/service/User/UserCouponService'
 import UserService from '@/service/User/UserService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class PopupQueryContacts extends Vue {
+  @Prop()
+  model!: string
+
   private isShowPopup = false
+  private isShowOfficialAccounts= false
+  private UserCouponService = UserCouponService
+  private totalAmount = 0
+  private innerModel = getModel(this.model)
+  private originalAmount = getValue(this.innerModel.model + '@' + 'original_amount')
+  private amount = getValue(this.innerModel.model + '@' + 'amount')
 
   private handleShowPopup () {
-    this.isShowPopup = true
+    return UserService.checkBaseInfo()
+      .then(() => {
+        return UserService.checkOfficialAccounts()
+          .catch((err) => {
+            this.isShowOfficialAccounts = true
+            return Promise.reject(err)
+          })
+      })
+      .then(() => UserCouponService.getUsableCoupon(this.innerModel.model))
+      .then(() => {
+        this.totalAmount = this.amount - UserCouponService.usableCouponInfo.amount
+        this.totalAmount = this.totalAmount < 0 ? 0 : this.totalAmount
+        this.isShowPopup = true
+      })
   }
 
   private handleSubmit () {
-    return UserService
+    return Promise.resolve()
   }
 }
 </script>
@@ -60,14 +101,30 @@ export default class PopupQueryContacts extends Vue {
       font-size: @font-size-md;
       padding: @padding-md 0;
     }
-    .amount {
+    .amount-container {
       padding: 0 0 @padding-lg;
       text-align: center;
       font-size: 28px;
       color: @orange-dark;
+      .amount {
+        position: relative;
+        display: inline-block;
+      }
+      .free {
+        font-size: @font-size-md;
+      }
       small {
         font-size: @font-size-md;
         color: @gray-7;
+      }
+      .original-amount {
+        position: absolute;
+        right: 0;
+        bottom: 4px;
+        transform: translateX(120%);
+        font-size: @font-size-sm;
+        color: @gray-6;
+        text-decoration: line-through;
       }
     }
     .flex {
@@ -80,6 +137,9 @@ export default class PopupQueryContacts extends Vue {
       .coupon {
         color: @text-link-color;
       }
+      .coupon-name {
+        color: @orange-dark;
+      }
       .none {
         color: @gray-6;
       }
@@ -91,6 +151,23 @@ export default class PopupQueryContacts extends Vue {
     .btn {
       padding: @padding-md;
     }
+  }
+}
+.QueryContact-official-accounts {
+  padding: @padding-md;
+  font-size: @font-size-md;
+  line-height: 1.7;
+  span {
+    color: #f40;
+  }
+  p {
+    text-align: center;
+  }
+  .service-img {
+    text-align: center;
+  }
+  .tips {
+    font-size: @font-size-sm;
   }
 }
 </style>

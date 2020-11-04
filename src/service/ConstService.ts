@@ -92,7 +92,7 @@ export function getClassifyOptions () {
 }
 
 export function getValue (name: string) {
-  const configs = cache.config.get('options') || []
+  const configs = cache.config.get('config') || []
   const item = configs.find((res: { name: string }) => res.name === name)
   return item ? item.value : ''
 }
