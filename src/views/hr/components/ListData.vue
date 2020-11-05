@@ -1,12 +1,12 @@
 <template>
-  <div class="view-hr-ListData">
+  <div class="view-hr-ListData" @click="handleClick">
     <van-cell :border="false" class="box" clickable>
       <h4 class="van-multi-ellipsis--l2">{{v.title}}</h4>
       <div class="info">
         <h5>
           <span class="label">月薪范围：</span>
           <span class="text">
-            {{v.monthly_pay_min && v.monthly_pay_max ? v.monthly_pay_min + '~' + v.monthly_pay_max : ''}}{{v.is_negotiate > 0 ? '(面议)' : ''}}
+            {{v.monthly_salary_min && v.monthly_salary_max ? v.monthly_salary_min + '~' + v.monthly_salary_max : ''}}{{v.is_negotiate > 0 ? '(面议)' : ''}}
           </span>
         </h5>
         <h5>
@@ -32,6 +32,10 @@ export default class ViewHrListData extends Vue {
   v!: any
 
   private getOptionsLabel = getOptionsLabel
+
+  private handleClick () {
+    this.$emit('click')
+  }
 }
 </script>
 

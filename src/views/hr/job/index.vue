@@ -3,7 +3,7 @@
     <ListMenu @reload="handleReload"></ListMenu>
     <ListContainer :onLoad="onLoad" ref="listElement">
       <template v-slot="{ v }">
-        <ListData :v="v"></ListData>
+        <ListData :v="v" @click="handleClick(v.id)"></ListData>
       </template>
     </ListContainer>
   </PageContainer>
@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import HrJobService from '@/service/Info/Hr/HrJobService'
+import RouterService from '@/service/RouterService'
 import { Component, Vue, Ref } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
 import ListMenu from '../components/ListMenu.vue'
@@ -34,6 +35,10 @@ export default class ViewHrJobIndex extends Vue {
   private handleReload (params: any) {
     this.filterParams = params
     this.listElement.reload()
+  }
+
+  private handleClick (id: string) {
+    RouterService.push('/hr/job/show', { id })
   }
 }
 </script>

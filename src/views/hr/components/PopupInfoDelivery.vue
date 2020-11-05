@@ -3,7 +3,7 @@
     <ButtonSubmit
       type="warning"
       :onClick="handleShowPopup"
-      icon="service"
+      icon="todo-list"
       size="small"
       plain
       round>
@@ -33,7 +33,7 @@
               <van-button size="mini" type="primary" @click="gotoForm(v)" v-else>编辑</van-button>
             </van-cell>
           </van-cell-group>
-          <div class="btn-container">
+          <div class="btn-container" v-if="list.length > 0">
             <ButtonSubmit :onClick="handleSubmit" block>投递{{sendModel.text}}</ButtonSubmit>
           </div>
           <div class="empty-container" v-if="list.length === 0">
@@ -64,9 +64,6 @@ interface ListItem {
 export default class PopupInfoDelivery extends Vue {
   @Prop()
   send_info_type!: string
-
-  @Prop()
-  send_info_id!: string
 
   @Prop()
   receive_info_type!: string
@@ -100,7 +97,6 @@ export default class PopupInfoDelivery extends Vue {
   private checkIsDelivery () {
     return InfoDeliveryService.show({
       send_info_type: this.sendModel.model,
-      send_info_id: this.send_info_id,
       receive_info_type: getModel(this.receive_info_type).model,
       receive_info_id: this.receive_info_id
     })
@@ -147,7 +143,7 @@ export default class PopupInfoDelivery extends Vue {
         }
         return InfoDeliveryService.store({
           send_info_type: this.sendModel.model,
-          send_info_id: this.send_info_id,
+          send_info_id: item.id,
           receive_info_type: getModel(this.receive_info_type).model,
           receive_info_id: this.receive_info_id
         })
@@ -169,6 +165,9 @@ export default class PopupInfoDelivery extends Vue {
 </script>
 
 <style lang="less">
+.PopupInfoDelivery {
+  display: inline-block;
+}
 .PopupInfoDelivery-popup {
   .DataRender .render-loading {
     padding-bottom: 20%;
@@ -191,6 +190,10 @@ export default class PopupInfoDelivery extends Vue {
       padding: 8px;
       font-size: 14px;
     }
+  }
+  .empty-container {
+    padding: @padding-lg;
+    text-align: center;
   }
 }
 </style>

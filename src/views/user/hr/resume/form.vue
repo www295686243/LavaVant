@@ -7,8 +7,8 @@
       </FormCheckbox>
       <FormSalary
         :isNegotiable.sync="form.is_negotiate"
-        :min-value.sync="form.monthly_pay_min"
-        :max-value.sync="form.monthly_pay_max"
+        :min-value.sync="form.monthly_salary_min"
+        :max-value.sync="form.monthly_salary_max"
         :field="formFields.rangeSalary" />
       <FormCheckboxGroup
         type="label-string"
@@ -54,8 +54,8 @@ export default class UserHrJobForm extends Vue {
   private form = {
     id: RouterService.query('id'),
     title: '',
-    monthly_pay_min: '',
-    monthly_pay_max: '',
+    monthly_salary_min: '',
+    monthly_salary_max: '',
     is_negotiate: 0,
     treatment: '',
     treatment_input: '',

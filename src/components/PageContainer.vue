@@ -49,5 +49,11 @@ export default class PageContainer extends Vue {
 
 <style lang="less">
 .PageContainer {
+  & > .DataRender {
+    & > .render-loading {
+      padding: 0;
+      padding-top: 20%;
+    }
+  }
 }
 </style>

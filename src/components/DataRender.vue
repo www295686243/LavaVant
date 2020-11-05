@@ -70,8 +70,8 @@ export default class DataRender extends Vue {
 
 <style lang="less">
 .DataRender {
-  .render-loading {
-    padding-top: 20%;
+  & > .render-loading {
+    padding: @padding-lg 0;
     text-align: center;
   }
 }

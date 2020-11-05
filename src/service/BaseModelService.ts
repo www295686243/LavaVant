@@ -1,4 +1,4 @@
-import { getOptions, getOptionsItem, getOptionsValue, getStatusValue, getStatusLabel, getValue } from './ConstService'
+import { getOptions, getOptionsItem, getOptionsValue, getStatusValue, getStatusLabel, getValue, getOptionsLabel } from './ConstService'
 
 export default abstract class BaseModelService {
   abstract name: string
@@ -27,6 +27,10 @@ export default abstract class BaseModelService {
   // eslint-disable-next-line
   public getOptionsValue (fieldName: string, value: number, _display_name?: string) {
     return getOptionsValue(this.name, fieldName, value, _display_name)
+  }
+
+  public getOptionsLabel (fieldName: string, value: number) {
+    return getOptionsLabel(this.name, fieldName, value)
   }
 
   // eslint-disable-next-line

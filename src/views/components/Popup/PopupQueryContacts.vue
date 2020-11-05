@@ -2,11 +2,11 @@
   <div class="PopupQueryContacts">
     <ButtonSubmit
       :onClick="handleShowPopup"
-      icon="phone"
+      icon="phone-o"
       size="small"
-      plain
-      round>
-      查看
+      type="default"
+      plain>
+      查看联系方式
     </ButtonSubmit>
     <van-popup
       class="PopupQueryContacts-popup"
@@ -98,8 +98,11 @@ export default class PopupQueryContacts extends Vue {
 
 <style lang="less">
 .PopupQueryContacts {
+  display: inline-block;
   .ButtonSubmit {
     display: block;
+    border: 0;
+    color: @text-link-color;
   }
 }
 .PopupQueryContacts-popup {

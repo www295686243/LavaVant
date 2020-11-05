@@ -8,8 +8,8 @@
       <FormInput v-model="form.company_name" :field="formFields.company_name" />
       <FormSalary
         :isNegotiable.sync="form.is_negotiate"
-        :min-value.sync="form.monthly_pay_min"
-        :max-value.sync="form.monthly_pay_max"
+        :min-value.sync="form.monthly_salary_min"
+        :max-value.sync="form.monthly_salary_max"
         :field="formFields.rangeSalary" />
       <FormCheckboxGroup
         type="label-string"
@@ -56,8 +56,8 @@ export default class UserHrJobForm extends Vue {
     title: '',
     is_other_user: 0,
     company_name: '',
-    monthly_pay_min: '',
-    monthly_pay_max: '',
+    monthly_salary_min: '',
+    monthly_salary_max: '',
     is_negotiate: 0,
     recruiter_number: 1,
     education: '',

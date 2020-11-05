@@ -3,7 +3,7 @@ import BaseModelService from '../BaseModelService'
 
 interface Params {
   send_info_type: string;
-  send_info_id: string;
+  send_info_id?: string;
   receive_info_type: string;
   receive_info_id: string;
 }
