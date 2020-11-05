@@ -1,5 +1,5 @@
 <template>
-  <PageContainer class="view-hr-resume-index">
+  <PageContainer class="view-hr-job-index">
     <ListMenu @reload="handleReload"></ListMenu>
     <ListContainer :onLoad="onLoad" ref="listElement">
       <template v-slot="{ v }">
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import HrResumeService from '@/service/Info/Hr/HrResumeService'
+import HrJobService from '@/service/Info/Hr/HrJobService'
 import { Component, Vue, Ref } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
 import ListMenu from '../components/ListMenu.vue'
@@ -21,14 +21,14 @@ import ListMenu from '../components/ListMenu.vue'
     ListMenu
   }
 })
-export default class ViewHrResumeIndex extends Vue {
+export default class ViewHrJobIndex extends Vue {
   @Ref()
   listElement!: any
 
   private filterParams = {}
 
   private onLoad (page: number) {
-    return HrResumeService.index({ page, ...this.filterParams })
+    return HrJobService.index({ page, ...this.filterParams })
   }
 
   private handleReload (params: any) {
@@ -39,7 +39,7 @@ export default class ViewHrResumeIndex extends Vue {
 </script>
 
 <style lang="less">
-.view-hr-resume-index {
+.view-hr-job-index {
   padding-top: 44px;
 }
 </style>

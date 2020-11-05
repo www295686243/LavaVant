@@ -69,7 +69,7 @@ export default class FormSelect extends Mixins(FormMixins) {
 <style lang="less">
 .FormSelect {
   .placeholder {
-    color: @gray-6;
+    color: @gray-5;
   }
   &.van-field--disabled .field {
     color: @gray-5;

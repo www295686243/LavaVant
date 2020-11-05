@@ -61,7 +61,7 @@ export default class FormArea extends Mixins(FormMixins) {
 <style lang="less">
 .FormArea {
   .placeholder {
-    color: @gray-6;
+    color: @gray-5;
   }
   &.van-field--disabled .field {
     color: @gray-5;

@@ -21,7 +21,7 @@
     <van-button @click="RouterService.push('/user/coupon/sell-coupon')">出售优惠券</van-button>
     <van-button @click="RouterService.push('/user/coupon/my-sell-coupon')">在售优惠券</van-button>
     <van-button @click="RouterService.push('/coupon-market')">优惠券市场</van-button>
-    <van-button @click="RouterService.push('/demo/list', { type: 'job' })">招聘列表</van-button>
+    <van-button @click="RouterService.push('/hr/job')">招聘列表</van-button>
     <van-button @click="RouterService.push('/hr/resume')">简历列表</van-button>
   </PageContainer>
 </template>

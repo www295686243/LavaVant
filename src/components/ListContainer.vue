@@ -125,6 +125,16 @@ export default class ListContainer extends Vue {
   .List-finished,
   .List-empty {
     padding-bottom: 60px;
+    .click {
+      color: @text-link-color;
+    }
+  }
+  .List-finished {
+    p {
+      .van-icon {
+        vertical-align: -2px;
+      }
+    }
   }
 }
 </style>

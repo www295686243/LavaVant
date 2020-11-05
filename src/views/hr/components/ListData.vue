@@ -15,8 +15,8 @@
         </h5>
       </div>
       <div class="info">
-        <p>上班地点：{{v.city | cityName}}</p>
-        <p>截止：{{v.end_time}}</p>
+        <p>上班地点：<span>{{v.city | cityName}}</span></p>
+        <p>截止：<span>{{v.end_time}}</span></p>
       </div>
     </van-cell>
   </div>
@@ -48,6 +48,9 @@ export default class ViewHrListData extends Vue {
       p {
         font-size: @font-size-sm;
         color: @gray-7;
+        span {
+          color: @gray-8;
+        }
       }
       .label {
         color: @gray-7;

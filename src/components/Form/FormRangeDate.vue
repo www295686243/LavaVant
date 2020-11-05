@@ -82,7 +82,7 @@ export default class FormRangeDate extends Mixins(FormMixins) {
 <style lang="less">
 .FormRangeDate {
   .placeholder {
-    color: @gray-6;
+    color: @gray-5;
   }
   &.van-field--disabled .field {
     color: @gray-5;

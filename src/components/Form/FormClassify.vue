@@ -84,7 +84,7 @@ export default class FormClassify extends Vue {
 <style lang="less">
 .FormClassify {
   .placeholder {
-    color: @gray-6;
+    color: @gray-5;
   }
   &.van-field--disabled .field {
     color: @gray-5;
