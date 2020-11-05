@@ -14,7 +14,8 @@
       closeable
       round
       close-on-popstate
-      position="bottom">
+      position="bottom"
+      get-container="body">
       <div class="container">
         <h2>打赏支付</h2>
         <div class="amount-container">

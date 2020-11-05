@@ -23,7 +23,7 @@
           <p class="end-time">截止：{{info.end_time}}</p>
         </div>
       </div>
-      <div class="hr-box">
+      <div class="hr-box action-box">
         <PopupInfoDelivery send_info_type="hrResume" send_info_id receive_info_type="hrJob" :receive_info_id="info.id"></PopupInfoDelivery>
         <PopupQueryContacts model="hrJob"></PopupQueryContacts>
       </div>
@@ -206,6 +206,10 @@ export default class ViewHrJobShow extends Vue {
       box-shadow: initial;
       margin: 0;
     }
+  }
+  .action-box {
+    display: flex;
+    align-items: center;
   }
 }
 </style>

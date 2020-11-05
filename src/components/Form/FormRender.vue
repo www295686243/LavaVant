@@ -158,7 +158,7 @@ export default class FormRender extends Vue {
     padding: @padding-md;
   }
   .van-field__label--right {
-    padding-right: 8px;
+    padding-right: 0;
   }
 }
 </style>

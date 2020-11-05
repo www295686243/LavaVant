@@ -13,7 +13,8 @@
       :disabled="isCountDown"
       :onClick="handleSubmit"
       slot="button"
-      type="info">
+      plain
+      type="primary">
       <template v-if="isCountDown">
         <van-count-down
           ref="countDown"
@@ -95,7 +96,7 @@ export default class FormSms extends Mixins(FormMixins) {
   }
   .van-count-down {
     display: inline;
-    color: @white;
+    color: @green;
   }
   &.van-field--error {
     .van-field__control {
@@ -107,6 +108,7 @@ export default class FormSms extends Mixins(FormMixins) {
   }
   .ButtonSubmit {
     height: 42px;
+    border: 0;
   }
 }
 </style>

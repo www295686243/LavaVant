@@ -8,7 +8,7 @@
       title="请选择"
       :default-index="defaultIndex"
       :columns="options"
-      value-key="display_name"
+      :value-key="valueKey"
       @cancel="handleCancel"
       @confirm="handleConfirm"
     />
@@ -31,6 +31,9 @@ export default class PopupPicker extends Vue {
 
   @Prop()
   defaultValue!: number
+
+  @Prop()
+  valueKey!: string
 
   private isShow = false
   private defaultIndex = 0

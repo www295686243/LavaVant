@@ -72,7 +72,7 @@ export default class FormCheckboxGroup extends Vue {
   }
 
   private innerText = this.text || ''
-  private options: { id: number; display_name: string }[] = []
+  private options: { value: number; display_name: string }[] = []
   private innerValue: string[] | number[] = []
 
   private fields = {
@@ -84,7 +84,7 @@ export default class FormCheckboxGroup extends Vue {
   }
 
   private props = {
-    value: 'id',
+    value: 'value',
     label: 'display_name'
   }
 

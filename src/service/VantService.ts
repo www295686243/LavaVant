@@ -38,6 +38,14 @@ class VantService {
       })
     }
   }
+
+  delay () {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve()
+      }, 3000000)
+    })
+  }
 }
 
 export default new VantService()

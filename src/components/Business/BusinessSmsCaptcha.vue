@@ -1,5 +1,5 @@
 <template>
-  <FormRender :onSubmit="handleSubmit" :submit-btn="typeMode.btn" :form="form" ref="formElement">
+  <FormRender :onSubmit="handleSubmit" :submit-btn="typeMode.btn" :form="form" ref="formElement" :labelWidth="44">
     <FormInput v-model="form.phone" :field="formFields.phone" />
     <FormSms :onClick="sendSmsCaptcha" v-model="form.code" :field="formFields.code"/>
   </FormRender>
@@ -76,6 +76,10 @@ export default class BusinessSmsCaptcha extends Vue {
           return UserService.bindPhone(this.form)
             .then(() => UserService.setInviteUser())
         }
+      })
+      .then((res) => {
+        this.$emit('success')
+        return res
       })
   }
 

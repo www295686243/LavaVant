@@ -5,6 +5,7 @@ import { formatDate } from '@/plugins/tools'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import RouterService from '@/service/RouterService'
+import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 
 interface LoginParams {
   username: string;
@@ -166,7 +167,7 @@ class UserService {
         }
       })
       .catch((err) => {
-        RouterService.push('/user/register')
+        PopupRegisterService.open()
         return Promise.reject(err)
       })
   }
@@ -177,6 +178,21 @@ class UserService {
         if (!this.info.is_follow_official_account) {
           return axios.get('user/checkOfficialAccounts')
         }
+      })
+  }
+
+  baseInfoUpdate (params: { role: string; industry: number[]; industry_attr?: number; position_attr?: number; city: number }) {
+    return axios.post('user/baseInfoUpdate', params)
+      .then((res) => {
+        return this.getBaseUserInfo()
+          .then(() => {
+            if (params.role === 'Personal Member') {
+              return UserPersonalService.show()
+            } else if (params.role === 'Enterprise Member') {
+              return UserEnterpriseService.show()
+            }
+          })
+          .then(() => res)
       })
   }
 }

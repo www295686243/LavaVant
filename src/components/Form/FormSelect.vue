@@ -28,7 +28,7 @@ export default class FormSelect extends Mixins(FormMixins) {
   private PopupPicker = new PopupPickerService()
   private innerName = ''
   private props = {
-    value: 'id',
+    value: 'value',
     label: 'display_name'
   }
 
@@ -38,15 +38,15 @@ export default class FormSelect extends Mixins(FormMixins) {
     if (this.field.disabled) return
     this.PopupPicker.open(this.options as any[], this.innerValue)
       .then((res: Options) => {
-        this.innerValue = res.id
+        this.innerValue = res[this.props.value]
         this.initName()
       })
   }
 
   private initName () {
-    const item = (this.options || []).find((res) => res.id === this.innerValue)
+    const item = (this.options || []).find((res) => res[this.props.value] === this.innerValue)
     if (item) {
-      this.innerName = item.display_name || ''
+      this.innerName = item[this.props.label] || ''
     }
   }
 
