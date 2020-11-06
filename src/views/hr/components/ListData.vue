@@ -27,7 +27,7 @@ import { getOptionsLabel } from '@/service/ConstService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
-export default class ViewHrListData extends Vue {
+export default class ListData extends Vue {
   @Prop()
   v!: any
 

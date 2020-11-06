@@ -7,7 +7,7 @@
       size="small"
       plain
       round>
-      投递{{sendModel.text}}
+      投递{{sendService.displayName}}
     </ButtonSubmit>
     <van-popup
       class="PopupInfoDelivery-popup"
@@ -18,12 +18,12 @@
       position="bottom">
       <DataRender class="delivery-container" :onLoad="handleLoad">
         <div class="delivery-info" v-if="deliveryInfo.id">
-          <p>您已投递{{sendModel.text}}。</p>
+          <p>您已投递{{sendService.displayName}}。</p>
           <div class="title">{{deliveryInfo.title}}</div>
         </div>
         <template v-else>
-          <van-cell-group :title="'我的' + sendModel.text">
-            <van-cell :title="v.title" :label="getStatusLabel(sendModel.model, v.status)" v-for="v in list" :key="v.id" @click="handleSelect(v)">
+          <van-cell-group :title="'我的' + sendService.displayName">
+            <van-cell :title="v.title" :label="sendService.getStatusLabel(v.status)" v-for="v in list" :key="v.id" @click="handleSelect(v)">
               <template v-if="v.active">
                 <template slot="right-icon" >
                   <van-icon name="passed" class="text-color-success right-icon" size="20" v-if="v.selected"/>
@@ -34,10 +34,10 @@
             </van-cell>
           </van-cell-group>
           <div class="btn-container" v-if="list.length > 0">
-            <ButtonSubmit :onClick="handleSubmit" block>投递{{sendModel.text}}</ButtonSubmit>
+            <ButtonSubmit :onClick="handleSubmit" block>投递{{sendService.displayName}}</ButtonSubmit>
           </div>
           <div class="empty-container" v-if="list.length === 0">
-            <ButtonSubmit icon="add-o" :onClick="() => gotoForm()">新增{{sendModel.text}}</ButtonSubmit>
+            <ButtonSubmit icon="add-o" :onClick="() => gotoForm()">新增{{sendService.displayName}}</ButtonSubmit>
           </div>
         </template>
       </DataRender>
@@ -48,9 +48,10 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import InfoDeliveryService from '@/service/Info/InfoDeliveryService'
-import { getStatusLabel, getStatusValue, getModel } from '@/service/ConstService'
+import { getStatusLabel } from '@/service/ConstService'
 import RouterService from '@/service/RouterService'
 import VantService from '@/service/VantService'
+import BaseModelService from '@/service/BaseModelService'
 
 interface ListItem {
   id: string;
@@ -63,13 +64,10 @@ interface ListItem {
 @Component
 export default class PopupInfoDelivery extends Vue {
   @Prop()
-  send_info_type!: string
+  receiveService!: BaseModelService
 
   @Prop()
-  receive_info_type!: string
-
-  @Prop()
-  receive_info_id!: string
+  sendService!: BaseModelService
 
   private getStatusLabel = getStatusLabel
   private isShowPopup = false
@@ -77,12 +75,6 @@ export default class PopupInfoDelivery extends Vue {
   private deliveryInfo = {
     id: '',
     title: ''
-  }
-
-  private sendModel = {
-    text: '',
-    path: '',
-    model: ''
   }
 
   private handleShowPopup () {
@@ -96,9 +88,9 @@ export default class PopupInfoDelivery extends Vue {
 
   private checkIsDelivery () {
     return InfoDeliveryService.show({
-      send_info_type: this.sendModel.model,
-      receive_info_type: getModel(this.receive_info_type).model,
-      receive_info_id: this.receive_info_id
+      send_info_type: this.sendService.name,
+      receive_info_type: this.receiveService.name,
+      receive_info_id: RouterService.query('id')
     })
       .then((res) => {
         if (res.data) {
@@ -108,12 +100,12 @@ export default class PopupInfoDelivery extends Vue {
   }
 
   private getList () {
-    return InfoDeliveryService.getInfoList(this.sendModel.model)
+    return InfoDeliveryService.getInfoList(this.sendService.name)
       .then((res) => {
         const datas = res.data.data || []
         this.list = datas.map((item: any) => {
           item.selected = false
-          item.active = item.status === getStatusValue(this.sendModel.model, 1, '已发布')
+          item.active = item.status === this.sendService.getStatusValue(1, '已发布')
           return item
         })
       })
@@ -130,7 +122,7 @@ export default class PopupInfoDelivery extends Vue {
   }
 
   private gotoForm (v: any = {}) {
-    RouterService.push('/user/' + this.sendModel.path + '/form', { id: v.id })
+    RouterService.push('/user/' + this.sendService.path + '/form', { id: v.id })
   }
 
   private handleSubmit () {
@@ -138,14 +130,14 @@ export default class PopupInfoDelivery extends Vue {
     return Promise.resolve()
       .then(() => {
         if (!item) {
-          const obj = { message: '请选择一份' + this.sendModel.text, status: 'error' }
+          const obj = { message: '请选择一份' + this.sendService.displayName, status: 'error' }
           return Promise.reject(obj)
         }
         return InfoDeliveryService.store({
-          send_info_type: this.sendModel.model,
+          send_info_type: this.sendService.name,
           send_info_id: item.id,
-          receive_info_type: getModel(this.receive_info_type).model,
-          receive_info_id: this.receive_info_id
+          receive_info_type: this.receiveService.name,
+          receive_info_id: RouterService.query('id')
         })
       })
       .then((res) => {
@@ -156,10 +148,6 @@ export default class PopupInfoDelivery extends Vue {
           title: item.title
         })
       })
-  }
-
-  created () {
-    Object.assign(this.sendModel, getModel(this.send_info_type))
   }
 }
 </script>

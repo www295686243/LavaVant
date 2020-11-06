@@ -4,6 +4,7 @@ export default abstract class BaseModelService {
   abstract name: string
   displayName!: string
   controllerName!: string
+  path!: string // 路由基础地址
 
   public getModelName () {
     return this.name

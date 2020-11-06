@@ -6,6 +6,7 @@ import WXService from '@/service/WXService'
 class HrResumeService extends BaseModelService {
   name = 'Info/Hr/HrResume'
   displayName = '简历'
+  path = 'hr/resume'
 
   index (params: { page: number }) {
     return axios.get('hr_resume', params)
