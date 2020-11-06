@@ -6,7 +6,7 @@ class UserCouponService extends BaseModelService {
 
   usableCouponInfo = {
     id: '',
-    display_name: '',
+    display_name: '暂无可用的互助券',
     amount: 0
   }
 

@@ -32,7 +32,7 @@ export default class FormRadioGroup extends Mixins(FormMixins) {
   border!: boolean
 
   private props = {
-    value: 'id',
+    value: 'value',
     label: 'display_name'
   }
 

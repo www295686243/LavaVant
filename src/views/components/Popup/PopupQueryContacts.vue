@@ -23,7 +23,7 @@
           <span class="free" v-else>免费查看</span>
         </div>
         <van-cell
-          :to="'/user/coupon/select-coupon?model=' + model"
+          :to="'/user/coupon/select-coupon?model='"
           class="coupon-container"
           :class="{ none: !UserCouponService.usableCouponInfo.id }"
           title="使用互助券"
@@ -52,27 +52,47 @@
         <p class="tips">（若已关注，还提示未关注，请取消关注，再关注即可）</p>
       </div>
     </van-popup>
+    <van-popup
+      v-model="isShowContacts"
+      get-container="body"
+      closeable
+      @closed="handleClosed"
+      position="bottom">
+      <div class="QueryContact-contacts">
+        <h2>联系电话</h2>
+        <div>
+          <van-button icon="phone-o" :url="'tel:' + phone">{{phone}}</van-button>
+          <p>(点击可拨号)</p>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script lang="ts">
-import { getModel, getValue } from '@/service/ConstService'
+import BaseModelService from '@/service/BaseModelService'
 import UserCouponService from '@/service/User/UserCouponService'
 import UserService from '@/service/User/UserService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
+interface Service extends BaseModelService {
+  pay: Function;
+  getContacts: Function;
+}
+
 @Component
 export default class PopupQueryContacts extends Vue {
   @Prop()
-  model!: string
+  Service!: Service
 
   private isShowPopup = false
   private isShowOfficialAccounts= false
   private UserCouponService = UserCouponService
   private totalAmount = 0
-  private innerModel = getModel(this.model)
-  private originalAmount = getValue(this.innerModel.model + '@' + 'original_amount')
-  private amount = getValue(this.innerModel.model + '@' + 'amount')
+  private originalAmount = this.Service.getValue('original_amount')
+  private amount = this.Service.getValue('amount')
+  private isShowContacts = false
+  private phone = ''
 
   private handleShowPopup () {
     return UserService.checkBaseInfo()
@@ -83,7 +103,7 @@ export default class PopupQueryContacts extends Vue {
             return Promise.reject(err)
           })
       })
-      .then(() => UserCouponService.getFirstUsableCoupon(this.innerModel.model))
+      .then(() => UserCouponService.getFirstUsableCoupon(this.Service.name))
       .then(() => {
         this.totalAmount = this.amount - UserCouponService.usableCouponInfo.amount
         this.totalAmount = this.totalAmount < 0 ? 0 : this.totalAmount
@@ -92,7 +112,18 @@ export default class PopupQueryContacts extends Vue {
   }
 
   private handleSubmit () {
-    return Promise.resolve()
+    return this.Service.pay({ user_coupon_id: UserCouponService.usableCouponInfo.id })
+      .then(() => this.Service.getContacts())
+      .then((res: any) => {
+        this.$emit('pay', res.data)
+        this.phone = res.data.phone
+        this.isShowPopup = false
+        this.isShowContacts = true
+      })
+  }
+
+  private handleClosed () {
+    this.$emit('pay', { is_pay: true })
   }
 }
 </script>
@@ -181,6 +212,23 @@ export default class PopupQueryContacts extends Vue {
   }
   .tips {
     font-size: @font-size-sm;
+  }
+}
+.QueryContact-contacts {
+  padding-bottom: @padding-lg;
+  text-align: center;
+  h2 {
+    font-size: @font-size-md;
+    padding: @padding-md 0;
+  }
+  .van-button {
+    font-size: 20px;
+    color: @text-link-color;
+    border: 0;
+  }
+  p {
+    font-size: @font-size-sm;
+    color: @gray-6;
   }
 }
 </style>

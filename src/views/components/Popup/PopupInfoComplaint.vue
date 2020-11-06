@@ -15,6 +15,7 @@
       closeable
       round
       close-on-popstate
+      get-container="body"
       position="bottom">
       <div class="complaint-container">
         <div class="title">信息投诉</div>
@@ -65,12 +66,12 @@ import InfoComplaintService from '@/service/Info/InfoComplaintService'
 import RouterService from '@/service/RouterService'
 import UserService from '@/service/User/UserService'
 import ValidateService from '@/service/ValidateService'
-import { getModel } from '@/service/ConstService'
+import BaseModelService from '@/service/BaseModelService'
 
 @Component
 export default class PopupInfoComplaint extends Vue {
   @Prop()
-  _model!: string
+  Service!: BaseModelService
 
   private InfoComplaintService = InfoComplaintService
   private isShowPopup = false
@@ -79,7 +80,7 @@ export default class PopupInfoComplaint extends Vue {
   private isLoad = false
   private form = {
     id: '',
-    _model: getModel(this._model).model,
+    _model: this.Service.name,
     info_id: RouterService.query('id'),
     complaint_type: '',
     complaint_content: '',
@@ -139,8 +140,13 @@ export default class PopupInfoComplaint extends Vue {
 
 <style lang="less">
 .PopupInfoComplaint {
-  display: flex;
-  margin-left: 12px;
+  display: inline-block;
+  .ButtonSubmit {
+    padding: 0;
+    display: block;
+    border: 0;
+    color: @text-link-color;
+  }
 }
 .PopupInfoComplaint-popup {
   .complaint-container {

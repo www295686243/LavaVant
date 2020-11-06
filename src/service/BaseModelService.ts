@@ -2,6 +2,7 @@ import { getOptions, getOptionsItem, getOptionsValue, getStatusValue, getStatusL
 
 export default abstract class BaseModelService {
   abstract name: string
+  displayName!: string
   controllerName!: string
 
   public getModelName () {

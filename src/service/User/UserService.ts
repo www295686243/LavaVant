@@ -18,7 +18,7 @@ interface RoleItem {
 }
 
 interface UserInfo {
-  id: number;
+  id: string;
   username: string;
   nickname: string;
   phone: string;
@@ -31,7 +31,7 @@ interface UserInfo {
 
 class UserService {
   info: UserInfo = {
-    id: 0,
+    id: '',
     nickname: '',
     username: '',
     phone: '',
@@ -42,8 +42,11 @@ class UserService {
     is_follow_official_account: 0
   }
 
+  // 是否显示关注公众号广告
+  isShowFollowAd = true
+
   constructor () {
-    Object.assign(this.info, cache.user.getAll())
+    this.updateData(cache.user.getAll())
   }
 
   isLogin () {
@@ -65,7 +68,7 @@ class UserService {
         const firstLoginDate = cache.user.get('_firstLoginDate')
         if ((!firstLoginDate || today > firstLoginDate) && this.info.id) {
           cache.user.set('_firstLoginDate', today)
-          return axios.post('user/todayFirstLogin', {})
+          return axios.post('user/todayFirstLogin')
             .then((res) => {
               this.cacheUserInfo(res)
             })
@@ -78,7 +81,7 @@ class UserService {
       .then(() => {
         cache.clearAll()
         VersionService.clearAll()
-        this.info.id = 0
+        this.info.id = ''
         return '注销成功'
       })
   }
@@ -104,6 +107,9 @@ class UserService {
   updateData (params: UserInfo | any) {
     cache.user.setAll(params)
     Object.assign(this.info, params)
+    if (this.info.is_follow_official_account) {
+      this.isShowFollowAd = false
+    }
   }
 
   private getBaseUserInfo () {

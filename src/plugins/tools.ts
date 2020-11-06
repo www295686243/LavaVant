@@ -90,6 +90,7 @@ export function getSelectedPaths (id: number, data: any[]) {
   return paths
 }
 
+// 大驼峰转下划线分割
 export function toLowerLine (str: string) {
   let temp = str.replace(/[A-Z]/g, function (match) {
     return '_' + match.toLowerCase()
