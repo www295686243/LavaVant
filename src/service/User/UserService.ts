@@ -172,10 +172,7 @@ class UserService {
           return Promise.reject(new Error('请先完善基本信息'))
         }
       })
-      .catch((err) => {
-        PopupRegisterService.open()
-        return Promise.reject(err)
-      })
+      .catch(() => PopupRegisterService.open())
   }
 
   checkOfficialAccounts () {
@@ -189,17 +186,11 @@ class UserService {
 
   baseInfoUpdate (params: { role: string; industry: number[]; industry_attr?: number; position_attr?: number; city: number }) {
     return axios.post('user/baseInfoUpdate', params)
-      .then((res) => {
-        return this.getBaseUserInfo()
-          .then(() => {
-            if (params.role === 'Personal Member') {
-              return UserPersonalService.show()
-            } else if (params.role === 'Enterprise Member') {
-              return UserEnterpriseService.show()
-            }
-          })
-          .then(() => res)
-      })
+      .then((res) => this.getUserInfo().then(() => res))
+  }
+
+  isFreeForLimitedTime (_model: string) {
+    return axios.get('user/isFreeForLimitedTime', { _model })
   }
 }
 

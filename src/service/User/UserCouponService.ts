@@ -26,10 +26,14 @@ class UserCouponService extends BaseModelService {
     return this.getUsableCoupon({ page: 1, _model })
       .then((res) => {
         if (res.data && res.data.data.length > 0) {
-          Object.assign(this.usableCouponInfo, res.data.data[0])
+          this.updateUsableCoupon(res.data.data[0])
           this.usableCouponInfo.display_name = this.usableCouponInfo.display_name || '暂无可用的互助券'
         }
       })
+  }
+
+  updateUsableCoupon (params: { id: string; display_name: string; amount: number }) {
+    Object.assign(this.usableCouponInfo, params)
   }
 }
 

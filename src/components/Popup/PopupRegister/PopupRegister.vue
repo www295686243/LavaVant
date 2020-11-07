@@ -3,6 +3,7 @@
     v-model="isShow"
     class="PopupRegister"
     round
+    @closed="handleClose"
     get-container="body">
     <van-steps :active="active">
       <van-step>手机验证</van-step>
@@ -50,6 +51,12 @@ export default class PopupRegister extends Vue {
 
   private handleSuccess () {
     this.close()
+    this.resolve()
+    this.$destroy()
+  }
+
+  private handleClose () {
+    this.reject()
   }
 }
 </script>

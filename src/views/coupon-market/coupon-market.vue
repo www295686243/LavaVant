@@ -5,6 +5,7 @@
       :onSubmit="handleSubmit"
       ref="couponListElement"
       buttonText="购买"
+      select="multiple"
       :market="true">
       <template slot="tip" v-if="unpaidOrder.quantity > 0">
         您有一笔订单正在支付有效期5分钟，是否继续？&emsp;<span class="click" @click.stop="handleUnpaidConfrim">继续支付</span>

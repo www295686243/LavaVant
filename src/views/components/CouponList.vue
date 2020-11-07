@@ -1,6 +1,6 @@
 <template>
   <div class="CouponList">
-    <ListContainer :onLoad="onLoad" ref="listElement">
+    <ListContainer :onLoad="onLoad" ref="listElement" emptyText="暂无任何互助券">
       <template v-slot="{ v }">
         <div class="coupon-item" @click="handleClick(v)">
           <div class="item-left">
@@ -19,11 +19,11 @@
             <p class="time">截止日期：{{v.end_at}}</p>
             <p class="sell van-ellipsis" v-if="market">出售人：{{v.sell_user.nickname}}</p>
           </div>
-          <div class="item-action" v-if="select || market">
+          <div class="item-action" v-if="select">
             <van-icon name="checked" v-if="v.active" />
             <van-icon name="circle" v-else />
           </div>
-          <span class="tag" :class="{ bind: v.is_trade === 0 }" v-if="select === false && market === false">{{v.is_trade > 0 ? '可交易' : '绑定'}}</span>
+          <span class="tag" :class="{ bind: v.is_trade === 0 }" v-if="!select">{{v.is_trade > 0 ? '可交易' : '绑定'}}</span>
         </div>
       </template>
     </ListContainer>
@@ -33,9 +33,10 @@
       @submit="handleSubmit"
       class="footer-action van-hairline--top"
       :loading="submitLoading"
-      v-if="select || market">
+      v-if="select">
       <slot name="tip" slot="tip"></slot>
-      <Checkbox v-model="isAllChecked" checkedColor="#ee0a24">全选</Checkbox>
+      <Checkbox v-model="isAllChecked" checkedColor="#ee0a24" v-if="select === 'multiple'">全选</Checkbox>
+      <span v-else></span>
     </van-submit-bar>
   </div>
 </template>
@@ -63,8 +64,9 @@ export default class ViewCouponList extends Vue {
   @Prop({ default: () => () => Promise.resolve() })
   onSubmit!: Function
 
-  @Prop({ default: false })
-  select!: boolean
+  // single/multiple
+  @Prop()
+  select!: string
 
   @Prop({ default: false })
   market!: boolean
@@ -83,7 +85,11 @@ export default class ViewCouponList extends Vue {
   private submitLoading = false
 
   private handleClick (v: { active: boolean }) {
-    v.active = !v.active
+    if (this.select === 'single') {
+      this.listElement.singleToggle(v)
+    } else if (this.select === 'multiple') {
+      this.listElement.toggle(v)
+    }
     this.computeTotalAmount()
   }
 

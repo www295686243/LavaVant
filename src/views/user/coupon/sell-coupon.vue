@@ -3,7 +3,7 @@
     <CouponList
       :onLoad="handleLoad"
       :onSubmit="handleSubmit"
-      :select="true"
+      select="multiple"
       ref="couponListElement"
       buttonText="出售">
       <p slot="tip" class="tip"><span @click="RouterService.push('/user/coupon/my-sell-coupon')">我的在售列表</span></p>

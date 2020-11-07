@@ -38,7 +38,7 @@ export default class ViewHrJobIndex extends Vue {
   }
 
   private handleClick (id: string) {
-    RouterService.push('/hr/job/show', { id })
+    RouterService.push('/' + HrJobService.path + '/show', { id })
   }
 }
 </script>

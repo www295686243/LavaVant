@@ -20,10 +20,10 @@
         <h2>打赏支付</h2>
         <div class="amount-container">
           <span class="amount" v-if="totalAmount > 0">{{totalAmount}}<small> 元</small><span class="original-amount">{{originalAmount}}元</span></span>
-          <span class="free" v-else>免费查看</span>
+          <span class="free" v-else>{{freeText}}</span>
         </div>
         <van-cell
-          :to="'/user/coupon/select-coupon?model='"
+          @click="handleGotoCoupon"
           class="coupon-container"
           :class="{ none: !UserCouponService.usableCouponInfo.id }"
           title="使用互助券"
@@ -31,7 +31,7 @@
           is-link />
         <div class="flex">
           <h6>完成互助任务，获得互助券</h6>
-          <h6>进入互助券市场</h6>
+          <h6 @click="RouterService.push('/coupon-market')">进入互助券市场</h6>
         </div>
         <div class="btn">
           <ButtonSubmit block round :onClick="handleSubmit">确认支付</ButtonSubmit>
@@ -71,9 +71,11 @@
 
 <script lang="ts">
 import BaseModelService from '@/service/BaseModelService'
+import RouterService from '@/service/RouterService'
 import UserCouponService from '@/service/User/UserCouponService'
 import UserService from '@/service/User/UserService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
 
 interface Service extends BaseModelService {
   pay: Function;
@@ -93,6 +95,8 @@ export default class PopupQueryContacts extends Vue {
   private amount = this.Service.getValue('amount')
   private isShowContacts = false
   private phone = ''
+  private freeText = ''
+  private RouterService = RouterService
 
   private handleShowPopup () {
     return UserService.checkBaseInfo()
@@ -103,8 +107,22 @@ export default class PopupQueryContacts extends Vue {
             return Promise.reject(err)
           })
       })
-      .then(() => UserCouponService.getFirstUsableCoupon(this.Service.name))
       .then(() => {
+        if (this.Service.displayName === '简历' && UserService.hasRole('Enterprise Member')) {
+          return UserService.isFreeForLimitedTime(this.Service.name)
+            .then(() => {
+              this.amount = 0
+            })
+            .catch(() => Promise.resolve())
+        }
+      })
+      .then(() => {
+        if (this.amount > 0) {
+          return UserCouponService.getFirstUsableCoupon(this.Service.name)
+        }
+      })
+      .then(() => {
+        this.freeText = this.amount === 0 ? '限时免费' : '免费查看'
         this.totalAmount = this.amount - UserCouponService.usableCouponInfo.amount
         this.totalAmount = this.totalAmount < 0 ? 0 : this.totalAmount
         this.isShowPopup = true
@@ -119,11 +137,22 @@ export default class PopupQueryContacts extends Vue {
         this.phone = res.data.phone
         this.isShowPopup = false
         this.isShowContacts = true
+        PopupSelectCouponService.destroy()
       })
   }
 
   private handleClosed () {
     this.$emit('pay', { is_pay: true })
+  }
+
+  private handleGotoCoupon () {
+    if (this.amount > 0) {
+      PopupSelectCouponService.open(this.Service.name)
+        .then((res: any) => {
+          UserCouponService.updateUsableCoupon(res)
+        })
+        .catch((err: any) => { console.log(err) })
+    }
   }
 }
 </script>
@@ -135,6 +164,7 @@ export default class PopupQueryContacts extends Vue {
     display: block;
     border: 0;
     color: @text-link-color;
+    padding: 0;
   }
 }
 .PopupQueryContacts-popup {

@@ -106,6 +106,20 @@ export default class ListContainer extends Vue {
     })
   }
 
+  singleToggle (v: { id: string; active: boolean }) {
+    this.list.forEach((res) => {
+      if (res.id === v.id) {
+        res.active = true
+      } else {
+        res.active = false
+      }
+    })
+  }
+
+  toggle (v: { active: boolean }) {
+    v.active = !v.active
+  }
+
   getSelectedIds () {
     return this.list.filter((res) => res.active).map((res) => res.id)
   }

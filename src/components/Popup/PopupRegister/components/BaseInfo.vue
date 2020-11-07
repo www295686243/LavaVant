@@ -2,8 +2,8 @@
   <FormRender class="PopupRegisterBaseInfo" :form="form" :onSubmit="handleSubmit">
     <FormSelect v-model="form.role" :field="formFields.role" />
     <FormClassify v-model="form.industry" :field="formFields.industry" />
-    <FormSelect v-model="form.position_attr" :field="formFields.position_attr" />
-    <FormSelect v-model="form.industry_attr" :field="formFields.industry_attr" />
+    <FormSelect v-model="form.industry_attr" :field="formFields.industry_attr" key="industry_attr" v-if="form.role === 'Enterprise Member'" />
+    <FormSelect v-model="form.position_attr" :field="formFields.position_attr" key="position_attr" v-else />
     <FormArea v-model="form.city" :field="formFields.city" />
   </FormRender>
 </template>
@@ -18,7 +18,7 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class PopupRegisterBaseInfo extends Vue {
   private form = {
-    role: '',
+    role: 'Personal Member',
     industry: [] as number[],
     position_attr: 0,
     industry_attr: 0,

@@ -1,6 +1,6 @@
 <template>
   <PageContainer class="view-user-my-sell-coupon">
-    <CouponList :onLoad="handleLoad" :onSubmit="handleSubmit" ref="couponListElement" :select="true" buttonText="撤回"></CouponList>
+    <CouponList :onLoad="handleLoad" :onSubmit="handleSubmit" ref="couponListElement" select="multiple" buttonText="撤回"></CouponList>
   </PageContainer>
 </template>
 

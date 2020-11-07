@@ -28,7 +28,6 @@ import RouterService from '@/service/RouterService'
 import Disclaimer from '@/views/hr/components/Disclaimer.vue'
 import { Sticky } from 'vant'
 import FollowAd from '@/views/components/FollowAd.vue'
-import UserService from '@/service/User/UserService'
 import ActionContainer from '../components/ActionContainer.vue'
 import HrResumeService from '@/service/Info/Hr/HrResumeService'
 import ContactsContainer from '../components/ContactsContainer.vue'
@@ -77,12 +76,8 @@ export default class ViewHrJobShow extends Vue {
     is_pay: false
   }
 
-  private recommendList = []
   private HrJobService = HrJobService
   private HrResumeService = HrResumeService
-  private model = 'hrJob'
-  private isSelfPublish = false
-  private RouterService = RouterService
 
   private handleLoad () {
     return HrJobService.show()
@@ -93,7 +88,6 @@ export default class ViewHrJobShow extends Vue {
           this.info.treatment = this.info.treatment ? `${this.info.treatment},${this.info.treatment_input}` : this.info.treatment_input
         }
         this.info.cityFullName = getCityName(this.info.city, '') + (this.info.address || '')
-        this.isSelfPublish = UserService.info.id === this.info.user_id
         // 信息统计
         InfoViewService.store(HrJobService.name)
       })
