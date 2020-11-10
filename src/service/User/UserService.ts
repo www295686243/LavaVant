@@ -70,7 +70,7 @@ class UserService {
           cache.user.set('_firstLoginDate', today)
           return axios.post('user/todayFirstLogin')
             .then((res) => {
-              this.cacheUserInfo(res)
+              this.updateData(res.data)
             })
         }
       })
@@ -122,7 +122,7 @@ class UserService {
   getUserInfo () {
     return axios.get('user/getUserInfo')
       .then((res) => {
-        this.cacheUserInfo(res)
+        this.updateData(res.data)
         UserPersonalService.show()
         UserEnterpriseService.show()
       })
@@ -138,12 +138,6 @@ class UserService {
 
   setInviteUser () {
     return axios.post('user/setInviteUser', { iu: RouterService.query('iu') })
-  }
-
-  private cacheUserInfo (res: PromiseResult) {
-    this.updateData(res.data.user)
-    cache.user.set('roles', res.data.roles || [])
-    cache.user.set('permissions', res.data.permissions || [])
   }
 
   hasPermission (name: string) {

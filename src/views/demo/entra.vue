@@ -23,6 +23,7 @@
     <van-button @click="RouterService.push('/coupon-market')">优惠券市场</van-button>
     <van-button @click="RouterService.push('/hr/job')">招聘列表</van-button>
     <van-button @click="RouterService.push('/hr/resume')">简历列表</van-button>
+    <van-button @click="RouterService.push('/user')">个人中心</van-button>
   </PageContainer>
 </template>
 

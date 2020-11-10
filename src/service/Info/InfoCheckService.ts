@@ -1,16 +1,15 @@
 import axios from '@/plugins/axios'
 import BaseModelService from '../BaseModelService'
-import RouterService from '../RouterService'
 
 class InfoCheckService extends BaseModelService {
   name = 'Info/InfoCheck'
 
-  index (params: { _model: string }) {
+  index (params: { _model: string; page: number }) {
     return axios.get('info_check', params)
   }
 
-  show () {
-    return axios.get(`info_check/${RouterService.query('id')}`)
+  show (id: string) {
+    return axios.get(`info_check/${id}`)
   }
 
   store (form: object) {

@@ -1,3 +1,4 @@
+import index from '@/views/user/index/index.vue'
 import notify from '@/views/user/notify/index.vue'
 import personalAuth from '@/views/user/auth/personal-auth.vue'
 import enterpriseAuth from '@/views/user/auth/enterprise-auth.vue'
@@ -18,6 +19,13 @@ import hr from './user/hr'
 import coupon from './user/coupon'
 
 export default [
+  {
+    path: '/user',
+    component: index,
+    meta: {
+      title: '个人中心'
+    }
+  },
   {
     path: '/user/notify',
     component: notify,
