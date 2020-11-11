@@ -19,7 +19,7 @@ class HrJobService extends BaseModelService {
   }
 
   update (form: any) {
-    return axios.put(`user/hr_resume/${RouterService.query('id')}`, {
+    return axios.put(`user/hr_job/${RouterService.query('id')}`, {
       _check: RouterService.query('_check'),
       ...form
     })

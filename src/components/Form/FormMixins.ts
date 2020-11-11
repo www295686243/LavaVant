@@ -9,7 +9,7 @@ export default class FormMixins extends Vue {
   @Prop()
   value!: any
 
-  public innerValue: any = this.value === undefined ? '' : this.value
+  public innerValue: any = (this.value === undefined || this.value === null) ? '' : this.value
 
   @Watch('value')
   onValue (val: any) {

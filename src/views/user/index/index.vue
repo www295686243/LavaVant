@@ -69,9 +69,6 @@ export default class ViewUserIndex extends Vue {
       flex: 0;
       display: flex;
       align-items: center;
-      &:active {
-        background: @background-color-light;
-      }
       p {
         white-space: nowrap;
         color: @gray-7;
@@ -97,7 +94,8 @@ export default class ViewUserIndex extends Vue {
   .van-icon-vip-card {
     color: #ff976a;
   }
-  .zz-icon-jianli {
+  .zz-icon-jianli,
+  .zz-icon-zhaopin {
     color: #1989fa;
   }
   .zz-icon-toudi {

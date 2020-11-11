@@ -1,5 +1,5 @@
 import cache from '@/plugins/cache'
-import axios, { PromiseResult } from '@/plugins/axios'
+import axios from '@/plugins/axios'
 import VersionService from '@/service/VersionService'
 import { formatDate } from '@/plugins/tools'
 import UserPersonalService from '@/service/User/UserPersonalService'

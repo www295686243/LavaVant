@@ -15,8 +15,8 @@
           <h4>{{ UserEnterpriseService.info.company || UserService.info.nickname }}</h4>
           <p class="display-name">企业用户</p>
         </div>
-        <div class="user-edit" @click="gotoUserInfo">
-          <p>修改</p>
+        <div class="user-edit">
+          <p @click="RouterService.push('/user/enterprise/base')">修改</p>
           <van-icon name="arrow" class="arrow" />
         </div>
       </div>
@@ -39,6 +39,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Image, Grid, GridItem } from 'vant'
 import UserService from '@/service/User/UserService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
+import RouterService from '@/service/RouterService'
 
 @Component({
   components: {
@@ -50,9 +51,6 @@ import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 export default class ViewUserEnterpriseIndex extends Vue {
   private UserEnterpriseService = UserEnterpriseService
   private UserService = UserService
-
-  private gotoUserInfo () {
-    //
-  }
+  private RouterService = RouterService
 }
 </script>
