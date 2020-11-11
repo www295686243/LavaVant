@@ -17,7 +17,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HrResumeService from '@/service/Info/Hr/HrResumeService'
-import InfoViewService from '@/service/Info/InfoViewService'
 import RouterService from '@/service/RouterService'
 import { getCityName } from '@/plugins/tools'
 import Disclaimer from '@/views/hr/components/Disclaimer.vue'
@@ -80,7 +79,7 @@ export default class ViewHrResumeShow extends Vue {
         }
         this.info.cityFullName = getCityName(this.info.city)
         // 信息统计
-        InfoViewService.store(HrResumeService.name)
+        HrResumeService.view({ id: this.info.id, su: RouterService.query('su') })
       })
   }
 

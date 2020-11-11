@@ -5,6 +5,7 @@ import demo from './demo'
 import user from './user'
 import hr from './hr'
 import CouponMarket from '@/views/coupon-market/coupon-market.vue'
+import taskHall from '@/views/task-hall/task-hall.vue'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,13 @@ const routes: Array<RouteConfig> = [
     component: CouponMarket,
     meta: {
       title: '交易市场'
+    }
+  },
+  {
+    path: '/task-hall',
+    component: taskHall,
+    meta: {
+      title: '互助任务'
     }
   },
   ...demo,

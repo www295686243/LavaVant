@@ -33,6 +33,10 @@ class HrJobService extends BaseModelService {
   getContacts () {
     return axios.get('hr_job/getContacts', { id: RouterService.query('id'), _model: this.name })
   }
+
+  view (params: { id: string; su: string }) {
+    return axios.get('hr_job/view', params)
+  }
 }
 
 export default new HrJobService()

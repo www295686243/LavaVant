@@ -22,7 +22,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HrJobService from '@/service/Info/Hr/HrJobService'
-import InfoViewService from '@/service/Info/InfoViewService'
 import { getCityName } from '@/plugins/tools'
 import RouterService from '@/service/RouterService'
 import Disclaimer from '@/views/hr/components/Disclaimer.vue'
@@ -89,7 +88,7 @@ export default class ViewHrJobShow extends Vue {
         }
         this.info.cityFullName = getCityName(this.info.city, '') + (this.info.address || '')
         // 信息统计
-        InfoViewService.store(HrJobService.name)
+        HrJobService.view({ id: this.info.id, su: RouterService.query('su') })
       })
   }
 

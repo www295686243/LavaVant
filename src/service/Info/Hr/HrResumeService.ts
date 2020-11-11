@@ -31,7 +31,11 @@ class HrResumeService extends BaseModelService {
   }
 
   getContacts () {
-    return axios.get('hr_job/getContacts', { id: RouterService.query('id'), _model: this.name })
+    return axios.get('hr_resume/getContacts', { id: RouterService.query('id'), _model: this.name })
+  }
+
+  view (params: { id: string; su: string }) {
+    return axios.get('hr_resume/view', params)
   }
 }
 

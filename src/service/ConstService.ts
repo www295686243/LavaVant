@@ -18,6 +18,15 @@ export interface ConfigItem {
   options: OptionItem[];
 }
 
+function resolveClassName (name: string) {
+  if (name.includes('App\\Models')) {
+    name = name.replace('App\\Models\\', '')
+    name = name.replaceAll('\\', '/')
+    return name
+  }
+  return name
+}
+
 export function getClassifyOptions () {
   return [
     {
@@ -98,6 +107,7 @@ export function getValue (name: string) {
 }
 
 export function getOptions (className: string, field: string) {
+  className = resolveClassName(className)
   const configs: ConfigItem[] = cache.config.get('options') || []
   let config = configs.find((res) => res.name === className + ':' + field)
   if (!config) {
@@ -107,27 +117,32 @@ export function getOptions (className: string, field: string) {
 }
 
 export function getOptionsItem (className: string, field: string, value: number) {
+  className = resolveClassName(className)
   const options = getOptions(className, field)
   const item = options.find((res) => res.value === value)
   return item
 }
 
 export function getOptionsLabel (className: string, field: string, value: number) {
+  className = resolveClassName(className)
   const item = getOptionsItem(className, field, value)
   return item ? item.display_name : ''
 }
 
 // eslint-disable-next-line
 export function getOptionsValue (className: string, field: string, value: number, _display_name?: string) {
+  className = resolveClassName(className)
   const item = getOptionsItem(className, field, value)
   return item ? item.value : 0
 }
 
 export function getStatusLabel (className: string, value: number) {
+  className = resolveClassName(className)
   return getOptionsLabel(className, 'status', value)
 }
 
 export function getStatusValue (className: string, value: number, _display_name?: string) {
+  className = resolveClassName(className)
   return getOptionsValue(className, 'status', value, _display_name)
 }
 

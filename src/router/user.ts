@@ -18,6 +18,8 @@ import enterpriseDetail from '@/views/user/enterprise/detail.vue'
 import hr from './user/hr'
 import coupon from './user/coupon'
 
+import order from '@/views/user/order/index.vue'
+
 export default [
   {
     path: '/user',
@@ -113,6 +115,13 @@ export default [
     component: cashLog,
     meta: {
       title: '提现记录'
+    }
+  },
+  {
+    path: '/user/order',
+    component: order,
+    meta: {
+      title: '联系记录'
     }
   },
   ...hr,

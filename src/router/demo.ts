@@ -7,8 +7,6 @@ import wechatPay from '@/views/demo/wechat-pay.vue'
 import wechatNotify from '@/views/demo/wechat-notify.vue'
 import infoComplaint from '@/views/demo/info-complaint.vue'
 import infoDelivery from '@/views/demo/info-delivery.vue'
-import list from '@/views/demo/list.vue'
-import show from '@/views/demo/show.vue'
 
 export default [
   {
@@ -72,20 +70,6 @@ export default [
     component: infoDelivery,
     meta: {
       title: '信息投递'
-    }
-  },
-  {
-    path: '/demo/list',
-    component: list,
-    meta: {
-      title: '信息列表'
-    }
-  },
-  {
-    path: '/demo/show',
-    component: show,
-    meta: {
-      title: '信息详情'
     }
   }
 ]
