@@ -32,6 +32,19 @@
       <van-cell title="我的简历" to="/user/hr/resume" icon-prefix="zz-icon" icon="jianli" is-link />
       <van-cell title="我的投递" to="/user/order" icon-prefix="zz-icon" icon="toudi" is-link />
     </van-cell-group>
+    <van-cell-group class="user-entra">
+      <van-cell title="联系记录" to="/user/order" icon-prefix="zz-icon" icon="lianxi" is-link />
+      <van-cell title="我的分享" to="/user/share" icon-prefix="zz-icon" icon="fenxiang" is-link />
+      <van-cell title="任务大厅" to="/task-hall" icon-prefix="zz-icon" icon="renwu" is-link />
+      <van-cell title="邀请" to="/user/invite" icon-prefix="zz-icon" icon="yaoqing" is-link />
+    </van-cell-group>
+    <van-cell-group class="user-other">
+      <van-cell title="使用帮助" to="/other/help" icon-prefix="zz-icon" icon="bangzhu" is-link />
+      <van-cell title="设置" to="/user/setup" icon-prefix="zz-icon" icon="shezhi" is-link />
+    </van-cell-group>
+    <van-cell-group class="user-switch">
+      <van-cell title="切换至企业" @click="handleSwitchEnterprise" icon-prefix="zz-icon" icon="qiehuan" is-link />
+    </van-cell-group>
   </div>
 </template>
 
@@ -41,6 +54,9 @@ import { Image, Grid, GridItem } from 'vant'
 import UserService from '@/service/User/UserService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import RouterService from '@/service/RouterService'
+import UserEnterpriseService from '@/service/User/UserEnterpriseService'
+import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
+import VantService from '@/service/VantService'
 
 @Component({
   components: {
@@ -53,5 +69,20 @@ export default class ViewUserPersonalIndex extends Vue {
   private UserPersonalService = UserPersonalService
   private UserService = UserService
   private RouterService = RouterService
+
+  private handleSwitchEnterprise () {
+    return Promise.resolve()
+      .then(() => {
+        if (!UserEnterpriseService.info.company) {
+          return PopupRegisterService.open('Enterprise Member')
+        } else {
+          const loading = VantService.toast.loading('切换中...')
+          return UserService.switchRole('Enterprise Member')
+            .then(() => {
+              loading.clear()
+            })
+        }
+      })
+  }
 }
 </script>

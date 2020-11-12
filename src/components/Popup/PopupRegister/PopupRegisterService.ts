@@ -4,11 +4,15 @@ import PopupRegister from './PopupRegister.vue'
 class PopupRegisterService {
   instance!: any
 
-  open () {
+  open (role?: string) {
     if (!this.instance) {
       const el = document.body.appendChild(document.createElement('div'))
       const Constructor = Vue.extend(PopupRegister)
-      this.instance = new Constructor().$mount(el)
+      this.instance = new Constructor({
+        propsData: {
+          role
+        }
+      }).$mount(el)
     }
     return this.instance.open()
   }

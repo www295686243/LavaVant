@@ -10,14 +10,14 @@
       <van-step>完善基础资料</van-step>
     </van-steps>
     <div class="container">
-      <component :is="current" @success="handleSuccess"></component>
+      <component :is="current" @success="handleSuccess" :role="role"></component>
     </div>
   </van-popup>
 </template>
 
 <script lang="ts">
 import UserService from '@/service/User/UserService'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import BaseInfo from './components/BaseInfo.vue'
 import BindPhone from './components/BindPhone.vue'
 import { Step, Steps } from 'vant'
@@ -31,6 +31,9 @@ import { Step, Steps } from 'vant'
   }
 })
 export default class PopupRegister extends Vue {
+  @Prop()
+  role!: string
+
   private active = UserService.info.phone ? 1 : 0
   private current = UserService.info.phone ? 'BaseInfo' : 'BindPhone'
   private resolve!: Function

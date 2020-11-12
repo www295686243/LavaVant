@@ -1,21 +1,11 @@
 <template>
   <PageContainer class="view-user-index">
     <component :is="roleComponent"></component>
-    <van-cell-group class="user-entra">
-      <van-cell title="联系记录" to="/user/order" icon-prefix="zz-icon" icon="lianxi" is-link />
-      <van-cell title="我的分享" to="/user/share" icon-prefix="zz-icon" icon="fenxiang" is-link />
-      <van-cell title="任务大厅" to="/task-hall" icon-prefix="zz-icon" icon="renwu" is-link />
-      <van-cell title="邀请" to="/user/invite" icon-prefix="zz-icon" icon="yaoqing" is-link />
-    </van-cell-group>
-    <van-cell-group class="user-other">
-      <van-cell title="使用帮助" to="/other/help" icon-prefix="zz-icon" icon="bangzhu" is-link />
-      <van-cell title="设置" to="/user/setup" icon-prefix="zz-icon" icon="shezhi" is-link />
-    </van-cell-group>
   </PageContainer>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import UserService from '@/service/User/UserService'
 import Enterprise from './components/enterprise.vue'
 import Personal from './components/personal.vue'
@@ -27,11 +17,20 @@ import Personal from './components/personal.vue'
   }
 })
 export default class ViewUserIndex extends Vue {
+  @Watch('UserService.info.current_role')
+  onCurrentRole (val: string) {
+    this.switchRole(val)
+  }
+
   private UserService = UserService
   private roleComponent = ''
 
+  private switchRole (role: string) {
+    this.roleComponent = role === 'Enterprise Member' ? 'Enterprise' : 'Personal'
+  }
+
   created () {
-    this.roleComponent = UserService.hasRole('Enterprise Member') ? 'Enterprise' : 'Personal'
+    this.switchRole(UserService.info.current_role)
   }
 }
 </script>
@@ -82,7 +81,8 @@ export default class ViewUserIndex extends Vue {
   }
   .hr-container,
   .user-other,
-  .user-entra {
+  .user-entra,
+  .user-switch {
     margin-top: @padding-md;
   }
   .van-icon-gold-coin {
@@ -118,6 +118,9 @@ export default class ViewUserIndex extends Vue {
   }
   .zz-icon-shezhi {
     color: @gray-7;
+  }
+  .zz-icon-qiehuan {
+    color: @gray-6;
   }
 }
 </style>

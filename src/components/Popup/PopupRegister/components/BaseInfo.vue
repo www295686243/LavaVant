@@ -1,6 +1,8 @@
 <template>
   <FormRender class="PopupRegisterBaseInfo" :form="form" :onSubmit="handleSubmit">
     <FormSelect v-model="form.role" :field="formFields.role" />
+    <FormInput v-model="form.company" :field="formFields.company" key="company" v-if="form.role === 'Enterprise Member'"></FormInput>
+    <FormInput v-model="form.name" :field="formFields.name" key="name" v-else></FormInput>
     <FormClassify v-model="form.industry" :field="formFields.industry" />
     <FormSelect v-model="form.industry_attr" :field="formFields.industry_attr" key="industry_attr" v-if="form.role === 'Enterprise Member'" />
     <FormSelect v-model="form.position_attr" :field="formFields.position_attr" key="position_attr" v-else />
@@ -13,12 +15,17 @@ import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import UserService from '@/service/User/UserService'
 import ValidateService from '@/service/ValidateService'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class PopupRegisterBaseInfo extends Vue {
+  @Prop()
+  role!: string
+
   private form = {
-    role: 'Personal Member',
+    role: this.role || 'Personal Member',
+    company: '',
+    name: '',
     industry: [] as number[],
     position_attr: 0,
     industry_attr: 0,
@@ -33,7 +40,18 @@ export default class PopupRegisterBaseInfo extends Vue {
         { display_name: '个人', value: 'Personal Member' },
         { display_name: '企业', value: 'Enterprise Member' }
       ],
-      rules: [ValidateService.required({ trigger: 'onChange' })]
+      rules: [ValidateService.required({ trigger: 'onChange' })],
+      disabled: !!this.role
+    },
+    company: {
+      prop: 'company',
+      label: '公司名',
+      rules: [ValidateService.required, ValidateService.max(60)]
+    },
+    name: {
+      prop: 'name',
+      label: '姓名',
+      rules: [ValidateService.required, ValidateService.max(20)]
     },
     industry: {
       prop: 'industry',

@@ -27,10 +27,5 @@ export default class TaskHall extends Vue {
 
 <style lang="less">
 .view-task-hall {
-  .tips {
-    padding: @padding-xs @padding-md;
-    font-size: @font-size-sm;
-    color: @gray-6;
-  }
 }
 </style>

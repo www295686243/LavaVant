@@ -24,6 +24,7 @@ interface UserInfo {
   phone: string;
   head_url: string;
   city: number;
+  current_role: string;
   roles: RoleItem[];
   permissions: string[];
   is_follow_official_account: number;
@@ -37,6 +38,7 @@ class UserService {
     phone: '',
     head_url: '',
     city: 0,
+    current_role: '',
     roles: [],
     permissions: [],
     is_follow_official_account: 0
@@ -185,6 +187,11 @@ class UserService {
 
   isFreeForLimitedTime (_model: string) {
     return axios.get('user/isFreeForLimitedTime', { _model })
+  }
+
+  switchRole (role: string) {
+    return axios.post('user/switchRole', { role })
+      .then((res) => this.getUserInfo().then(() => res))
   }
 }
 

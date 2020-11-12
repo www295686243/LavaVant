@@ -34,6 +34,8 @@ class VantService {
       return Toast.loading({
         ...params,
         message,
+        forbidClick: true,
+        duration: 0,
         className: (params && params.className) || 'vant-toast-loading'
       })
     }
