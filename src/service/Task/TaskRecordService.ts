@@ -7,6 +7,10 @@ class TaskRecordService extends BaseModelService {
   index () {
     return axios.get('task_record')
   }
+
+  shareIndex (page: number) {
+    return axios.get('task_record/shareIndex', { page })
+  }
 }
 
 export default new TaskRecordService()

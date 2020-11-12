@@ -24,6 +24,8 @@ import invite from '@/views/user/invite/invite.vue'
 
 import infoProvide from '@/views/user/info_provide/info_provide.vue'
 
+import share from '@/views/user/share/index.vue'
+
 export default [
   {
     path: '/user',
@@ -140,6 +142,13 @@ export default [
     component: invite,
     meta: {
       title: '邀请加入'
+    }
+  },
+  {
+    path: '/user/share',
+    component: share,
+    meta: {
+      title: '分享记录'
     }
   },
   ...hr,

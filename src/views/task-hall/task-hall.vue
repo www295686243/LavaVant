@@ -5,7 +5,10 @@
         <h4>{{v.title}}</h4>
         <h5 class="status" :class="{ finish: v.is_complete }">{{v.is_complete ? '已完成' : '去完成'}}</h5>
       </div>
-      <h5 class="desc">{{v.desc}}</h5>
+      <div class="flex desc">
+        <h5>{{v.desc}}</h5>
+        <h5 v-if="v.id === 1" class="text-color-click" @click.stop="handleShareRecord">分享记录</h5>
+      </div>
     </van-cell>
     <FollowOfficialAccount v-model="isShowQrcode"></FollowOfficialAccount>
     <van-popup
@@ -156,6 +159,10 @@ export default class TaskHall extends Vue {
     return rewards.map((res) => {
       return `奖励${this.getCouponTemplateName(res.coupon_template_id)}${res.give_number}张`
     }).join()
+  }
+
+  private handleShareRecord () {
+    RouterService.push('/user/share')
   }
 }
 </script>
