@@ -1,6 +1,7 @@
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
 import BaseModelService from '../BaseModelService'
+import RouterService from '../RouterService'
 import UserService from './UserService'
 
 class UserPersonalService extends BaseModelService {
@@ -54,6 +55,22 @@ class UserPersonalService extends BaseModelService {
   updateData (params: any) {
     cache.user_personal.setAll(params)
     Object.assign(this.info, params)
+  }
+
+  checkInfo () {
+    return Promise.resolve()
+      .then(() => {
+        if (
+          !(
+            this.info.tags &&
+            (this.info.education_experience && this.info.education_experience.length > 0) &&
+            (this.info.work_experience && this.info.work_experience.length > 0)
+          )
+        ) {
+          RouterService.push('/user/personal/base')
+          return Promise.reject(new Error('请先完善个人资料'))
+        }
+      })
   }
 }
 

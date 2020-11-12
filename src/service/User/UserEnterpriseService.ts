@@ -1,6 +1,7 @@
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
 import BaseModelService from '../BaseModelService'
+import RouterService from '../RouterService'
 import UserService from './UserService'
 
 class UserEnterpriseService extends BaseModelService {
@@ -49,6 +50,16 @@ class UserEnterpriseService extends BaseModelService {
   updateData (params: any) {
     cache.user_enterprise.setAll(params)
     Object.assign(this.info, params)
+  }
+
+  checkInfo () {
+    return Promise.resolve()
+      .then(() => {
+        if (!(this.info.company && this.info.intro && this.info.company_scale)) {
+          RouterService.push('/user/enterprise/base')
+          return Promise.reject(new Error('请先完善企业资料'))
+        }
+      })
   }
 }
 

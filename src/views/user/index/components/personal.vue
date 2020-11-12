@@ -16,7 +16,7 @@
           <p class="display-name">个人用户</p>
         </div>
         <div class="user-edit">
-          <p @click="RouterService.push('/user/enterprise/base')">修改</p>
+          <p @click="RouterService.push('/user/personal/base')">修改</p>
           <van-icon name="arrow" class="arrow" />
         </div>
       </div>

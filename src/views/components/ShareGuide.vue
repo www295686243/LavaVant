@@ -15,10 +15,12 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
   inheritAttrs: false
 })
 export default class ShareGuide extends Vue {
+  // invite
   @Prop({ default: 'share' })
   type!: string
 
-  private buttonText = '分享'
+  @Prop({ default: '分享' })
+  buttonText!: string
 
   private isShowPopup = false
 

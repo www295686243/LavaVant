@@ -52,14 +52,23 @@ export default class PopupRegister extends Vue {
     this.isShow = false
   }
 
-  private handleSuccess () {
-    this.close()
-    this.resolve()
+  public destroy () {
     this.$destroy()
+  }
+
+  private handleSuccess () {
+    if (this.current === 'BindPhone') {
+      this.current = 'BaseInfo'
+    } else {
+      this.close()
+      this.resolve()
+      this.$destroy()
+    }
   }
 
   private handleClose () {
     this.reject()
+    this.destroy()
   }
 }
 </script>

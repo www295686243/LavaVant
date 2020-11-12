@@ -7,14 +7,14 @@
       mode="closeable">
       <span @click="handleNotifyClick">您有{{NotifyService.unreadCount}}条未读消息，点击前往查看</span>
     </van-notice-bar>
-    <DataRender :onLoad="handleLoad">
+    <DataRender :onLoad="handleLoad" ref="drElement">
       <slot></slot>
     </DataRender>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Ref } from 'vue-property-decorator'
 import NotifyService from '@/service/NotifyService'
 import { NoticeBar } from 'vant'
 import RouterService from '@/service/RouterService'
@@ -25,6 +25,9 @@ import RouterService from '@/service/RouterService'
   }
 })
 export default class PageContainer extends Vue {
+  @Ref()
+  drElement!: any
+
   @Prop({ default: () => () => Promise.resolve() })
   readonly onLoad!: Function
 
@@ -43,6 +46,10 @@ export default class PageContainer extends Vue {
 
   private handleNotifyClose () {
     NotifyService.setClose()
+  }
+
+  public reload () {
+    this.drElement.initLoad()
   }
 }
 </script>

@@ -20,6 +20,10 @@ import coupon from './user/coupon'
 
 import order from '@/views/user/order/index.vue'
 
+import invite from '@/views/user/invite/invite.vue'
+
+import infoProvide from '@/views/user/info_provide/info_provide.vue'
+
 export default [
   {
     path: '/user',
@@ -122,6 +126,20 @@ export default [
     component: order,
     meta: {
       title: '联系记录'
+    }
+  },
+  {
+    path: '/user/info_provide',
+    component: infoProvide,
+    meta: {
+      title: '提供信息'
+    }
+  },
+  {
+    path: '/user/invite',
+    component: invite,
+    meta: {
+      title: '邀请加入'
     }
   },
   ...hr,
