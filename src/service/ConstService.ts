@@ -18,6 +18,11 @@ export interface ConfigItem {
   options: OptionItem[];
 }
 
+interface Rewards {
+  give_number: number;
+  coupon_template_id: number;
+}
+
 function resolveClassName (name: string) {
   if (name.includes('App\\Models')) {
     name = name.replace('App\\Models\\', '')
@@ -144,6 +149,17 @@ export function getStatusLabel (className: string, value: number) {
 export function getStatusValue (className: string, value: number, _display_name?: string) {
   className = resolveClassName(className)
   return getOptionsValue(className, 'status', value, _display_name)
+}
+
+function getCouponTemplateName (coupon_template_id: number) {
+  const item = (cache.config.get('coupon_template') || []).find((res: { id: number }) => res.id === coupon_template_id)
+  return item ? item.display_name : '--'
+}
+
+export function getRewardCoupons (rewards: Rewards[]) {
+  return rewards.map((res) => {
+    return `${getCouponTemplateName(res.coupon_template_id)}${res.give_number}张`
+  }).join()
 }
 
 const modelNames = {

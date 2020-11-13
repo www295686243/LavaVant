@@ -21,6 +21,7 @@ import coupon from './user/coupon'
 import order from '@/views/user/order/index.vue'
 
 import invite from '@/views/user/invite/invite.vue'
+import inviteList from '@/views/user/invite/index.vue'
 
 import infoProvide from '@/views/user/info_provide/info_provide.vue'
 
@@ -142,6 +143,13 @@ export default [
     component: invite,
     meta: {
       title: '邀请加入'
+    }
+  },
+  {
+    path: '/user/invite/list',
+    component: inviteList,
+    meta: {
+      title: '邀请记录'
     }
   },
   {

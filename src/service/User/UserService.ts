@@ -142,6 +142,14 @@ class UserService {
     return axios.post('user/setInviteUser', { iu: RouterService.query('iu') })
   }
 
+  getInviteList (page: number) {
+    return axios.get('user/getInviteList', { page })
+  }
+
+  getInviteUser () {
+    return axios.get('user/getInviteUser', { iu: RouterService.query('iu') })
+  }
+
   hasPermission (name: string) {
     return this.info.permissions.includes(name)
   }

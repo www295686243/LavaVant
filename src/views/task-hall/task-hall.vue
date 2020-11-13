@@ -8,6 +8,7 @@
       <div class="flex desc">
         <h5>{{v.desc}}</h5>
         <h5 v-if="v.id === 1" class="text-color-click" @click.stop="handleShareRecord">分享记录</h5>
+        <h5 v-if="v.id === 8" class="text-color-click" @click.stop="handleInviteRecord">邀请记录</h5>
       </div>
     </van-cell>
     <FollowOfficialAccount v-model="isShowQrcode"></FollowOfficialAccount>
@@ -21,7 +22,7 @@
           <h4>{{v.title}}</h4>
           <h5 class="status">去完成</h5>
         </div>
-        <h5 class="desc">{{getRewards(v.rewards)}}</h5>
+        <h5 class="desc">奖励{{getRewardCoupons(v.rewards)}}</h5>
       </van-cell>
     </van-popup>
   </PageContainer>
@@ -32,7 +33,7 @@ import { Component, Vue, Ref } from 'vue-property-decorator'
 import FollowOfficialAccount from '@/views/components/FollowOfficialAccount.vue'
 import UserService from '@/service/User/UserService'
 import cache from '@/plugins/cache'
-import { getOptionsValue } from '@/service/ConstService'
+import { getOptionsValue, getRewardCoupons } from '@/service/ConstService'
 import TaskRecordService from '@/service/Task/TaskRecordService'
 import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 import RouterService from '@/service/RouterService'
@@ -78,6 +79,7 @@ export default class TaskHall extends Vue {
   private isShowQrcode = false
   private isShowSharePopup = false
   private isShowFollowTask = UserService.info.is_follow_official_account === 0
+  private getRewardCoupons = getRewardCoupons
 
   private getList () {
     return (cache.config.get('task') || []).filter((res: { task_type: number }) => {
@@ -150,19 +152,12 @@ export default class TaskHall extends Vue {
     }
   }
 
-  private getCouponTemplateName (coupon_template_id: number) {
-    const item = (cache.config.get('coupon_template') || []).find((res: { id: number }) => res.id === coupon_template_id)
-    return item ? item.display_name : '--'
-  }
-
-  private getRewards (rewards: Rewards[]) {
-    return rewards.map((res) => {
-      return `奖励${this.getCouponTemplateName(res.coupon_template_id)}${res.give_number}张`
-    }).join()
-  }
-
   private handleShareRecord () {
     RouterService.push('/user/share')
+  }
+
+  private handleInviteRecord () {
+    RouterService.push('/user/invite/list')
   }
 }
 </script>

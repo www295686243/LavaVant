@@ -8,7 +8,7 @@
     @load="handleLoad"
     v-model="isLoading">
     <template v-for="(v, index) in list">
-      <div :key="index"><slot :index="index" :v="v"></slot></div>
+      <div :key="index" class="ListContainer-item"><slot :index="index" :v="v"></slot></div>
     </template>
     <div class="List-empty" v-if="isEmpty">
       <slot name="empty">
