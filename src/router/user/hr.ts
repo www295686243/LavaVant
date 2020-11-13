@@ -4,6 +4,8 @@ import jobSuccess from '@/views/user/hr/job/success.vue'
 import resume from '@/views/user/hr/resume/index.vue'
 import resumeForm from '@/views/user/hr/resume/form.vue'
 import resumeSuccess from '@/views/user/hr/resume/success.vue'
+import delivery from '@/views/user/hr/delivery/index.vue'
+import receive from '@/views/user/hr/receive/index.vue'
 
 export default [
   {
@@ -60,6 +62,20 @@ export default [
     component: resumeSuccess,
     meta: {
       title: '更新成功'
+    }
+  },
+  {
+    path: '/user/hr/delivery',
+    component: delivery,
+    meta: {
+      title: '我的投递'
+    }
+  },
+  {
+    path: '/user/hr/receive',
+    component: receive,
+    meta: {
+      title: '接收简历'
     }
   }
 ]

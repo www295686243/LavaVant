@@ -30,13 +30,11 @@
     </div>
     <van-cell-group class="hr-container">
       <van-cell title="我的简历" to="/user/hr/resume" icon-prefix="zz-icon" icon="jianli" is-link />
-      <van-cell title="我的投递" to="/user/order" icon-prefix="zz-icon" icon="toudi" is-link />
+      <van-cell title="我的投递" to="/user/hr/delivery" icon-prefix="zz-icon" icon="toudi" is-link />
     </van-cell-group>
     <van-cell-group class="user-entra">
       <van-cell title="联系记录" to="/user/order" icon-prefix="zz-icon" icon="lianxi" is-link />
-      <van-cell title="我的分享" to="/user/share" icon-prefix="zz-icon" icon="fenxiang" is-link />
       <van-cell title="任务大厅" to="/task-hall" icon-prefix="zz-icon" icon="renwu" is-link />
-      <van-cell title="邀请" to="/user/invite" icon-prefix="zz-icon" icon="yaoqing" is-link />
     </van-cell-group>
     <van-cell-group class="user-other">
       <van-cell title="使用帮助" to="/other/help" icon-prefix="zz-icon" icon="bangzhu" is-link />

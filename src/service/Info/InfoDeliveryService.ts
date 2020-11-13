@@ -11,8 +11,8 @@ interface Params {
 class InfoDeliveryService extends BaseModelService {
   name = 'Info/InfoDelivery'
 
-  index () {
-    //
+  index (params: { page: number; type: string; receive_info_type?: string; send_info_type?: string }) {
+    return axios.get('info_delivery', params)
   }
 
   show (params: Params) {
