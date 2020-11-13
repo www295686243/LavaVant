@@ -11,6 +11,7 @@
       <Disclaimer></Disclaimer>
     </div>
     <RecommendContainer class="container" :Service="HrResumeService"></RecommendContainer>
+    <FixedHelp></FixedHelp>
   </PageContainer>
 </template>
 
@@ -27,6 +28,7 @@ import ContactsContainer from '../components/ContactsContainer.vue'
 import DescriptionContainer from '../components/DescriptionContainer.vue'
 import BaseInfoContainer from '../components/BaseInfoContainer.vue'
 import RecommendContainer from '../components/RecommendContainer.vue'
+import FixedHelp from '@/views/components/FixedHelp.vue'
 
 @Component({
   components: {
@@ -37,7 +39,8 @@ import RecommendContainer from '../components/RecommendContainer.vue'
     ContactsContainer,
     DescriptionContainer,
     BaseInfoContainer,
-    RecommendContainer
+    RecommendContainer,
+    FixedHelp
   }
 })
 export default class ViewHrResumeShow extends Vue {

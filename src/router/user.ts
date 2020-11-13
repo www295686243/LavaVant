@@ -27,6 +27,8 @@ import infoProvide from '@/views/user/info_provide/info_provide.vue'
 
 import share from '@/views/user/share/index.vue'
 
+import help from '@/views/user/help/help.vue'
+
 export default [
   {
     path: '/user',
@@ -157,6 +159,13 @@ export default [
     component: share,
     meta: {
       title: '分享记录'
+    }
+  },
+  {
+    path: '/user/help',
+    component: help,
+    meta: {
+      title: '使用帮助'
     }
   },
   ...hr,

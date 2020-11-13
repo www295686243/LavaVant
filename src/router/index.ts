@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import demo from './demo'
 import user from './user'
 import hr from './hr'
+import other from './other'
 import CouponMarket from '@/views/coupon-market/coupon-market.vue'
 import taskHall from '@/views/task-hall/task-hall.vue'
 import invite from '@/views/operation/invite.vue'
@@ -39,7 +40,8 @@ const routes: Array<RouteConfig> = [
   },
   ...demo,
   ...user,
-  ...hr
+  ...hr,
+  ...other
 ]
 
 const router = new VueRouter({

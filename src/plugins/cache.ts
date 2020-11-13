@@ -14,6 +14,7 @@ export default {
   version: store.namespace(prefix + 'version'),
   stat: store.namespace(prefix + 'stat'),
   hr: store.namespace(prefix + 'hr'),
+  other: store.namespace(prefix + 'other'),
   clearAll () {
     store.clearAll()
   }

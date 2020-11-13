@@ -184,3 +184,18 @@ const modelNames = {
 export function getModel (name: string) {
   return modelNames[name]
 }
+
+class ConstService {
+  isDisableFixedHelp = false
+
+  constructor () {
+    this.isDisableFixedHelp = cache.other.get('isDisableFixedHelp') === true
+  }
+
+  disableFixedHelp () {
+    cache.other.set('isDisableFixedHelp', true)
+    this.isDisableFixedHelp = true
+  }
+}
+
+export default new ConstService()

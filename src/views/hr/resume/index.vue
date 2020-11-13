@@ -6,6 +6,7 @@
         <ListData :v="v" @click="handleClick(v.id)"></ListData>
       </template>
     </ListContainer>
+    <FixedHelp></FixedHelp>
   </PageContainer>
 </template>
 
@@ -15,11 +16,13 @@ import RouterService from '@/service/RouterService'
 import { Component, Vue, Ref } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
 import ListMenu from '../components/ListMenu.vue'
+import FixedHelp from '@/views/components/FixedHelp.vue'
 
 @Component({
   components: {
     ListData,
-    ListMenu
+    ListMenu,
+    FixedHelp
   }
 })
 export default class ViewHrResumeIndex extends Vue {

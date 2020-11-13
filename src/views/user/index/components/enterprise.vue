@@ -37,7 +37,7 @@
       <van-cell title="任务大厅" to="/task-hall" icon-prefix="zz-icon" icon="renwu" is-link />
     </van-cell-group>
     <van-cell-group class="user-other">
-      <van-cell title="使用帮助" to="/other/help" icon-prefix="zz-icon" icon="bangzhu" is-link />
+      <van-cell title="使用帮助" to="/user/help" icon-prefix="zz-icon" icon="bangzhu" is-link />
       <van-cell title="设置" to="/user/setup" icon-prefix="zz-icon" icon="shezhi" is-link />
     </van-cell-group>
     <van-cell-group class="user-switch">
