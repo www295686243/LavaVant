@@ -10,6 +10,7 @@ export default {
   user: store.namespace(prefix + 'user'),
   user_personal: store.namespace(prefix + 'user_personal'),
   user_enterprise: store.namespace(prefix + 'user_enterprise'),
+  user_control: store.namespace(prefix + 'user_control'),
   config: store.namespace(prefix + 'config'),
   version: store.namespace(prefix + 'version'),
   stat: store.namespace(prefix + 'stat'),

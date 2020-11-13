@@ -6,6 +6,7 @@ import UserPersonalService from '@/service/User/UserPersonalService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import RouterService from '@/service/RouterService'
 import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
+import UserControlService from './UserControlService'
 
 interface LoginParams {
   username: string;
@@ -127,6 +128,7 @@ class UserService {
         this.updateData(res.data)
         UserPersonalService.show()
         UserEnterpriseService.show()
+        UserControlService.show()
       })
   }
 

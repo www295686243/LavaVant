@@ -29,6 +29,8 @@ import share from '@/views/user/share/index.vue'
 
 import help from '@/views/user/help/help.vue'
 
+import setup from '@/views/user/setup/setup.vue'
+
 export default [
   {
     path: '/user',
@@ -166,6 +168,13 @@ export default [
     component: help,
     meta: {
       title: '使用帮助'
+    }
+  },
+  {
+    path: '/user/setup',
+    component: setup,
+    meta: {
+      title: '设置'
     }
   },
   ...hr,

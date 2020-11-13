@@ -23,7 +23,7 @@ export default class PopupRegisterBaseInfo extends Vue {
   role!: string
 
   private form = {
-    role: this.role || 'Personal Member',
+    role: '',
     company: '',
     name: '',
     industry: [] as number[],
@@ -41,7 +41,7 @@ export default class PopupRegisterBaseInfo extends Vue {
         { display_name: '企业', value: 'Enterprise Member' }
       ],
       rules: [ValidateService.required({ trigger: 'onChange' })],
-      disabled: !!this.role
+      disabled: !!(this.role || UserService.info.current_role)
     },
     company: {
       prop: 'company',
@@ -83,6 +83,22 @@ export default class PopupRegisterBaseInfo extends Vue {
         this.$emit('success')
         return res
       })
+  }
+
+  created () {
+    this.form.role = this.role || (UserService.info.current_role || 'Personal Member')
+    this.form.company = UserEnterpriseService.info.company || ''
+    this.form.name = UserPersonalService.info.name || ''
+    this.form.position_attr = UserPersonalService.info.position_attr || 0
+    this.form.industry_attr = UserEnterpriseService.info.industry_attr || 0
+    if (this.form.role === 'Personal Member') {
+      this.form.city = UserPersonalService.info.city || 0
+      this.form.industry = UserPersonalService.info.industry || []
+    } else if (this.form.role === 'Enterprise Member') {
+      this.form.city = UserEnterpriseService.info.city || 0
+      this.form.industry = UserEnterpriseService.info.industry || []
+    }
+    this.form.city = UserService.info.city || 0
   }
 }
 </script>

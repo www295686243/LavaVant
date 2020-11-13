@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import PopupRegister from './PopupRegister.vue'
+import PopupPhone from './PopupPhone.vue'
 
 class PopupRegisterService {
   instance!: any
@@ -12,6 +13,13 @@ class PopupRegisterService {
         role
       }
     }).$mount(el)
+    return this.instance.open()
+  }
+
+  phone () {
+    const el = document.body.appendChild(document.createElement('div'))
+    const Constructor = Vue.extend(PopupPhone)
+    this.instance = new Constructor().$mount(el)
     return this.instance.open()
   }
 

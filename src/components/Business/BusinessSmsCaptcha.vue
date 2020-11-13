@@ -56,7 +56,8 @@ export default class BusinessSmsCaptcha extends Vue {
   private formFields = ValidateService.genRules({
     phone: {
       label: '手机号',
-      rules: [ValidateService.required, ValidateService.mobile]
+      rules: [ValidateService.required, ValidateService.mobile],
+      disabled: false
     },
     code: {
       label: '验证码'
@@ -93,6 +94,10 @@ export default class BusinessSmsCaptcha extends Vue {
 
   created () {
     this.typeMode = TYPE_NAME[this.typeName]
+    if (this.typeMode.code === 'verify-phone') {
+      this.form.phone = UserService.info.phone
+      this.formFields.phone.disabled = true
+    }
   }
 }
 </script>

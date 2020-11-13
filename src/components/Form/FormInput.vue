@@ -79,5 +79,8 @@ export default class FormInput extends Mixins(FormMixins) {
       color: @gray-5;
     }
   }
+  &.van-field--disabled .van-field__label {
+    color: @gray-7;
+  }
 }
 </style>

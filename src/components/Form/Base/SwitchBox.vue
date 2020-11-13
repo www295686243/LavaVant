@@ -31,11 +31,12 @@ export default class FormBaseSwitch extends Mixins(FormMixins) {
   size!: number
 
   private isLoading = false
+  private originalValue = this.value
 
-  private onChange () {
+  private onChange (val: number) {
     if (this.onSubmit) {
       this.isLoading = true
-      this.onSubmit()
+      this.onSubmit(val)
         .then((res: PromiseResult) => {
           this.isLoading = false
           if (res && res.message) {
@@ -44,6 +45,7 @@ export default class FormBaseSwitch extends Mixins(FormMixins) {
         })
         .catch((res: PromiseResult) => {
           this.isLoading = false
+          this.innerValue = this.originalValue
           if (res && res.message) {
             VantService.toast.fail(res.message)
           }

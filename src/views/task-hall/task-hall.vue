@@ -182,7 +182,7 @@ export default class TaskHall extends Vue {
     }
   }
   .desc {
-    margin-top: @padding-xs;
+    margin-top: @padding-md;
     line-height: 1.4;
     color: @gray-7;
   }
