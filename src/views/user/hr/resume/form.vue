@@ -2,9 +2,6 @@
   <PageContainer class="view-user-hr-job-form">
     <FormRender :Service="HrResumeService" :form="form" :onSubmitAfter="handleSubmitAfter" :submitBtn="submitBtnText">
       <FormInput v-model="form.title" :field="formFields.title" />
-      <FormCheckbox v-model="form.is_other_user" :field="formFields.is_other_user">
-        帮人发布的<span class="tips">(选中后不显示当前账号的工作经历等认证)</span>
-      </FormCheckbox>
       <FormSalary
         :isNegotiable.sync="form.is_negotiate"
         :min-value.sync="form.monthly_salary_min"
@@ -22,32 +19,18 @@
       <FormDateTime v-model="form.end_time" :field="formFields.end_time" :min-date="minDate" />
       <FormInput v-model="form.contacts" :field="formFields.contacts" />
       <FormInput v-model="form.phone" :field="formFields.phone" />
-      <FormCheckbox v-model="form.is_force_show_user_info" :field="formFields.is_force_show_user_info" v-if="form.is_other_user === 0">
-        直接公开个人详情(包括工作经历、教育经历)
-      </FormCheckbox>
     </FormRender>
   </PageContainer>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import HrResumeService from '@/service/User/Info/HrResumeService'
-import UserPersonalService from '@/service/User/UserPersonalService'
 
 @Component
 export default class UserHrJobForm extends Vue {
-  @Watch('form.is_other_user')
-  onIsOtherUser (val: number) {
-    if (val > 0) {
-      this.submitBtnText = '立即发布'
-    } else {
-      this.submitBtnText = '发布并完善个人资料'
-    }
-    this.initDefaultData()
-  }
-
   private HrResumeService = HrResumeService
   private isCreate = !!RouterService.query('id')
   private minDate!: Date
@@ -61,13 +44,11 @@ export default class UserHrJobForm extends Vue {
     treatment_input: '',
     education: '',
     seniority: '',
-    city: '',
+    city: 0,
     end_time: '',
     contacts: '',
     phone: '',
-    is_force_show_user_info: 0,
-    description: '',
-    is_other_user: 0
+    description: ''
   }
 
   private submitBtnText = '发布并完善个人资料'
@@ -77,10 +58,6 @@ export default class UserHrJobForm extends Vue {
       prop: 'title',
       label: '求职标题',
       rules: [ValidateService.required, ValidateService.max(42)]
-    },
-    is_other_user: {
-      prop: 'is_other_user',
-      label: ''
     },
     rangeSalary: {
       prop: 'rangeSalary',
@@ -127,33 +104,13 @@ export default class UserHrJobForm extends Vue {
       prop: 'phone',
       label: '联系电话',
       rules: [ValidateService.required, ValidateService.mobile]
-    },
-    is_force_show_user_info: {
-      prop: 'is_force_show_user_info',
-      label: ''
     }
   })
-
-  private initDefaultData () {
-    if (this.isCreate && this.form.is_other_user === 0) {
-      this.form.city = UserPersonalService.info.city
-      this.form.contacts = UserPersonalService.info.name
-      this.form.phone = UserPersonalService.info.phone
-    } else {
-      this.form.city = ''
-      this.form.contacts = ''
-      this.form.phone = ''
-    }
-  }
 
   private handleSubmitAfter () {
     return Promise.resolve()
       .then(() => {
-        if (this.form.is_other_user > 0) {
-          RouterService.replace('/user/hr/resume/' + (this.form.id ? 'update-success' : 'create-success'))
-        } else {
-          RouterService.replace('/user/personal/detail', { toPath: '/user/hr/resume/' + (this.form.id ? 'update-success' : 'create-success') })
-        }
+        RouterService.replace('/user/hr/resume/' + (this.form.id ? 'update-success' : 'create-success'))
       })
   }
 

@@ -2,9 +2,6 @@
   <PageContainer class="view-user-hr-job-form">
     <FormRender :Service="HrJobService" :form="form" :onSubmitAfter="handleSubmitAfter" :submitBtn="submitBtnText">
       <FormInput v-model="form.title" :field="formFields.title" />
-      <FormCheckbox v-model="form.is_other_user" :field="formFields.is_other_user">
-        帮人发布的<span class="tips">(选中后不显示注册企业信息)</span>
-      </FormCheckbox>
       <FormInput v-model="form.company_name" :field="formFields.company_name" />
       <FormSalary
         :isNegotiable.sync="form.is_negotiate"
@@ -30,31 +27,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import HrJobService from '@/service/User/Info/HrJobService'
-import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 
 @Component
 export default class UserHrJobForm extends Vue {
-  @Watch('form.is_other_user')
-  onIsOtherUser (val: number) {
-    if (val > 0) {
-      this.submitBtnText = '立即发布'
-    } else {
-      this.submitBtnText = '发布并完善企业资料'
-    }
-    this.initDefaultData()
-  }
-
   private HrJobService = HrJobService
   private isCreate = !!RouterService.query('id')
   private minDate!: Date
   private form = {
     id: RouterService.query('id'),
     title: '',
-    is_other_user: 0,
     company_name: '',
     monthly_salary_min: '',
     monthly_salary_max: '',
@@ -62,7 +47,7 @@ export default class UserHrJobForm extends Vue {
     recruiter_number: 1,
     education: '',
     seniority: '',
-    city: '',
+    city: 0,
     address: '',
     end_time: '',
     contacts: '',
@@ -80,10 +65,6 @@ export default class UserHrJobForm extends Vue {
       label: '招聘标题',
       rules: [ValidateService.required, ValidateService.max(42)],
       placeholder: '请输入招聘岗位名称'
-    },
-    is_other_user: {
-      prop: 'is_other_user',
-      label: ''
     },
     company_name: {
       prop: 'company_name',
@@ -150,30 +131,10 @@ export default class UserHrJobForm extends Vue {
     }
   })
 
-  private initDefaultData () {
-    if (this.isCreate && this.form.is_other_user === 0) {
-      this.form.company_name = UserEnterpriseService.info.company
-      this.form.city = UserEnterpriseService.info.city
-      this.form.contacts = UserEnterpriseService.info.name
-      this.form.phone = UserEnterpriseService.info.phone
-      this.form.address = UserEnterpriseService.info.address
-    } else {
-      this.form.company_name = ''
-      this.form.city = ''
-      this.form.contacts = ''
-      this.form.phone = ''
-      this.form.address = ''
-    }
-  }
-
   private handleSubmitAfter () {
     return Promise.resolve()
       .then(() => {
-        if (this.form.is_other_user > 0) {
-          RouterService.replace('/user/hr/job/' + (this.form.id ? 'update-success' : 'create-success'))
-        } else {
-          RouterService.replace('/user/enterprise/detail', { toPath: '/user/hr/job/' + (this.form.id ? 'update-success' : 'create-success') })
-        }
+        RouterService.replace('/user/hr/job/' + (this.form.id ? 'update-success' : 'create-success'))
       })
   }
 

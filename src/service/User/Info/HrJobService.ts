@@ -14,7 +14,7 @@ class HrJobService extends BaseModelService {
     return axios.get(`user/hr_job/${RouterService.query('id')}`, { _check: RouterService.query('_check') })
   }
 
-  store (form: { is_other_user: number; id: number }) {
+  store (form: { id: number }) {
     return axios.post('user/hr_job', form)
   }
 

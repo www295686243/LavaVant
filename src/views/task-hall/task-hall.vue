@@ -14,10 +14,10 @@
     <FollowOfficialAccount v-model="isShowQrcode"></FollowOfficialAccount>
     <van-popup
       class="view-task-hall-share-popup"
-      v-model="isShowSharePopup"
+      v-model="isShowSubTaskPopup"
       round
       get-container="body">
-      <van-cell v-for="v in shareTaskList" @click="handleShare(v)" :key="v.id" clickable>
+      <van-cell v-for="v in subTaskList" @click="handleClickSubTask(v)" :key="v.id" clickable>
         <div class="flex">
           <h4>{{v.title}}</h4>
           <h5 class="status">去完成</h5>
@@ -40,6 +40,9 @@ import RouterService from '@/service/RouterService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import VantService from '@/service/VantService'
+import InfoProvideService from '@/service/User/Info/InfoProvideService'
+import HrJobService from '@/service/User/Info/HrJobService'
+import HrResumeService from '@/service/User/Info/HrResumeService'
 
 interface TaskRecord {
   title: string;
@@ -53,6 +56,7 @@ interface Rewards {
 
 interface TaskRule {
   id: number;
+  task_rule_name: number;
   title: string;
   rewards: Rewards[];
 }
@@ -75,9 +79,9 @@ export default class TaskHall extends Vue {
   pageElement!: any
 
   private list = []
-  private shareTaskList: TaskRule[] = []
+  private subTaskList: TaskRule[] = []
   private isShowQrcode = false
-  private isShowSharePopup = false
+  private isShowSubTaskPopup = false
   private isShowFollowTask = UserService.info.is_follow_official_account === 0
   private getRewardCoupons = getRewardCoupons
 
@@ -108,8 +112,8 @@ export default class TaskHall extends Vue {
   private handleTask (v: Task) {
     if (v.is_complete) return
     if (v.id === 1) { // 分享信息
-      this.shareTaskList = v.task_rule
-      this.isShowSharePopup = true
+      this.subTaskList = v.task_rule
+      this.isShowSubTaskPopup = true
     } else if (v.id === 2) { // 关注公众号
       this.isShowQrcode = true
     } else if (v.id === 3) { // 绑定手机号
@@ -140,15 +144,20 @@ export default class TaskHall extends Vue {
     } else if (v.id === 8) { // 邀请加入
       RouterService.push('/user/invite')
     } else if (v.id === 9) { // 提供信息
-      RouterService.push('/user/info_provide')
+      this.subTaskList = v.task_rule
+      this.isShowSubTaskPopup = true
     }
   }
 
-  private handleShare (v: TaskRule) {
-    if (v.id === 1) { // 分享简历
+  private handleClickSubTask (v: TaskRule) {
+    if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 1, '分享简历')) {
       RouterService.push('/hr/resume')
-    } else if (v.id === 2) { // 分享职位
+    } else if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 2, '分享职位')) {
       RouterService.push('/hr/job')
+    } else if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 12, '提供职位')) {
+      RouterService.push('/user/info_provide', { _model: HrJobService.name })
+    } else if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 13, '提供人才')) {
+      RouterService.push('/user/info_provide', { _model: HrResumeService.name })
     }
   }
 

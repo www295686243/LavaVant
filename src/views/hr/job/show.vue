@@ -70,7 +70,6 @@ export default class ViewHrJobShow extends Vue {
     phone: '',
     status: 0,
     views: 0,
-    is_other_user: 0,
     description: '',
     created_at: '',
     salary: '',
