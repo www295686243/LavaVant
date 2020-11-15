@@ -1,7 +1,7 @@
 import axios from '@/plugins/axios'
 import BaseModelService from '../BaseModelService'
 
-class UserPersonalAuth extends BaseModelService {
+class UserPersonalAuthService extends BaseModelService {
   name = 'User/UserPersonalAuth'
 
   show () {
@@ -13,4 +13,4 @@ class UserPersonalAuth extends BaseModelService {
   }
 }
 
-export default new UserPersonalAuth()
+export default new UserPersonalAuthService()

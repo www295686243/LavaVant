@@ -14,7 +14,7 @@
         v-model="form.treatment"
         :field="formFields.treatment" />
       <FormStepper v-model="form.recruiter_number" :field="formFields.recruiter_number" />
-      <FormTextarea v-model="form.description" :field="formFields.description" />
+      <FormTextarea v-model="form.description" :field="formFields.description" :rows="5" />
       <FormSelect v-model="form.education" :field="formFields.education" />
       <FormSelect v-model="form.seniority" :field="formFields.seniority" />
       <FormArea v-model="form.city" :field="formFields.city" />
@@ -62,14 +62,13 @@ export default class UserHrJobForm extends Vue {
   private formFields = ValidateService.genRules({
     title: {
       prop: 'title',
-      label: '招聘标题',
-      rules: [ValidateService.required, ValidateService.max(42)],
-      placeholder: '请输入招聘岗位名称'
+      label: '职位名称',
+      rules: [ValidateService.required, ValidateService.max(42)]
     },
     company_name: {
       prop: 'company_name',
       label: '企业名称',
-      rules: [ValidateService.max(60)]
+      rules: [ValidateService.required, ValidateService.max(60)]
     },
     rangeSalary: {
       prop: 'rangeSalary',
@@ -84,7 +83,7 @@ export default class UserHrJobForm extends Vue {
     recruiter_number: {
       prop: 'recruiter_number',
       label: '招聘人数',
-      rules: [ValidateService.minNum(1)]
+      rules: [ValidateService.required, ValidateService.minNum(1)]
     },
     description: {
       prop: 'description',

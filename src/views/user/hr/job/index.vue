@@ -6,12 +6,22 @@
           <template v-slot="{ v }">
             <ListData :v="v" :Service="HrJobService"></ListData>
           </template>
+          <template>
+            <van-empty slot="empty" description="暂无任何信息">
+              <ButtonSubmit round :onClick="() => RouterService.push('/user/hr/job/form')">发布职位</ButtonSubmit>
+            </van-empty>
+          </template>
         </ListContainer>
       </van-tab>
       <van-tab title="待审核">
         <ListContainer :onLoad="handleLoadCheck" ref="checkListElement">
           <template v-slot="{ v }">
             <CheckListData :v="v" :Service="HrJobService" @reload="handleReloadCheck"></CheckListData>
+          </template>
+          <template>
+            <van-empty slot="empty" description="暂无任何信息">
+              <ButtonSubmit round :onClick="() => RouterService.push('/user/hr/job/form')">发布职位</ButtonSubmit>
+            </van-empty>
           </template>
         </ListContainer>
       </van-tab>
@@ -24,15 +34,17 @@ import HrJobService from '@/service/User/Info/HrJobService'
 import { Component, Ref, Vue } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
 import CheckListData from '../components/CheckListData.vue'
-import { Tab, Tabs } from 'vant'
+import { Tab, Tabs, Empty } from 'vant'
 import InfoCheckService from '@/service/Info/InfoCheckService'
+import RouterService from '@/service/RouterService'
 
 @Component({
   components: {
     ListData,
     CheckListData,
     [Tab.name]: Tab,
-    [Tabs.name]: Tabs
+    [Tabs.name]: Tabs,
+    [Empty.name]: Empty
   }
 })
 export default class ViewUserHrResumeIndex extends Vue {
@@ -40,6 +52,7 @@ export default class ViewUserHrResumeIndex extends Vue {
   checkListElement!: any
 
   private HrJobService = HrJobService
+  private RouterService = RouterService
   private active = 0
 
   private handleLoad (page: number) {

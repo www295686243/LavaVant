@@ -12,7 +12,7 @@
         :text.sync="form.treatment_input"
         v-model="form.treatment"
         :field="formFields.treatment" />
-      <FormTextarea v-model="form.description" :field="formFields.description" />
+      <FormTextarea v-model="form.description" :field="formFields.description" :rows="5" />
       <FormSelect v-model="form.education" :field="formFields.education" />
       <FormSelect v-model="form.seniority" :field="formFields.seniority" />
       <FormArea v-model="form.city" :field="formFields.city" />
@@ -56,7 +56,7 @@ export default class UserHrJobForm extends Vue {
   private formFields = ValidateService.genRules({
     title: {
       prop: 'title',
-      label: '求职标题',
+      label: '简历标题',
       rules: [ValidateService.required, ValidateService.max(42)]
     },
     rangeSalary: {

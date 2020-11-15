@@ -24,7 +24,7 @@
         <van-grid :border="false" :column-num="3" :clickable="true">
           <van-grid-item icon="gold-coin" to="/user/wallet" text="我的钱包" />
           <van-grid-item icon="youhuiquan" icon-prefix="zz-icon" to="/user/coupon/my-coupon" text="互助券" />
-          <van-grid-item icon="vip-card" to="/user/personal-auth" text="认证" />
+          <van-grid-item icon="vip-card" @click="handleGotoAuth" text="认证" />
         </van-grid>
       </div>
     </div>
@@ -53,7 +53,6 @@ import UserService from '@/service/User/UserService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import RouterService from '@/service/RouterService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
-import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 import VantService from '@/service/VantService'
 
 @Component({
@@ -69,17 +68,20 @@ export default class ViewUserPersonalIndex extends Vue {
   private RouterService = RouterService
 
   private handleSwitchEnterprise () {
-    return Promise.resolve()
+    return UserEnterpriseService.checkBaseInfo()
       .then(() => {
-        if (!UserEnterpriseService.info.company) {
-          return PopupRegisterService.open('Enterprise Member')
-        } else {
-          const loading = VantService.toast.loading('切换中...')
-          return UserService.switchRole('Enterprise Member')
-            .then(() => {
-              loading.clear()
-            })
-        }
+        const loading = VantService.toast.loading('切换中...')
+        return UserService.switchRole('Enterprise Member')
+          .then(() => {
+            loading.clear()
+          })
+      })
+  }
+
+  private handleGotoAuth () {
+    return UserPersonalService.checkBaseInfo()
+      .then(() => {
+        RouterService.push('/user/personal-auth')
       })
   }
 }

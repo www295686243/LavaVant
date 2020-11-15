@@ -1,3 +1,4 @@
+import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
 import BaseModelService from '../BaseModelService'
@@ -69,6 +70,15 @@ class UserPersonalService extends BaseModelService {
         ) {
           RouterService.push('/user/personal/base')
           return Promise.reject(new Error('请先完善个人资料'))
+        }
+      })
+  }
+
+  checkBaseInfo () {
+    return Promise.resolve()
+      .then(() => {
+        if (!(this.info.name && this.info.position_attr && this.info.city && this.info.industry.length > 0)) {
+          return PopupRegisterService.open('Personal Member')
         }
       })
   }

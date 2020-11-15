@@ -12,7 +12,7 @@
         title="设置地区与行业"
         icon="apps-o"
         is-link />
-      <van-cell center title="订阅招聘信息" icon="star-o">
+      <van-cell center title="订阅职位信息" icon="star-o">
         <SwitchBox
           slot="right-icon"
           v-model="UserControlService.info.is_open_resume_push"
@@ -20,7 +20,7 @@
           size="20">
         </SwitchBox>
       </van-cell>
-      <van-cell center title="订阅求职信息" icon="star-o">
+      <van-cell center title="订阅简历信息" icon="star-o">
         <SwitchBox
           slot="right-icon"
           v-model="UserControlService.info.is_open_job_push"

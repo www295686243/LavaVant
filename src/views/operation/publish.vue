@@ -5,13 +5,13 @@
         <van-col span="12" @click="RouterService.push('/user/resume/create')">
           <div class="view-col-box van-hairline--surround">
             <ImageContainer src="/images/share-resume.png" width="40" height="40"></ImageContainer>
-            <p>发布求职</p>
+            <p>发布简历</p>
           </div>
         </van-col>
         <van-col span="12" @click="RouterService.push('/user/job/create')">
           <div class="view-col-box van-hairline--surround">
             <ImageContainer src="/images/share-job.png" width="40" height="40"></ImageContainer>
-            <p>发布招聘</p>
+            <p>发布职位</p>
           </div>
         </van-col>
       </van-row>
@@ -28,7 +28,7 @@
       </van-steps>
     </div>
     <h6 class="view-tips">
-      发布后，可在【<span class="z-color-click" @click="RouterService.push('/user')">个人中心</span>—><span class="z-color-click" @click="RouterService.push('/user/resume')">我的求职</span>/<span class="z-color-click" @click="RouterService.push('/user/job')">我的招聘</span>】查看管理
+      发布后，可在【<span class="z-color-click" @click="RouterService.push('/user')">个人中心</span>—><span class="z-color-click" @click="RouterService.push('/user/resume')">我的简历</span>/<span class="z-color-click" @click="RouterService.push('/user/job')">我的职位</span>】查看管理
     </h6>
   </PageContainer>
 </template>

@@ -1,6 +1,7 @@
 <template>
   <PageContainer class="view-user-index">
     <component :is="roleComponent"></component>
+    <FooterTabBar></FooterTabBar>
   </PageContainer>
 </template>
 
@@ -9,11 +10,13 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import UserService from '@/service/User/UserService'
 import Enterprise from './components/enterprise.vue'
 import Personal from './components/personal.vue'
+import FooterTabBar from '@/views/components/FooterTabBar.vue'
 
 @Component({
   components: {
     Enterprise,
-    Personal
+    Personal,
+    FooterTabBar
   }
 })
 export default class ViewUserIndex extends Vue {

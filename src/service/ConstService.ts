@@ -165,7 +165,7 @@ export function getRewardCoupons (rewards: Rewards[]) {
 const modelNames = {
   hrJob: {
     model: 'Info/Hr/HrJob',
-    text: '招聘',
+    text: '职位',
     path: 'hr/job'
   },
   hrResume: {

@@ -6,25 +6,32 @@
       <FormArea v-model="form.city" :field="formFields.city"/>
       <FormInput v-model="form.address" :field="formFields.address" />
       <FormTextarea v-model="form.intro" :field="formFields.intro" />
-      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ _model: UserEnterpriseAuth.name, info_id: form.user_id }" />
+      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ _model: UserEnterpriseAuthService.name, info_id: form.user_id }" />
+      <template slot="footer" v-if="isSubmitted === true && disableSubmit === false">
+        <ButtonSubmit :onClick="handleSubmit" block round>更新认证</ButtonSubmit>
+      </template>
     </FormRender>
   </PageContainer>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import ValidateService, { FormFields } from '@/service/ValidateService'
-import RouterService from '@/service/RouterService'
 import UserService from '@/service/User/UserService'
-import UserEnterpriseAuth from '@/service/User/UserEnterpriseAuth'
+import UserEnterpriseAuthService from '@/service/User/UserEnterpriseAuthService'
+import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 
 @Component
 export default class ViewUserEnterpriseAuth extends Vue {
-  private UserEnterpriseAuth = UserEnterpriseAuth
+  @Watch('UserEnterpriseService.info.company')
+  onChange () {
+    this.change()
+  }
+
   private form = {
     company: '',
     business_license: '',
-    city: '',
+    city: 0,
     address: '',
     intro: '',
     certificates: [],
@@ -35,6 +42,8 @@ export default class ViewUserEnterpriseAuth extends Vue {
   private submitBtn = '提 交'
   private isSubmitted = false
   private disableSubmit = false
+  private UserEnterpriseAuthService = UserEnterpriseAuthService
+  private UserEnterpriseService = UserEnterpriseService
 
   private formFields: FormFields = ValidateService.genRules({
     company: {
@@ -72,17 +81,14 @@ export default class ViewUserEnterpriseAuth extends Vue {
   })
 
   private handleLoad () {
-    return UserEnterpriseAuth.show()
+    return UserEnterpriseAuthService.show()
       .then((res) => {
+        Object.assign(this.form, res.data)
         this.isSubmitted = !!(res.data && res.data.id)
         this.handleToggleFormDisabled(this.isSubmitted)
-        if (this.isSubmitted) {
-          if (res.data.status !== UserEnterpriseAuth.getStatusValue(1, '审核中')) {
-            this.submitBtn = '更新认证'
-          } else {
-            this.submitBtn = '请等待审核'
-            this.disableSubmit = true
-          }
+        if (this.isSubmitted && res.data.status === UserEnterpriseAuthService.getStatusValue(1, '审核中')) {
+          this.submitBtn = '请等待审核'
+          this.disableSubmit = true
         }
         return res
       })
@@ -97,14 +103,10 @@ export default class ViewUserEnterpriseAuth extends Vue {
   private handleSubmit () {
     return Promise.resolve()
       .then(() => {
-        if (this.isSubmitted && this.form.status !== UserEnterpriseAuth.getStatusValue(1, '审核中')) {
+        if (this.isSubmitted && this.form.status !== UserEnterpriseAuthService.getStatusValue(1, '审核中')) {
           this.init()
         } else {
-          return UserEnterpriseAuth.store(this.form)
-            .then((res) => {
-              RouterService.go()
-              return res
-            })
+          return UserEnterpriseAuthService.store(this.form)
         }
       })
   }
@@ -113,6 +115,18 @@ export default class ViewUserEnterpriseAuth extends Vue {
     Object.keys(this.formFields).forEach((key: string) => {
       this.formFields[key].disabled = bool
     })
+  }
+
+  private change () {
+    this.form.company = UserEnterpriseService.info.company || ''
+    this.form.business_license = UserEnterpriseService.info.business_license || ''
+    this.form.city = UserEnterpriseService.info.city || 0
+    this.form.address = UserEnterpriseService.info.address || ''
+    this.form.intro = UserEnterpriseService.info.intro || ''
+  }
+
+  created () {
+    this.change()
   }
 }
 </script>

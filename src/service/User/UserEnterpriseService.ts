@@ -1,3 +1,4 @@
+import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
 import BaseModelService from '../BaseModelService'
@@ -58,6 +59,15 @@ class UserEnterpriseService extends BaseModelService {
         if (!(this.info.company && this.info.intro && this.info.company_scale)) {
           RouterService.push('/user/enterprise/base')
           return Promise.reject(new Error('请先完善企业资料'))
+        }
+      })
+  }
+
+  checkBaseInfo () {
+    return Promise.resolve()
+      .then(() => {
+        if (!(this.info.company && this.info.industry_attr && this.info.city && this.info.industry.length > 0)) {
+          return PopupRegisterService.open('Enterprise Member')
         }
       })
   }

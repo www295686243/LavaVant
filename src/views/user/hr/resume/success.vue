@@ -11,7 +11,7 @@
         <p><img src="@/assets/images/yuancao.jpg" alt="原草网公众号" width="200" height="200"></p>
         <p>检测到您未关注【原草互助】公众号</p>
         <p>请长按二维码识别关注</p>
-        <p>才能获得公众号即时招聘信息推送、进度推送！</p>
+        <p>才能获得公众号即时职位信息推送、进度推送！</p>
       </div>
     </div>
   </PageContainer>

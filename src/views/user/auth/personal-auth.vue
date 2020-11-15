@@ -7,25 +7,33 @@
       <FormArea v-model="form.city" :field="formFields.city"/>
       <FormInput v-model="form.address" :field="formFields.address" />
       <FormTextarea v-model="form.intro" :field="formFields.intro" />
-      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ _model: 'User/UserPersonalAuth', info_id: form.user_id }" />
+      <FormImages v-model="form.certificates" :field="formFields.certificates" :uploadParmas="{ _model: UserPersonalAuthService.name, info_id: form.user_id }" />
+      <template slot="footer" v-if="isSubmitted === true && disableSubmit === false">
+        <ButtonSubmit :onClick="handleSubmit" block round>更新认证</ButtonSubmit>
+      </template>
     </FormRender>
   </PageContainer>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import ValidateService, { FormFields } from '@/service/ValidateService'
-import RouterService from '@/service/RouterService'
 import UserService from '@/service/User/UserService'
-import UserPersonalAuth from '@/service/User/UserPersonalAuth'
+import UserPersonalAuthService from '@/service/User/UserPersonalAuthService'
+import UserPersonalService from '@/service/User/UserPersonalService'
 
 @Component
 export default class ViewUserPersonalAuth extends Vue {
+  @Watch('UserPersonalService.info.name')
+  onChange () {
+    this.change()
+  }
+
   private form = {
     name: '',
     company: '',
     position: '',
-    city: '',
+    city: 0,
     address: '',
     intro: '',
     certificates: [],
@@ -36,6 +44,8 @@ export default class ViewUserPersonalAuth extends Vue {
   private submitBtn = '提 交'
   private isSubmitted = false
   private disableSubmit = false
+  private UserPersonalService = UserPersonalService
+  private UserPersonalAuthService = UserPersonalAuthService
 
   private formFields: FormFields = ValidateService.genRules({
     name: {
@@ -78,17 +88,14 @@ export default class ViewUserPersonalAuth extends Vue {
   })
 
   private handleLoad () {
-    return UserPersonalAuth.show()
+    return UserPersonalAuthService.show()
       .then((res) => {
+        Object.assign(this.form, res.data)
         this.isSubmitted = !!(res.data && res.data.id)
         this.handleToggleFormDisabled(this.isSubmitted)
-        if (this.isSubmitted) {
-          if (res.data.status !== UserPersonalAuth.getStatusValue(1, '审核中')) {
-            this.submitBtn = '更新认证'
-          } else {
-            this.submitBtn = '请等待审核'
-            this.disableSubmit = true
-          }
+        if (this.isSubmitted && res.data.status === UserPersonalAuthService.getStatusValue(1, '审核中')) {
+          this.submitBtn = '请等待审核'
+          this.disableSubmit = true
         }
         return res
       })
@@ -103,14 +110,10 @@ export default class ViewUserPersonalAuth extends Vue {
   private handleSubmit () {
     return Promise.resolve()
       .then(() => {
-        if (this.isSubmitted && this.form.status !== UserPersonalAuth.getStatusValue(1, '审核中')) {
+        if (this.isSubmitted && this.form.status !== UserPersonalAuthService.getStatusValue(1, '审核中')) {
           this.init()
         } else {
-          return UserPersonalAuth.store(this.form)
-            .then((res) => {
-              RouterService.go()
-              return res
-            })
+          return UserPersonalAuthService.store(this.form)
         }
       })
   }
@@ -119,6 +122,19 @@ export default class ViewUserPersonalAuth extends Vue {
     Object.keys(this.formFields).forEach((key: string) => {
       this.formFields[key].disabled = bool
     })
+  }
+
+  private change () {
+    this.form.name = UserPersonalService.info.name || ''
+    this.form.company = UserPersonalService.info.company || ''
+    this.form.position = UserPersonalService.info.position || ''
+    this.form.city = UserPersonalService.info.city || 0
+    this.form.address = UserPersonalService.info.address || ''
+    this.form.intro = UserPersonalService.info.intro || ''
+  }
+
+  created () {
+    this.change()
   }
 }
 </script>
