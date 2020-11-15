@@ -161,7 +161,7 @@ class UserService {
   }
 
   checkBaseInfo () {
-    let attr = ''
+    let attr = 0
     let industry: any[] = []
     if (this.hasRole('Enterprise Member')) {
       attr = UserEnterpriseService.info.industry_attr
