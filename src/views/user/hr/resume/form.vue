@@ -1,6 +1,11 @@
 <template>
   <PageContainer class="view-user-hr-job-form">
-    <FormRender :Service="HrResumeService" :form="form" :onSubmitAfter="handleSubmitAfter" :submitBtn="submitBtnText">
+    <FormRender
+      :Service="HrResumeService"
+      :form="form"
+      :onSubmitAfter="handleSubmitAfter"
+      :onLoadAfter="onLoadAfter"
+      submitBtn="发布">
       <FormInput v-model="form.title" :field="formFields.title" />
       <FormSalary
         :isNegotiable.sync="form.is_negotiate"
@@ -28,12 +33,14 @@ import { Component, Vue } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import HrResumeService from '@/service/User/Info/HrResumeService'
+import cache from '@/plugins/cache'
 
 @Component
 export default class UserHrJobForm extends Vue {
   private HrResumeService = HrResumeService
-  private isCreate = !!RouterService.query('id')
-  private minDate!: Date
+  private isCreate = !RouterService.query('id')
+  private minDate = new Date()
+  private timer = 0
   private form = {
     id: RouterService.query('id'),
     title: '',
@@ -50,8 +57,6 @@ export default class UserHrJobForm extends Vue {
     phone: '',
     description: ''
   }
-
-  private submitBtnText = '发布并完善个人资料'
 
   private formFields = ValidateService.genRules({
     title: {
@@ -114,8 +119,33 @@ export default class UserHrJobForm extends Vue {
       })
   }
 
+  private onLoadAfter () {
+    return Promise.resolve()
+      .then(() => {
+        if (this.isCreate) {
+          Object.assign(this.form, cache.hr.get('resume-create'))
+          // 设置个定时器，每秒进行临时存储输入的数据
+          this.setTimer()
+        }
+      })
+  }
+
+  private setTimer () {
+    this.timer = setInterval(() => {
+      cache.hr.set('resume-create', this.form)
+    }, 1000)
+  }
+
+  private clearTimer () {
+    clearInterval(this.timer)
+    cache.hr.remove('resume-create')
+  }
+
+  beforeDestroy () {
+    clearInterval(this.timer)
+  }
+
   created () {
-    this.minDate = new Date()
     this.minDate.setDate(this.minDate.getDate() + 3)
   }
 }

@@ -60,6 +60,9 @@ export default class FormRender extends Vue {
   onSubmitAfter!: Function
 
   @Prop()
+  onLoadAfter!: Function
+
+  @Prop()
   form!: { [key: string]: any }
 
   @Prop({ default: '提 交' })
@@ -128,6 +131,11 @@ export default class FormRender extends Vue {
                 this.form[key] = res.data[key] || this.form[key]
               })
             })
+        }
+      })
+      .then(() => {
+        if (this.onLoadAfter) {
+          return this.onLoadAfter()
         }
       })
   }
