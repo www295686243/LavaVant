@@ -79,7 +79,7 @@ export default class ViewUserEnterpriseIndex extends Vue {
   }
 
   private handleGotoAuth () {
-    return UserEnterpriseService.checkBaseInfo()
+    UserEnterpriseService.checkBaseInfo()
       .then(() => {
         RouterService.push('/user/enterprise-auth')
       })

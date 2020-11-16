@@ -79,7 +79,7 @@ export default class ViewUserPersonalIndex extends Vue {
   }
 
   private handleGotoAuth () {
-    return UserPersonalService.checkBaseInfo()
+    UserPersonalService.checkBaseInfo()
       .then(() => {
         RouterService.push('/user/personal-auth')
       })
