@@ -1,6 +1,6 @@
 <template>
   <PageContainer class="view-hr-resume-index">
-    <ListMenu @reload="handleReload"></ListMenu>
+    <ListFilter @change="handleReload" ref="listFilterElement"></ListFilter>
     <ListContainer :onLoad="onLoad" ref="listElement">
       <template v-slot="{ v }">
         <ListData :v="v" @click="handleClick(v.id)"></ListData>
@@ -15,13 +15,13 @@ import HrResumeService from '@/service/Info/Hr/HrResumeService'
 import RouterService from '@/service/RouterService'
 import { Component, Vue, Ref } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
-import ListMenu from '../components/ListMenu.vue'
 import FixedHelp from '@/views/components/FixedHelp.vue'
+import ListFilter from '@/views/components/ListFilter/ListFilter.vue'
 
 @Component({
   components: {
     ListData,
-    ListMenu,
+    ListFilter,
     FixedHelp
   }
 })
@@ -29,14 +29,14 @@ export default class ViewHrResumeIndex extends Vue {
   @Ref()
   listElement!: any
 
-  private filterParams = {}
+  @Ref()
+  listFilterElement!: any
 
   private onLoad (page: number) {
-    return HrResumeService.index({ page, ...this.filterParams })
+    return HrResumeService.index({ page, ...this.listFilterElement.form })
   }
 
-  private handleReload (params: any) {
-    this.filterParams = params
+  private handleReload () {
     this.listElement.reload()
   }
 
