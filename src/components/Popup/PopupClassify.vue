@@ -20,13 +20,19 @@
             <van-sidebar-item :title="v.display_name" v-for="v in sidebarData" :key="v.id" :badge="v.badge" />
           </van-sidebar>
           <div class="panel-container">
-            <van-panel :title="v.display_name" v-for="v in panelData" :key="v.id" class="panel-item">
+            <van-panel v-for="(v, panelIndex) in panelData" :key="v.id" class="panel-item">
+              <template #header>
+                <div class="van-cell van-panel__header">
+                  <h4>{{v.display_name}}</h4>
+                  <Checkbox v-model="v.active" icon-size="14px" @click="handleClickAllSelect(v)">全选</Checkbox>
+                </div>
+              </template>
               <div class="panel-content">
                 <van-row gutter="8">
                   <van-col span="8" v-for="item in v.children" :key="item.id">
                     <van-button
                       plain
-                      @click="handleSelect(item.id)"
+                      @click="handleSelect(item.id, panelIndex)"
                       :type="innerValue.includes(item.id) ? 'danger' : 'default'"
                       size="large"
                       class="panel-tag van-ellipsis">
@@ -47,13 +53,15 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Sidebar, SidebarItem, NavBar, Panel } from 'vant'
 import { Options } from './PopupClassifyService'
+import Checkbox from '@/components/Form/Base/Checkbox.vue'
 
 @Component({
   components: {
     [Sidebar.name]: Sidebar,
     [SidebarItem.name]: SidebarItem,
     [NavBar.name]: NavBar,
-    [Panel.name]: Panel
+    [Panel.name]: Panel,
+    Checkbox
   }
 })
 export default class PopupClassify extends Vue {
@@ -68,8 +76,24 @@ export default class PopupClassify extends Vue {
   private panelData: Options[] = []
   private innerValue: number[] = []
 
-  public open (defaultValue: number[]) {
-    this.innerValue = defaultValue
+  public open (defaultValue?: number[]) {
+    this.innerValue = defaultValue || []
+    this.sidebarData = this.options.map((res) => {
+      return {
+        id: res.id,
+        display_name: res.display_name,
+        badge: this.getSidebarInfo(res.children)
+      }
+    })
+    this.options = this.options.map((res) => {
+      res.children = res.children.map((item) => {
+        const ids = item.children.map((row) => row.id)
+        item.active = ids.every((id) => this.innerValue.includes(id))
+        return item
+      })
+      return res
+    })
+    this.initPanelData()
     this.isShow = true
     return new Promise((resolve, reject) => {
       this.resolve = resolve
@@ -87,6 +111,7 @@ export default class PopupClassify extends Vue {
 
   private handleCancel () {
     this.close()
+    this.reject()
   }
 
   private handleConfirm () {
@@ -98,12 +123,15 @@ export default class PopupClassify extends Vue {
     this.initPanelData()
   }
 
-  private handleSelect (id: number) {
+  private handleSelect (id: number, panelIndex: number) {
     if (this.innerValue.includes(id)) {
       this.innerValue.splice(this.innerValue.indexOf(id), 1)
+      this.panelData[panelIndex].active = false
       this.resetSidebarDataInfo(-1)
     } else {
       this.innerValue.push(id)
+      const ids = this.panelData[panelIndex].children.map((res) => res.id)
+      this.panelData[panelIndex].active = ids.every((id) => this.innerValue.includes(id))
       this.resetSidebarDataInfo(1)
     }
   }
@@ -133,15 +161,17 @@ export default class PopupClassify extends Vue {
     return intersection(ids, this.innerValue).length || ''
   }
 
-  created () {
-    this.sidebarData = this.options.map((res) => {
-      return {
-        id: res.id,
-        display_name: res.display_name,
-        badge: this.getSidebarInfo(res.children)
-      }
-    })
-    this.initPanelData()
+  private handleClickAllSelect (v: Options) {
+    const ids = v.children.map((res) => res.id)
+    if (v.active) {
+      const diffItems = ids.filter((id) => !this.innerValue.includes(id))
+      this.innerValue = this.innerValue.concat(diffItems)
+      this.resetSidebarDataInfo(diffItems.length)
+    } else {
+      const InterItems = ids.filter((id) => this.innerValue.includes(id))
+      this.innerValue = this.innerValue.filter((id) => !ids.includes(id))
+      this.resetSidebarDataInfo(-InterItems.length)
+    }
   }
 }
 </script>
@@ -198,8 +228,13 @@ export default class PopupClassify extends Vue {
     }
     .van-panel__header {
       padding: 10px 10px 0;
+      justify-content: space-between;
       &:after {
         border-width: 0;
+      }
+      .van-checkbox__label {
+        font-size: @font-size-sm;
+        line-height: 1;
       }
     }
   }

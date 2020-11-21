@@ -1,6 +1,6 @@
 <template>
   <PageContainer class="view-hr-job-index">
-    <ListMenu @reload="handleReload"></ListMenu>
+    <ListFilter @change="handleReload" ref="listFilterElement"></ListFilter>
     <ListContainer :onLoad="onLoad" ref="listElement">
       <template v-slot="{ v }">
         <ListData :v="v" @click="handleClick(v.id)"></ListData>
@@ -16,27 +16,27 @@ import RouterService from '@/service/RouterService'
 import FixedHelp from '@/views/components/FixedHelp.vue'
 import { Component, Vue, Ref } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
-import ListMenu from '../components/ListMenu.vue'
+import ListFilter from '@/views/components/ListFilter/ListFilter.vue'
 
 @Component({
   components: {
     ListData,
-    ListMenu,
-    FixedHelp
+    FixedHelp,
+    ListFilter
   }
 })
 export default class ViewHrJobIndex extends Vue {
   @Ref()
   listElement!: any
 
-  private filterParams = {}
+  @Ref()
+  listFilterElement!: any
 
   private onLoad (page: number) {
-    return HrJobService.index({ page, ...this.filterParams })
+    return HrJobService.index({ page, ...this.listFilterElement.form })
   }
 
-  private handleReload (params: any) {
-    this.filterParams = params
+  private handleReload () {
     this.listElement.reload()
   }
 

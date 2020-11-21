@@ -203,6 +203,25 @@ class UserService {
     return axios.post('user/switchRole', { role })
       .then((res) => this.getUserInfo().then(() => res))
   }
+
+  getCurrentRoleInfo () {
+    if (this.info.current_role === 'Personal Member') {
+      return {
+        industry: UserPersonalService.info.industry,
+        city: UserPersonalService.info.city
+      }
+    } else if (this.info.current_role === 'Enterprise Member') {
+      return {
+        industry: UserEnterpriseService.info.industry,
+        city: UserEnterpriseService.info.city
+      }
+    } else {
+      return {
+        industry: [],
+        city: this.info.city
+      }
+    }
+  }
 }
 
 export default new UserService()

@@ -1,6 +1,8 @@
 <template>
   <van-checkbox
     v-model="innerValue"
+    @change="handleChange"
+    @click="handleClick"
     :checked-color="checkedColor"
     v-bind="$attrs">
     <slot></slot>
@@ -42,6 +44,14 @@ export default class FormBaseCheckbox extends Mixins(FormMixins) {
     } else {
       this.innerValue = value > 0
     }
+  }
+
+  private handleChange (checked: boolean) {
+    this.$emit('change', checked)
+  }
+
+  private handleClick () {
+    this.$emit('click')
   }
 
   created () {

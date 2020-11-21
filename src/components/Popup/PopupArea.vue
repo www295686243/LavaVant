@@ -2,10 +2,12 @@
   <van-popup
     v-model="isShow"
     position="bottom"
+    @close="handleClose"
     get-container="body">
     <van-area
       :area-list="areaList"
-      v-model="defaultValue"
+      cancel-button-text="清空"
+      v-model="innerValue"
       @cancel="handleCancel"
       @confirm="handleConfirm"
     />
@@ -28,6 +30,7 @@ export default class PopupArea extends Vue {
 
   private areaList = areaList
   private isShow = false
+  private innerValue = this.defaultValue ? this.defaultValue.toString() : ''
   private resolve!: Function
   private reject!: Function
 
@@ -49,10 +52,16 @@ export default class PopupArea extends Vue {
 
   private handleCancel () {
     this.close()
+    this.resolve(0)
+  }
+
+  private handleClose () {
+    this.close()
+    this.reject()
   }
 
   private handleConfirm (res: { code: number }[]) {
-    this.resolve(res[res.length - 1].code)
+    this.resolve(Number(res[res.length - 1].code))
     this.close()
   }
 }
