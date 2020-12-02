@@ -46,6 +46,7 @@ import HrResumeService from '@/service/User/Info/HrResumeService'
 
 interface TaskRecord {
   title: string;
+  task_id: number;
   is_complete: number;
 }
 
@@ -56,7 +57,6 @@ interface Rewards {
 
 interface TaskRule {
   id: number;
-  task_rule_name: number;
   title: string;
   rewards: Rewards[];
 }
@@ -101,7 +101,7 @@ export default class TaskHall extends Vue {
         const taskRecord = res.data || []
         this.list = this.getList()
           .map((item: Task) => {
-            const taskRecordItem: TaskRecord = taskRecord.find((record: TaskRecord) => record.title === item.title)
+            const taskRecordItem: TaskRecord = taskRecord.find((record: TaskRecord) => record.task_id === item.id)
             item.is_complete = taskRecordItem && taskRecordItem.is_complete ? 1 : 0
             return item
           })
@@ -150,13 +150,13 @@ export default class TaskHall extends Vue {
   }
 
   private handleClickSubTask (v: TaskRule) {
-    if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 1, '分享简历')) {
+    if (v.id === 1) { // 分享简历
       RouterService.push('/hr/resume')
-    } else if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 2, '分享职位')) {
+    } else if (v.id === 2) { // 分享职位
       RouterService.push('/hr/job')
-    } else if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 12, '提供职位')) {
+    } else if (v.id === 10) { // 提供职位
       RouterService.push('/user/info_provide', { _model: HrJobService.name })
-    } else if (v.task_rule_name === InfoProvideService.getOptionsValue('task_rule_name', 13, '提供人才')) {
+    } else if (v.id === 11) { // 提供人才
       RouterService.push('/user/info_provide', { _model: HrResumeService.name })
     }
   }
