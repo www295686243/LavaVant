@@ -28,7 +28,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import RouterService from '@/service/RouterService'
-import VantService from '@/service/VantService'
 import FollowOfficialAccount from '@/views/components/FollowOfficialAccount.vue'
 import UserService from '@/service/User/UserService'
 import BusinessSmsCaptcha from '@/components/Business/BusinessSmsCaptcha.vue'
@@ -52,16 +51,8 @@ export default class ViewOperationInvite extends Vue {
       })
   }
 
-  private handleSubmit () {
-    const loading = VantService.toast.loading('加入中...')
-    UserService.setInviteUser()
-      .then(() => {
-        loading.clear()
-        RouterService.push('/user/register')
-      })
-      .catch(() => {
-        loading.clear()
-      })
+  private handleSuccess () {
+    RouterService.push('/user')
   }
 }
 </script>
