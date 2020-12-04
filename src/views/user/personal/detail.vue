@@ -1,5 +1,5 @@
 <template>
-  <FormRender :Service="UserPersonalService" :onSubmit="handleSubmit" :onSubmitAfter="handleSubmitAfter" :form="form" :disableSubmit="form.is_check" :submitBtn="form.is_check ? '请等待审核' : '提交'">
+  <FormRender :Service="UserPersonalService" :onSubmitAfter="handleSubmitAfter" :form="form">
     <FormImage v-model="form.avatar" :field="formFields.avatar" :uploadParmas="{ _model: UserPersonalService.name, info_id: form.user_id }" />
     <FormCheckboxGroup v-model="form.tags" :field="formFields.tags" type="label-string" :border="false"/>
     <FormGroupPopup
@@ -158,10 +158,6 @@ export default class UserPersonalDetail extends Vue {
       rules: [ValidateService.uploadRequired, ValidateService.max(6)]
     }
   })
-
-  private handleSubmit () {
-    return UserPersonalService.check(this.form)
-  }
 
   private handleSubmitAfter (res: any) {
     return Promise.resolve()
