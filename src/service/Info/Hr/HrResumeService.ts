@@ -1,9 +1,9 @@
+import HrAbstract from '@/abstract/HrAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '@/service/BaseModelService'
 import RouterService from '@/service/RouterService'
 import WXService from '@/service/WXService'
 
-class HrResumeService extends BaseModelService {
+class HrResumeService extends HrAbstract {
   name = 'Info/Hr/HrResume'
   displayName = '简历'
   path = 'hr/resume'
@@ -36,6 +36,14 @@ class HrResumeService extends BaseModelService {
 
   view (params: { id: string; su: string }) {
     return axios.get('hr_resume/view', params)
+  }
+
+  complaint (params: { complaint_type: string; complaint_content: string }) {
+    return axios.post('hr_resume/complaint', { ...params, id: RouterService.query('id') })
+  }
+
+  isComplaint () {
+    return axios.get('hr_resume/isComplaint', { id: RouterService.query('id') })
   }
 }
 

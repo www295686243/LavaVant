@@ -1,9 +1,9 @@
+import HrAbstract from '@/abstract/HrAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '@/service/BaseModelService'
 import RouterService from '@/service/RouterService'
 import WXService from '@/service/WXService'
 
-class HrJobService extends BaseModelService {
+class HrJobService extends HrAbstract {
   name = 'Info/Hr/HrJob'
   displayName = '职位'
   path = 'hr/job'
@@ -36,6 +36,14 @@ class HrJobService extends BaseModelService {
 
   view (params: { id: string; su: string }) {
     return axios.get('hr_job/view', params)
+  }
+
+  complaint (params: { complaint_type: string; complaint_content: string }) {
+    return axios.post('hr_job/complaint', { ...params, id: RouterService.query('id') })
+  }
+
+  isComplaint () {
+    return axios.get('hr_job/isComplaint', { id: RouterService.query('id') })
   }
 }
 

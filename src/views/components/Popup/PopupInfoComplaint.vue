@@ -27,7 +27,6 @@
         <FormRender
           :form="form"
           :onSubmit="handleSubmit"
-          :Service="InfoComplaintService"
           :disableSubmit="!!form.id"
           :onLoad="handleLoad">
           <FormRadioGroup v-model="form.complaint_type" :field="formFields.complaint_type"></FormRadioGroup>
@@ -62,25 +61,23 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import InfoComplaintService from '@/service/Info/InfoComplaintService'
 import RouterService from '@/service/RouterService'
 import UserService from '@/service/User/UserService'
 import ValidateService from '@/service/ValidateService'
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
+import { getOptions } from '@/service/ConstService'
 
 @Component
 export default class PopupInfoComplaint extends Vue {
   @Prop()
-  Service!: BaseModelService
+  Service!: HrAbstract
 
-  private InfoComplaintService = InfoComplaintService
   private isShowPopup = false
   private isShowOfficialAccount = false
   private isShowCustomerService = false
   private isLoad = false
   private form = {
     id: '',
-    _model: this.Service.name,
     info_id: RouterService.query('id'),
     complaint_type: '',
     complaint_content: '',
@@ -93,7 +90,8 @@ export default class PopupInfoComplaint extends Vue {
       prop: 'complaint_type',
       label: '投诉类型',
       rules: [ValidateService.required],
-      disabled: false
+      disabled: false,
+      options: getOptions('Info/InfoComplaint', 'complaint_type')
     },
     complaint_content: {
       prop: 'complaint_content',
@@ -108,10 +106,7 @@ export default class PopupInfoComplaint extends Vue {
   }
 
   private handleLoad () {
-    return InfoComplaintService.getInfoComplaint({
-      info_id: this.form.info_id,
-      _model: this.form._model
-    })
+    return this.Service.isComplaint()
       .then((res) => {
         Object.assign(this.form, res.data)
         this.isLoad = true
@@ -120,7 +115,7 @@ export default class PopupInfoComplaint extends Vue {
   }
 
   private handleSubmit () {
-    return InfoComplaintService.store(this.form)
+    return this.Service.complaint(this.form)
       .then((res) => {
         this.isShowPopup = false
         this.isShowOfficialAccount = UserService.info.is_follow_official_account === 0
