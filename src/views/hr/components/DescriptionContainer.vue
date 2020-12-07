@@ -28,7 +28,6 @@ export default class DescriptionContainer extends Vue {
 
 <style lang="less">
 .DescriptionContainer {
-  margin-top: @padding-lg;
   line-height: 1.7;
   .views-container {
     color: @gray-7;

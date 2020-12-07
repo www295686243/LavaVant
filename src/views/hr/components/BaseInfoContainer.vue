@@ -36,6 +36,7 @@ export default class BaseInfoContainer extends Vue {
 <style lang="less">
 .BaseInfoContainer {
   position: relative;
+  padding-bottom: @padding-lg;
   .title-container {
     display: flex;
     align-items: flex-start;
