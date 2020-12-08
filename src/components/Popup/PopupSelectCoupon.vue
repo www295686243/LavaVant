@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Ref } from 'vue-property-decorator'
 import CouponList from '@/views/components/CouponList.vue'
-import UserCouponService from '@/service/User/UserCouponService'
+import HrAbstract from '@/abstract/HrAbstract'
 
 @Component({
   components: {
@@ -26,7 +26,7 @@ export default class PopupSelectCoupon extends Vue {
   couponListElement!: any
 
   @Prop()
-  _model!: string
+  Service!: HrAbstract
 
   private isShow = false
   private resolve!: Function
@@ -49,7 +49,7 @@ export default class PopupSelectCoupon extends Vue {
   }
 
   private handleLoad (page: number) {
-    return UserCouponService.getUsableCoupon({ page, _model: this._model })
+    return this.Service.getUsableCoupon({ page })
   }
 
   private handleSubmit () {

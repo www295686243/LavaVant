@@ -2,6 +2,7 @@ import HrAbstract from '@/abstract/HrAbstract'
 import axios from '@/plugins/axios'
 import RouterService from '@/service/RouterService'
 import WXService from '@/service/WXService'
+import UserCouponService from '../User/UserCouponService'
 
 class HrResumeService extends HrAbstract {
   name = 'Info/Hr/HrResume'
@@ -46,7 +47,7 @@ class HrResumeService extends HrAbstract {
     return axios.get(`hr_resume/${RouterService.query('id')}`, { _check: RouterService.query('_check') })
   }
 
-  store (form: { id: number }) {
+  store (form: { id: string }) {
     return axios.post('hr_resume', form)
   }
 
@@ -75,6 +76,19 @@ class HrResumeService extends HrAbstract {
 
   isComplaint () {
     return axios.get('hr_resume/isComplaint', { id: RouterService.query('id') })
+  }
+
+  getUsableCoupon (params: { page: number }) {
+    return axios.get('hr_resume/getUsableCoupon', params)
+  }
+
+  getFirstUsableCoupon () {
+    return this.getUsableCoupon({ page: 1 })
+      .then((res) => {
+        if (res.data && res.data.data.length > 0) {
+          UserCouponService.updateUsableCoupon(res.data.data[0])
+        }
+      })
   }
 }
 

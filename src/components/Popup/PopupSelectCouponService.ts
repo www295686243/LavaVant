@@ -1,16 +1,17 @@
+import HrAbstract from '@/abstract/HrAbstract'
 import Vue from 'vue'
 import PopupSelectCoupon from './PopupSelectCoupon.vue'
 
 class PopupSelectCouponService {
   instance!: any
 
-  open (_model: string) {
+  open (Service: HrAbstract) {
     if (!this.instance) {
       const el = document.body.appendChild(document.createElement('div'))
       const Constructor = Vue.extend(PopupSelectCoupon)
       this.instance = new Constructor({
         propsData: {
-          _model
+          Service
         }
       }).$mount(el)
     }

@@ -76,6 +76,7 @@ import UserCouponService from '@/service/User/UserCouponService'
 import UserService from '@/service/User/UserService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
+import HrAbstract from '@/abstract/HrAbstract'
 
 interface Service extends BaseModelService {
   pay: Function;
@@ -85,7 +86,7 @@ interface Service extends BaseModelService {
 @Component
 export default class PopupQueryContacts extends Vue {
   @Prop()
-  Service!: Service
+  Service!: HrAbstract
 
   private isShowPopup = false
   private isShowOfficialAccounts= false
@@ -108,7 +109,7 @@ export default class PopupQueryContacts extends Vue {
       })
       .then(() => {
         if (this.amount > 0) {
-          return UserCouponService.getFirstUsableCoupon(this.Service.name)
+          return this.Service.getFirstUsableCoupon()
         }
       })
       .then(() => {
@@ -136,7 +137,7 @@ export default class PopupQueryContacts extends Vue {
 
   private handleGotoCoupon () {
     if (this.amount > 0) {
-      PopupSelectCouponService.open(this.Service.name)
+      PopupSelectCouponService.open(this.Service)
         .then((res: any) => {
           UserCouponService.updateUsableCoupon(res)
         })

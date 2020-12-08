@@ -56,7 +56,7 @@ export default class ViewUserHrResumeIndex extends Vue {
   private active = 0
 
   private handleLoad (page: number) {
-    return HrResumeService.index({ page })
+    return HrResumeService.authIndex({ page })
   }
 
   private handleLoadCheck (page: number) {

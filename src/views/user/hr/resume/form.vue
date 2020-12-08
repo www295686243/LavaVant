@@ -4,7 +4,6 @@
       :Service="HrResumeService"
       :form="form"
       :onSubmitAfter="handleSubmitAfter"
-      :onLoadAfter="onLoadAfter"
       submitBtn="发布">
       <FormInput v-model="form.title" :field="formFields.title" />
       <FormSalary
@@ -56,6 +55,8 @@ export default class UserHrJobForm extends Vue {
     contacts: '',
     phone: '',
     description: ''
+  } as {
+    [key: string]: any;
   }
 
   private formFields = ValidateService.genRules({
@@ -112,21 +113,24 @@ export default class UserHrJobForm extends Vue {
     }
   })
 
-  private handleSubmitAfter () {
-    return Promise.resolve()
-      .then(() => {
-        RouterService.replace('/user/hr/resume/' + (this.form.id ? 'update-success' : 'create-success'))
-      })
-  }
-
-  private onLoadAfter () {
-    return Promise.resolve()
-      .then(() => {
+  private handleLoad () {
+    return HrResumeService.authShow()
+      .then((res) => {
+        Object.keys(this.form).forEach((key) => {
+          this.form[key] = res.data[key] || this.form[key]
+        })
         if (this.isCreate) {
           Object.assign(this.form, cache.hr.get('resume-create'))
           // 设置个定时器，每秒进行临时存储输入的数据
           this.setTimer()
         }
+      })
+  }
+
+  private handleSubmitAfter () {
+    return Promise.resolve()
+      .then(() => {
+        RouterService.replace('/user/hr/resume/' + (this.form.id ? 'update-success' : 'create-success'))
       })
   }
 
