@@ -90,6 +90,10 @@ class HrResumeService extends HrAbstract {
         }
       })
   }
+
+  checkIndex (params: { page: number }) {
+    return axios.get('hr_resume/CheckIndex', params)
+  }
 }
 
 export default new HrResumeService()

@@ -35,7 +35,6 @@ import { Component, Ref, Vue } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
 import CheckListData from '../components/CheckListData.vue'
 import { Tab, Tabs, Empty } from 'vant'
-import InfoCheckService from '@/service/Info/InfoCheckService'
 import RouterService from '@/service/RouterService'
 
 @Component({
@@ -60,7 +59,7 @@ export default class ViewUserHrResumeIndex extends Vue {
   }
 
   private handleLoadCheck (page: number) {
-    return InfoCheckService.index({ page, _model: HrResumeService.name })
+    return HrResumeService.checkIndex({ page })
   }
 
   private handleReloadCheck () {

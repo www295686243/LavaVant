@@ -90,6 +90,10 @@ class HrJobService extends HrAbstract {
         }
       })
   }
+
+  checkIndex (params: { page: number }) {
+    return axios.get('hr_job/CheckIndex', params)
+  }
 }
 
 export default new HrJobService()
