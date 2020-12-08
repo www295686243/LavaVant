@@ -18,7 +18,7 @@ class HrJobService extends HrAbstract {
   }
 
   pay (params: { user_coupon_id: string }) {
-    return axios.post('hr_job/pay', { ...params, id: RouterService.query('id'), _model: this.name })
+    return axios.post('hr_job/pay', { ...params, id: RouterService.query('id') })
       .then((res) => {
         if (res.data.pay_status !== 'success') {
           return WXService.chooseWXPay(res.data)
@@ -32,7 +32,7 @@ class HrJobService extends HrAbstract {
   }
 
   getContacts () {
-    return axios.get('hr_job/getContacts', { id: RouterService.query('id'), _model: this.name })
+    return axios.get('hr_job/getContacts', { id: RouterService.query('id') })
   }
 
   view (params: { id: string; su: string }) {
@@ -92,7 +92,7 @@ class HrJobService extends HrAbstract {
   }
 
   checkIndex (params: { page: number }) {
-    return axios.get('hr_job/CheckIndex', params)
+    return axios.get('hr_job/checkIndex', params)
   }
 }
 
