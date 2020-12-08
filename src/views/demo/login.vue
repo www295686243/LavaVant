@@ -5,7 +5,7 @@
       <FormInput v-model="form.password" :field="formFields.password" />
     </FormRender>
     <BusinessSmsCaptcha typeName="invite-user"></BusinessSmsCaptcha>
-    <ButtonStat :onClick="handleWeChatLogin">微信登陆</ButtonStat>
+    <ButtonSubmit :onClick="handleWeChatLogin">微信登陆</ButtonSubmit>
   </PageContainer>
 </template>
 

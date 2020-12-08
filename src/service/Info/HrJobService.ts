@@ -94,6 +94,13 @@ class HrJobService extends HrAbstract {
   checkIndex (params: { page: number }) {
     return axios.get('hr_job/checkIndex', params)
   }
+
+  recommendList (params: { page: number; limit: number }) {
+    return axios.get('hr_job/recommendList', {
+      ...params,
+      id: RouterService.query('id')
+    })
+  }
 }
 
 export default new HrJobService()

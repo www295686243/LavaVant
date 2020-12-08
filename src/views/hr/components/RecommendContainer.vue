@@ -2,20 +2,19 @@
   <div class="RecommendContainer">
     <h3 class="recommend-title">推荐{{Service.displayName}}</h3>
     <DataRender :onLoad="handleLoad">
-      <ListData :v="v" v-for="v in list" :key="v.id" class="van-hairline--bottom" @click="handleClick(v.id)"></ListData>
+      <template v-if="list.length > 0">
+        <ListData :v="v" v-for="v in list" :key="v.id" class="van-hairline--bottom" @click="handleClick(v.id)"></ListData>
+      </template>
+      <p v-else class="recommend-empty">暂无推荐信息</p>
     </DataRender>
   </div>
 </template>
 
 <script lang="ts">
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
 import RouterService from '@/service/RouterService'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import ListData from './ListData.vue'
-
-interface IfService extends BaseModelService {
-  index: Function;
-}
 
 @Component({
   components: {
@@ -24,14 +23,14 @@ interface IfService extends BaseModelService {
 })
 export default class RecommendContainer extends Vue {
   @Prop()
-  Service!: IfService
+  Service!: HrAbstract
 
   private list = []
 
   private handleLoad () {
-    return this.Service.index({ page: 1 })
+    return this.Service.recommendList({ page: 1, limit: 5 })
       .then((res: any) => {
-        this.list = res.data.data
+        this.list = res.data
       })
   }
 
@@ -52,6 +51,11 @@ export default class RecommendContainer extends Vue {
       box-shadow: initial;
       margin: 0;
     }
+  }
+  .recommend-empty {
+    text-align: center;
+    padding-bottom: @padding-lg;
+    color: @gray-7;
   }
 }
 </style>

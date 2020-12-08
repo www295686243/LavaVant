@@ -113,7 +113,7 @@ export default class ViewHrJobShow extends Vue {
   }
 
   .enterprise-container {
-    margin-top: @padding-lg;
+    margin-bottom: @padding-lg;
     line-height: 1.7;
     .title {
       margin-bottom: @padding-base;

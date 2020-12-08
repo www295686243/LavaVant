@@ -11,7 +11,6 @@ import DataRender from './components/DataRender.vue'
 import PageContainer from './components/PageContainer.vue'
 import ListContainer from './components/ListContainer.vue'
 import ButtonSubmit from './components/Button/ButtonSubmit.vue'
-import ButtonStat from './components/Button/ButtonStat.vue'
 import FormRender from './components/Form/FormRender.vue'
 import FormInput from './components/Form/FormInput.vue'
 import FormText from './components/Form/FormText.vue'
@@ -43,7 +42,6 @@ Vue.component('DataRender', DataRender)
 Vue.component('PageContainer', PageContainer)
 Vue.component('ListContainer', ListContainer)
 Vue.component('ButtonSubmit', ButtonSubmit)
-Vue.component('ButtonStat', ButtonStat)
 Vue.component('FormRender', FormRender)
 Vue.component('FormInput', FormInput)
 Vue.component('FormText', FormText)

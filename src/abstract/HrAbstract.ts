@@ -18,4 +18,5 @@ export default abstract class HrAbstract extends BaseAbstract {
   abstract updateDisable(id: string): Promise<PromiseResult>
   abstract getFirstUsableCoupon(): Promise<void>
   abstract getUsableCoupon(params: { page: number }): Promise<PromiseResult>
+  abstract recommendList(params: { page: number; limit: number }): Promise<PromiseResult>
 }

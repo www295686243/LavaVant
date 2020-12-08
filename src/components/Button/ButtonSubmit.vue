@@ -14,6 +14,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import VantService from '@/service/VantService'
 import { PromiseResult } from '@/plugins/axios'
+import StatService from '@/service/StatService'
 
 @Component({
   inheritAttrs: false
@@ -35,6 +36,7 @@ export default class ButtonSubmit extends Vue {
       result
         .then((res: PromiseResult) => {
           this.loading = false
+          this.StatClick(res && res.message)
           if (res && res.message) {
             VantService.toast.success(res.message)
           }
@@ -51,10 +53,20 @@ export default class ButtonSubmit extends Vue {
             if (message) {
               VantService.toast.fail(message)
             }
+            this.StatClick(message)
+          } else {
+            this.StatClick()
           }
         })
     } else {
       this.loading = false
+      this.StatClick()
+    }
+  }
+
+  private StatClick (message?: string) {
+    if (this.$slots.default) {
+      StatService.clickPush(this.$slots.default[0].text as string, message ? { message } : undefined)
     }
   }
 }
