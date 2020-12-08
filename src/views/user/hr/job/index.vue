@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import HrJobService from '@/service/User/Info/HrJobService'
+import HrJobService from '@/service/Info/HrJobService'
 import { Component, Ref, Vue } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
 import CheckListData from '../components/CheckListData.vue'

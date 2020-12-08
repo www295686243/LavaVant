@@ -40,8 +40,8 @@ import RouterService from '@/service/RouterService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import VantService from '@/service/VantService'
-import HrJobService from '@/service/User/Info/HrJobService'
-import HrResumeService from '@/service/User/Info/HrResumeService'
+import HrJobService from '@/service/Info/HrJobService'
+import HrResumeService from '@/service/Info/HrResumeService'
 
 interface TaskRecord {
   title: string;

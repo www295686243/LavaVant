@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import HrJobService from '@/service/Info/Hr/HrJobService'
+import HrJobService from '@/service/Info/HrJobService'
 import RouterService from '@/service/RouterService'
 import FixedHelp from '@/views/components/FixedHelp.vue'
 import { Component, Vue, Ref } from 'vue-property-decorator'

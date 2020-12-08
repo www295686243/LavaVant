@@ -32,7 +32,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
-import HrResumeService from '@/service/User/Info/HrResumeService'
+import HrResumeService from '@/service/Info/HrResumeService'
 import cache from '@/plugins/cache'
 
 @Component

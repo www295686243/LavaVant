@@ -22,14 +22,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HrJobService from '@/service/Info/Hr/HrJobService'
+import HrJobService from '@/service/Info/HrJobService'
 import { getCityName } from '@/plugins/tools'
 import RouterService from '@/service/RouterService'
 import Disclaimer from '@/views/hr/components/Disclaimer.vue'
 import { Sticky } from 'vant'
 import FollowAd from '@/views/components/FollowAd.vue'
 import ActionContainer from '../components/ActionContainer.vue'
-import HrResumeService from '@/service/Info/Hr/HrResumeService'
+import HrResumeService from '@/service/Info/HrResumeService'
 import ContactsContainer from '../components/ContactsContainer.vue'
 import DescriptionContainer from '../components/DescriptionContainer.vue'
 import BaseInfoContainer from '../components/BaseInfoContainer.vue'

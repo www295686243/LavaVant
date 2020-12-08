@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import HrResumeService from '@/service/Info/Hr/HrResumeService'
+import HrResumeService from '@/service/Info/HrResumeService'
 import RouterService from '@/service/RouterService'
 import { Component, Vue, Ref } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'

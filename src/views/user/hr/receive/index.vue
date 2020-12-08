@@ -20,7 +20,7 @@
 <script lang="ts">
 import InfoDeliveryService from '@/service/Info/InfoDeliveryService'
 import RouterService from '@/service/RouterService'
-import HrResumeService from '@/service/User/Info/HrResumeService'
+import HrResumeService from '@/service/Info/HrResumeService'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({

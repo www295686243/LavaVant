@@ -45,6 +45,37 @@ class HrJobService extends HrAbstract {
   isComplaint () {
     return axios.get('hr_job/isComplaint', { id: RouterService.query('id') })
   }
+
+  authIndex (params: { page: number }) {
+    return axios.get('hr_job', params)
+  }
+
+  authShow () {
+    return axios.get(`hr_job/${RouterService.query('id')}`, { _check: RouterService.query('_check') })
+  }
+
+  store (form: { id: number }) {
+    return axios.post('hr_job', form)
+  }
+
+  update (form: any) {
+    return axios.put(`hr_job/${RouterService.query('id')}`, {
+      _check: RouterService.query('_check'),
+      ...form
+    })
+  }
+
+  destroy (id: string) {
+    return axios.delete(`hr_job/${id}`)
+  }
+
+  refreshUpdateAt (id: string) {
+    return axios.post('hr_job/refreshUpdateAt', { id })
+  }
+
+  updateDisable (id: string) {
+    return axios.post('hr_job/updateDisable', { id })
+  }
 }
 
 export default new HrJobService()

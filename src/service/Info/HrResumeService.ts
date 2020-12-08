@@ -38,6 +38,37 @@ class HrResumeService extends HrAbstract {
     return axios.get('hr_resume/view', params)
   }
 
+  authIndex (params: { page: number }) {
+    return axios.get('hr_resume', params)
+  }
+
+  authShow () {
+    return axios.get(`hr_resume/${RouterService.query('id')}`, { _check: RouterService.query('_check') })
+  }
+
+  store (form: { id: number }) {
+    return axios.post('hr_resume', form)
+  }
+
+  update (form: any) {
+    return axios.put(`hr_resume/${RouterService.query('id')}`, {
+      _check: RouterService.query('_check'),
+      ...form
+    })
+  }
+
+  destroy (id: string) {
+    return axios.delete(`hr_resume/${id}`)
+  }
+
+  refreshUpdateAt (id: string) {
+    return axios.post('hr_resume/refreshUpdateAt', { id })
+  }
+
+  updateDisable (id: string) {
+    return axios.post('hr_resume/updateDisable', { id })
+  }
+
   complaint (params: { complaint_type: string; complaint_content: string }) {
     return axios.post('hr_resume/complaint', { ...params, id: RouterService.query('id') })
   }

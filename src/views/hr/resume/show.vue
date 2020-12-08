@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HrResumeService from '@/service/Info/Hr/HrResumeService'
+import HrResumeService from '@/service/Info/HrResumeService'
 import RouterService from '@/service/RouterService'
 import { getCityName } from '@/plugins/tools'
 import Disclaimer from '@/views/hr/components/Disclaimer.vue'

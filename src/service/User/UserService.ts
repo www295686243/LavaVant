@@ -195,10 +195,6 @@ class UserService {
       .then((res) => this.getUserInfo().then(() => res))
   }
 
-  isFreeForLimitedTime (_model: string) {
-    return axios.get('user/isFreeForLimitedTime', { _model })
-  }
-
   switchRole (role: string) {
     return axios.post('user/switchRole', { role })
       .then((res) => this.getUserInfo().then(() => res))

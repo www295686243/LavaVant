@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import ValidateService, { FormFields } from '@/service/ValidateService'
-import InfoProvideService from '@/service/User/Info/InfoProvideService'
+import InfoProvideService from '@/service/Info/InfoProvideService'
 import RouterService from '@/service/RouterService'
 
 @Component

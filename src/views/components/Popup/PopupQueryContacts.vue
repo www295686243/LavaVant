@@ -20,7 +20,7 @@
         <h2>打赏支付</h2>
         <div class="amount-container">
           <span class="amount" v-if="totalAmount > 0">{{totalAmount}}<small> 元</small><span class="original-amount">{{originalAmount}}元</span></span>
-          <span class="free" v-else>{{freeText}}</span>
+          <span class="free" v-else>免费查看</span>
         </div>
         <van-cell
           @click="handleGotoCoupon"
@@ -95,7 +95,6 @@ export default class PopupQueryContacts extends Vue {
   private amount = this.Service.getValue('amount')
   private isShowContacts = false
   private phone = ''
-  private freeText = ''
   private RouterService = RouterService
 
   private handleShowPopup () {
@@ -108,21 +107,11 @@ export default class PopupQueryContacts extends Vue {
           })
       })
       .then(() => {
-        if (this.Service.displayName === '简历' && UserService.hasRole('Enterprise Member')) {
-          return UserService.isFreeForLimitedTime(this.Service.name)
-            .then(() => {
-              this.amount = 0
-            })
-            .catch(() => Promise.resolve())
-        }
-      })
-      .then(() => {
         if (this.amount > 0) {
           return UserCouponService.getFirstUsableCoupon(this.Service.name)
         }
       })
       .then(() => {
-        this.freeText = this.amount === 0 ? '限时免费' : '免费查看'
         this.totalAmount = this.amount - UserCouponService.usableCouponInfo.amount
         this.totalAmount = this.totalAmount < 0 ? 0 : this.totalAmount
         this.isShowPopup = true
