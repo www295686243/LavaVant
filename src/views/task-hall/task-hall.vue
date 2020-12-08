@@ -40,7 +40,6 @@ import RouterService from '@/service/RouterService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import VantService from '@/service/VantService'
-import InfoProvideService from '@/service/User/Info/InfoProvideService'
 import HrJobService from '@/service/User/Info/HrJobService'
 import HrResumeService from '@/service/User/Info/HrResumeService'
 
