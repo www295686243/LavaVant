@@ -1,8 +1,8 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 
-class TaskRecordService extends BaseModelService {
-  name = 'Task/TaskRecord'
+class TaskRecordService extends BaseAbstract {
+  name = 'TaskRecord'
 
   index () {
     return axios.get('task_record')

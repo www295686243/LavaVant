@@ -1,8 +1,8 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '@/service/BaseModelService'
 
-class HrResumeService extends BaseModelService {
-  name = 'Info/InfoProvide'
+class HrResumeService extends BaseAbstract {
+  name = 'InfoProvide'
 
   store (form: { description: string; phone: string }) {
     return axios.post('info_provide', form)

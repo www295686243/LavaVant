@@ -1,12 +1,12 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
-import BaseModelService from '../BaseModelService'
 import RouterService from '../RouterService'
 import UserService from './UserService'
 
-class UserEnterpriseService extends BaseModelService {
-  name = 'User/UserEnterprise'
+class UserEnterpriseService extends BaseAbstract {
+  name = 'UserEnterprise'
   info = {
     avatar: '',
     company: '',

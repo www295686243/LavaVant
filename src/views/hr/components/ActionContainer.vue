@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
 import RouterService from '@/service/RouterService'
 import UserService from '@/service/User/UserService'
 import PopupInfoComplaint from '@/views/components/Popup/PopupInfoComplaint.vue'
@@ -40,10 +40,10 @@ import PopupInfoDelivery from './PopupInfoDelivery.vue'
 })
 export default class ActionContainer extends Vue {
   @Prop()
-  Service!: BaseModelService
+  Service!: HrAbstract
 
   @Prop()
-  deliveryService!: BaseModelService
+  deliveryService!: HrAbstract
 
   @Prop()
   info!: { status: number; id: string; is_pay: boolean; user_id: string }

@@ -31,16 +31,11 @@
 </template>
 
 <script lang="ts">
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
 import InfoCheckService from '@/service/Info/InfoCheckService'
 import RouterService from '@/service/RouterService'
 import VantService from '@/service/VantService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-
-interface Service extends BaseModelService {
-  refreshUpdateAt: Function;
-  updateDisable: Function;
-}
 
 @Component
 export default class CheckListData extends Vue {
@@ -48,7 +43,7 @@ export default class CheckListData extends Vue {
   v!: any
 
   @Prop()
-  Service!: Service
+  Service!: HrAbstract
 
   private RouterService = RouterService
   private InfoCheckService = InfoCheckService

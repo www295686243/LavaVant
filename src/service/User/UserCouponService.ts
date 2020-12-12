@@ -1,8 +1,8 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 
-class UserCouponService extends BaseModelService {
-  name = 'User/UserCoupon'
+class UserCouponService extends BaseAbstract {
+  name = 'UserCoupon'
 
   usableCouponInfo = {
     id: '',

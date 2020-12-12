@@ -16,7 +16,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import FollowOfficialAccount from '@/views/components/FollowOfficialAccount.vue'
 import UserService from '@/service/User/UserService'
-import BaseModelService from '@/service/BaseModelService'
+import BaseAbstract from '@/abstract/BaseAbstract'
 
 @Component({
   components: {
@@ -28,7 +28,7 @@ export default class FollowAd extends Vue {
   isDisableCloseBtn!: boolean
 
   @Prop()
-  Service!: BaseModelService
+  Service!: BaseAbstract
 
   private UserService = UserService
   private isShowQrcode = false

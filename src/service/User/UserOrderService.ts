@@ -1,8 +1,8 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 
-class UserOrderService extends BaseModelService {
-  name = 'User/UserOrder'
+class UserOrderService extends BaseAbstract {
+  name = 'UserOrder'
 
   index (page: number) {
     return axios.get('user_order', { page })

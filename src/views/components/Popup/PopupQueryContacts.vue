@@ -70,18 +70,12 @@
 </template>
 
 <script lang="ts">
-import BaseModelService from '@/service/BaseModelService'
 import RouterService from '@/service/RouterService'
 import UserCouponService from '@/service/User/UserCouponService'
 import UserService from '@/service/User/UserService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
 import HrAbstract from '@/abstract/HrAbstract'
-
-interface Service extends BaseModelService {
-  pay: Function;
-  getContacts: Function;
-}
 
 @Component
 export default class PopupQueryContacts extends Vue {

@@ -1,8 +1,8 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 
-class InfoCheckService extends BaseModelService {
-  name = 'Info/InfoCheck'
+class InfoCheckService extends BaseAbstract {
+  name = 'InfoCheck'
 
   show (id: string) {
     return axios.get(`info_check/${id}`)

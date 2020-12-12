@@ -1,9 +1,9 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 import WXService from '../WXService'
 
-class CouponOrderService extends BaseModelService {
-  name = 'Coupon/CouponOrder'
+class CouponOrderService extends BaseAbstract {
+  name = 'CouponOrder'
   store (params: { ids: string[] }) {
     return axios.post('coupon_order', params)
       .then((res) => {

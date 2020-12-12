@@ -1,8 +1,8 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 
-class CouponMarketService extends BaseModelService {
-  name = 'Coupon/CouponMarket'
+class CouponMarketService extends BaseAbstract {
+  name = 'CouponMarket'
 
   index (params: { page: number; sort?: number; coupon_template_id?: string }) {
     return axios.get('coupon_market', params)

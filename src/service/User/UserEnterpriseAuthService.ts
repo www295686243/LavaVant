@@ -1,8 +1,8 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 
-class UserEnterpriseAuthService extends BaseModelService {
-  name = 'User/UserEnterpriseAuth'
+class UserEnterpriseAuthService extends BaseAbstract {
+  name = 'UserEnterpriseAuth'
 
   show () {
     return axios.get('user_enterprise_auth/show')

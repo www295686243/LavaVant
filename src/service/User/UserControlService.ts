@@ -1,9 +1,9 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
 import cache from '@/plugins/cache'
-import BaseModelService from '../BaseModelService'
 
-class UserControlService extends BaseModelService {
-  name = 'User/UserControl'
+class UserControlService extends BaseAbstract {
+  name = 'UserControl'
   info = {
     is_disable_all_push: 0,
     is_open_resume_push: 0,

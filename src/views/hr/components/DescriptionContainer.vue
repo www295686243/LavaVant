@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
@@ -22,7 +22,7 @@ export default class DescriptionContainer extends Vue {
   info!: { description: string; end_time: string }
 
   @Prop()
-  Service!: BaseModelService
+  Service!: HrAbstract
 }
 </script>
 

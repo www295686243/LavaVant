@@ -14,14 +14,9 @@
 </template>
 
 <script lang="ts">
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
 import RouterService from '@/service/RouterService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-
-interface Service extends BaseModelService {
-  refreshUpdateAt: Function;
-  updateDisable: Function;
-}
 
 @Component
 export default class ListData extends Vue {
@@ -29,7 +24,7 @@ export default class ListData extends Vue {
   v!: any
 
   @Prop()
-  Service!: Service
+  Service!: HrAbstract
 
   private RouterService = RouterService
 

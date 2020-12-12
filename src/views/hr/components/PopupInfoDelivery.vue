@@ -51,7 +51,7 @@ import InfoDeliveryService from '@/service/Info/InfoDeliveryService'
 import { getStatusLabel } from '@/service/ConstService'
 import RouterService from '@/service/RouterService'
 import VantService from '@/service/VantService'
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
 
 interface ListItem {
   id: string;
@@ -64,10 +64,10 @@ interface ListItem {
 @Component
 export default class PopupInfoDelivery extends Vue {
   @Prop()
-  receiveService!: BaseModelService
+  receiveService!: HrAbstract
 
   @Prop()
-  sendService!: BaseModelService
+  sendService!: HrAbstract
 
   private getStatusLabel = getStatusLabel
   private isShowPopup = false

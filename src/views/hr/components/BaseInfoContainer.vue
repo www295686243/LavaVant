@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import BaseModelService from '@/service/BaseModelService'
+import HrAbstract from '@/abstract/HrAbstract'
 import ShareGuide from '@/views/components/ShareGuide.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
@@ -29,7 +29,7 @@ export default class BaseInfoContainer extends Vue {
   info!: { title: string; status: number; salary: string; seniority: number; education: number; recruiter_number?: number }
 
   @Prop()
-  Service!: BaseModelService
+  Service!: HrAbstract
 }
 </script>
 

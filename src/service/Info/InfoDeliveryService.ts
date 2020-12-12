@@ -1,5 +1,5 @@
+import BaseAbstract from '@/abstract/BaseAbstract'
 import axios from '@/plugins/axios'
-import BaseModelService from '../BaseModelService'
 
 interface Params {
   send_info_type: string;
@@ -8,8 +8,8 @@ interface Params {
   receive_info_id: string;
 }
 
-class InfoDeliveryService extends BaseModelService {
-  name = 'Info/InfoDelivery'
+class InfoDeliveryService extends BaseAbstract {
+  name = 'InfoDelivery'
 
   index (params: { page: number; type: string; receive_info_type?: string; send_info_type?: string }) {
     return axios.get('info_delivery', params)
