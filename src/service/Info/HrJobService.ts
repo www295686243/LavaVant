@@ -5,7 +5,7 @@ import WXService from '@/service/WXService'
 import UserCouponService from '@/service/User/UserCouponService'
 
 class HrJobService extends HrAbstract {
-  name = 'Info/Hr/HrJob'
+  name = 'HrJob'
   displayName = '职位'
   path = 'hr/job'
 
