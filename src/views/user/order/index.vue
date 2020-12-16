@@ -1,6 +1,5 @@
 <template>
   <PageContainer class="view-order-index">
-    <p class="tips">注：为保护用户隐私，自购买之日起，联系订单有效期为7天</p>
     <ListContainer :onLoad="handleLoad">
       <template v-slot="{ v }">
         <van-cell :border="false" class="User-ListData">

@@ -1,7 +1,7 @@
 <template>
   <div class="FooterTabBar">
     <van-tabbar class="van-hairline--top" v-model="tabbarActive" active-color="#07c160">
-      <van-tabbar-item icon="wap-home-o" to="/list">岗位</van-tabbar-item>
+      <van-tabbar-item icon="wap-home-o" :to="UserService.info.current_role === 'Personal Member' ? '/hr/job' : '/hr/resume'">{{UserService.info.current_role === 'Personal Member' ? '职位' : '简历'}}</van-tabbar-item>
       <van-tabbar-item icon="apps-o" @click="handleAction('classify')">分类</van-tabbar-item>
       <van-tabbar-item icon="add" @click="handleAction('publish')">发布</van-tabbar-item>
       <van-tabbar-item icon="service-o" @click="handleAction('customer-service')">客服</van-tabbar-item>
@@ -49,6 +49,7 @@ import {
 import RouterService from '@/service/RouterService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
+import UserService from '@/service/User/UserService'
 
 @Component({
   components: {
@@ -82,6 +83,8 @@ export default class FooterTabBar extends Vue {
       icon: '/images/icon-task-hall.png'
     }
   ]
+
+  private UserService = UserService
 
   private handleAction (action: string) {
     if (action === 'publish') {

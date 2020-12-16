@@ -3,6 +3,7 @@
     <FormRender
       :Service="HrResumeService"
       :form="form"
+      :onLoad="handleLoad"
       :onSubmitAfter="handleSubmitAfter"
       submitBtn="发布">
       <FormInput v-model="form.title" :field="formFields.title" />
@@ -114,12 +115,16 @@ export default class UserHrJobForm extends Vue {
   })
 
   private handleLoad () {
-    return HrResumeService.authShow()
-      .then((res) => {
-        Object.keys(this.form).forEach((key) => {
-          this.form[key] = res.data[key] || this.form[key]
-        })
-        if (this.isCreate) {
+    return Promise.resolve()
+      .then(() => {
+        if (!this.isCreate) {
+          return HrResumeService.authShow()
+            .then((res) => {
+              Object.keys(this.form).forEach((key) => {
+                this.form[key] = res.data[key] || this.form[key]
+              })
+            })
+        } else {
           Object.assign(this.form, cache.hr.get('resume-create'))
           // 设置个定时器，每秒进行临时存储输入的数据
           this.setTimer()

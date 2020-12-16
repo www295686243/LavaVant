@@ -87,9 +87,9 @@ export default class TaskHall extends Vue {
   private getList () {
     return (cache.config.get('task') || []).filter((res: { task_type: number }) => {
       if (UserService.info.current_role === 'Enterprise Member') {
-        return res.task_type === getOptionsValue('Task/Task', 'task_type', 1, '通用任务') || res.task_type === getOptionsValue('Task/Task', 'task_type', 3, '企业任务')
+        return res.task_type === getOptionsValue('Task', 'task_type', 1, '通用任务') || res.task_type === getOptionsValue('Task', 'task_type', 3, '企业任务')
       } else {
-        return res.task_type === getOptionsValue('Task/Task', 'task_type', 1, '通用任务') || res.task_type === getOptionsValue('Task/Task', 'task_type', 2, '个人任务')
+        return res.task_type === getOptionsValue('Task', 'task_type', 1, '通用任务') || res.task_type === getOptionsValue('Task', 'task_type', 2, '个人任务')
       }
     })
   }
