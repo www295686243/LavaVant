@@ -8,7 +8,8 @@ export default [
     path: '/hr/resume',
     component: resume,
     meta: {
-      title: '简历列表'
+      title: '简历列表',
+      keepAlive: true
     }
   },
   {
@@ -22,7 +23,8 @@ export default [
     path: '/hr/job',
     component: job,
     meta: {
-      title: '职位列表'
+      title: '职位列表',
+      keepAlive: true
     }
   },
   {

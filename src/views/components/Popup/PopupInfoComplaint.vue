@@ -93,7 +93,7 @@ export default class PopupInfoComplaint extends Vue {
       label: '投诉类型',
       rules: [ValidateService.required],
       disabled: false,
-      options: getOptions('Info/InfoComplaint', 'complaint_type')
+      options: getOptions('InfoComplaint', 'complaint_type')
     },
     complaint_content: {
       prop: 'complaint_content',

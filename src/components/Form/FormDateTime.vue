@@ -28,6 +28,10 @@ export default class FormDateTime extends Mixins(FormMixins) {
         this.innerValue = res
       })
   }
+
+  private created () {
+    this.field.disabled = true
+  }
 }
 </script>
 

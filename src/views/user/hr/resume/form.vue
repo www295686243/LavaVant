@@ -34,6 +34,7 @@ import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import HrResumeService from '@/service/Info/HrResumeService'
 import cache from '@/plugins/cache'
+import UserPersonalService from '@/service/User/UserPersonalService'
 
 @Component
 export default class UserHrJobForm extends Vue {
@@ -51,10 +52,10 @@ export default class UserHrJobForm extends Vue {
     treatment_input: '',
     education: '',
     seniority: '',
-    city: 0,
+    city: UserPersonalService.info.city,
     end_time: '',
-    contacts: '',
-    phone: '',
+    contacts: UserPersonalService.info.name,
+    phone: UserPersonalService.info.phone,
     description: ''
   } as {
     [key: string]: any;

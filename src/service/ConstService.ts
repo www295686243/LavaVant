@@ -25,9 +25,7 @@ interface Rewards {
 
 function resolveClassName (name: string) {
   if (name.includes('App\\Models')) {
-    name = name.replace('App\\Models\\', '')
-    name = name.replaceAll('\\', '/')
-    return name
+    return name.split('\\').pop()
   }
   return name
 }

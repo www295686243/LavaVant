@@ -37,6 +37,7 @@ import ValidateService from '@/service/ValidateService'
 import RouterService from '@/service/RouterService'
 import HrJobService from '@/service/Info/HrJobService'
 import cache from '@/plugins/cache'
+import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 
 @Component
 export default class UserHrJobForm extends Vue {
@@ -47,18 +48,18 @@ export default class UserHrJobForm extends Vue {
   private form = {
     id: RouterService.query('id'),
     title: '',
-    company_name: '',
+    company_name: UserEnterpriseService.info.company,
     monthly_salary_min: '',
     monthly_salary_max: '',
     is_negotiate: 0,
     recruiter_number: 1,
     education: '',
     seniority: '',
-    city: 0,
-    address: '',
+    city: UserEnterpriseService.info.city,
+    address: UserEnterpriseService.info.address,
     end_time: '',
-    contacts: '',
-    phone: '',
+    contacts: UserEnterpriseService.info.name,
+    phone: UserEnterpriseService.info.phone,
     treatment: '',
     treatment_input: '',
     description: ''

@@ -2,7 +2,7 @@
   <div class="BaseInfoContainer">
     <div class="title-container">
       <h2>{{info.title}}</h2>
-      <ShareGuide size="mini" icon="share-o" plain></ShareGuide>
+      <ShareGuide size="small" icon="share-o" plain></ShareGuide>
     </div>
     <div class="position">
       <span class="light">{{info.salary}}</span> / {{Service.getOptionsLabel('seniority', info.seniority)}} / {{Service.getOptionsLabel('education', info.education)}}<span v-if="info.recruiter_number"> / {{info.recruiter_number}}人</span>

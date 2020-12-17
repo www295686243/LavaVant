@@ -17,8 +17,11 @@ class RouterSerivce {
         this.keepAlives = Array.from(new Set(this.keepAlives.concat(names)))
       }
       // 设置title
-      // document.title = to.meta.title || process.env.VUE_APP_NAME
-      document.title = 'demo'
+      if (process.env.VUE_APP_ENV === 'dev') {
+        document.title = 'demo'
+      } else {
+        document.title = to.meta.title || process.env.VUE_APP_NAME
+      }
       // 页面访问埋点
       StatService.viewPush(to)
       // 开发环境直接跳过

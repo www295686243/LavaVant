@@ -2,14 +2,11 @@
   <PageContainer class="view-order-index">
     <ListContainer :onLoad="handleLoad">
       <template v-slot="{ v }">
-        <van-cell :border="false" class="User-ListData">
+        <van-cell :border="false" class="User-ListData" @click="handleClick(v)">
           <h4 class="van-multi-ellipsis--l2">{{v.user_orderable.title}}</h4>
           <div class="info">
             <p>状态：<span>{{getStatusLabel(v.user_orderable_type, v.user_orderable.status)}}</span></p>
             <p>购买于：<span>{{v.paid_at}}</span></p>
-          </div>
-          <div class="btns">
-            <ButtonSubmit size="small" plain :onClick="() => handleClick(v)">查看详情</ButtonSubmit>
           </div>
         </van-cell>
       </template>
