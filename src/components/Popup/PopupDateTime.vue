@@ -2,6 +2,7 @@
   <van-popup
     v-model="isShow"
     position="bottom"
+    close-on-popstate
     @closed="handleCancel"
     get-container="body">
     <van-datetime-picker

@@ -1,7 +1,7 @@
 <template>
   <div class="ShareGuide">
     <ButtonSubmit :onClick="handleClick" v-bind="$attrs">{{ buttonText }}</ButtonSubmit>
-    <van-popup v-model="isShowPopup">
+    <van-popup close-on-popstate v-model="isShowPopup">
       <img src="../../assets/images/invite-guide.png" width="100%" v-if="type === 'invite'" />
       <img src="../../assets/images/share-guide.png" width="100%" v-else />
     </van-popup>

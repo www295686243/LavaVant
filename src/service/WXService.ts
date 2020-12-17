@@ -4,6 +4,8 @@ import { isWX, isIOS, isAndroid, isPCWX, toLowerLine } from '@/plugins/tools'
 import RouterService from './RouterService'
 import cache from '@/plugins/cache'
 import UserService from './User/UserService'
+import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
+import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 
 interface ShareParams {
   title: string;
@@ -64,6 +66,8 @@ class WXService {
       .then(() => UserService.getUserInfo())
       .then(() => {
         location.replace(RouterService.query('redirect_url'))
+        PopupSelectCouponService.destroy()
+        PopupRegisterService.destroy()
       })
   }
 

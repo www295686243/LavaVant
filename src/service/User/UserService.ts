@@ -7,6 +7,7 @@ import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import RouterService from '@/service/RouterService'
 import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 import UserControlService from './UserControlService'
+import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
 
 interface LoginParams {
   username: string;
@@ -62,6 +63,10 @@ class UserService {
         this.updateData(res.data)
       })
       .then(() => this.getUserInfo())
+      .then(() => {
+        PopupSelectCouponService.destroy()
+        PopupRegisterService.destroy()
+      })
   }
 
   todayFirstLogin () {

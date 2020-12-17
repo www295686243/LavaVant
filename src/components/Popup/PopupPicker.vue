@@ -2,6 +2,7 @@
   <van-popup
     v-model="isShow"
     position="bottom"
+    close-on-popstate
     get-container="body">
     <van-picker
       show-toolbar

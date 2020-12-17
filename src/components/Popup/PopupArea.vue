@@ -2,6 +2,7 @@
   <van-popup
     v-model="isShow"
     position="bottom"
+    close-on-popstate
     @close="handleClose"
     get-container="body">
     <van-area

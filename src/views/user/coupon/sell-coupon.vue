@@ -13,6 +13,7 @@
       v-model="isShowImportAmount"
       round
       closeable
+      close-on-popstate
       :close-on-click-overlay="false"
       class="dialog-user-coupon-import-amount">
       <h2>挂售单价</h2>

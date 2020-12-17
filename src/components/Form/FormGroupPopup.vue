@@ -20,6 +20,7 @@
       :close-on-click-overlay="false"
       closeable
       round
+      close-on-popstate
       class="FormGroupPopupContainer"
       get-container="body">
       <div class="title">添加{{title}}</div>

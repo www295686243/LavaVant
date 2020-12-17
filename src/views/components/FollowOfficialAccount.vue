@@ -2,6 +2,7 @@
   <van-popup
     class="FollowOfficialAccount"
     v-model="innerValue"
+    close-on-popstate
     closeable
     get-container="body">
     <div class="service-img"><img src="@/assets/images/yuancao.jpg" alt="公众号二维码" width="240" height="240"></div>

@@ -4,9 +4,12 @@
     position="bottom"
     class="PopupSelectCoupon"
     round
-    @closed="handleClosed"
+    @closed="close"
+    close-on-popstate
     :style="{ height: '90%' }"
+    closeable
     get-container="body">
+    <van-nav-bar title="请选择优惠券" />
     <CouponList ref="couponListElement" :onLoad="handleLoad" :onSubmit="handleSubmit" select="single" buttonText="确定"></CouponList>
   </van-popup>
 </template>
@@ -15,10 +18,12 @@
 import { Component, Vue, Prop, Ref } from 'vue-property-decorator'
 import CouponList from '@/views/components/CouponList.vue'
 import HrAbstract from '@/abstract/HrAbstract'
+import { NavBar } from 'vant'
 
 @Component({
   components: {
-    CouponList
+    CouponList,
+    [NavBar.name]: NavBar
   }
 })
 export default class PopupSelectCoupon extends Vue {
@@ -42,6 +47,7 @@ export default class PopupSelectCoupon extends Vue {
 
   public close () {
     this.isShow = false
+    this.reject()
   }
 
   public destroy () {
@@ -73,5 +79,24 @@ export default class PopupSelectCoupon extends Vue {
 <style lang="less">
 .PopupSelectCoupon {
   background: @background-color;
+  overflow-y: initial;
+  .van-popup__close-icon--top-right {
+    top: 12px;
+  }
+  .van-nav-bar {
+    background: transparent;
+  }
+  .CouponList {
+    padding-top: 0;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ListContainer .List-finished, .ListContainer .List-empty {
+    padding-bottom: 110px;
+  }
+  .van-list__loading, .van-list__finished-text, .van-list__error-text {
+    line-height: 20px;
+  }
 }
 </style>

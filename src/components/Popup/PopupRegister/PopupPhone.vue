@@ -3,6 +3,7 @@
     v-model="isShow"
     class="PopupPhone"
     round
+    close-on-popstate
     @closed="handleClose"
     get-container="body">
     <van-steps :active="active" v-if="UserService.info.phone">

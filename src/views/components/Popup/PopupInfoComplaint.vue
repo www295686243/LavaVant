@@ -42,6 +42,7 @@
       class="PopupInfoComplaint-official-account"
       get-container="body"
       closeable
+      close-on-popstate
       v-model="isShowOfficialAccount">
       <div class="official-account">
         <p>检测到您未关注【原草互助】公众号</p>
@@ -53,6 +54,7 @@
       class="PopupInfoComplaint-service"
       v-model="isShowCustomerService"
       closeable
+      close-on-popstate
       get-container="body">
       <div class="service-img"><img src="@/assets/images/yuancaokf.jpg" alt="原草网客服" width="240" height="240"></div>
     </van-popup>

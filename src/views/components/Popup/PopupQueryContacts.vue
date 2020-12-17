@@ -42,6 +42,7 @@
       v-model="isShowOfficialAccounts"
       get-container="body"
       closeable
+      close-on-popstate
       position="bottom">
       <div class="QueryContact-official-accounts">
         <span>您未关注【原草互助】公众号，关注后才能查看！</span><br>
@@ -56,6 +57,7 @@
       v-model="isShowContacts"
       get-container="body"
       closeable
+      close-on-popstate
       @closed="handleClosed"
       position="bottom">
       <div class="QueryContact-contacts">

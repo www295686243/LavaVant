@@ -10,6 +10,7 @@
     <van-popup
       v-model="isShowPublish"
       get-container="body"
+      close-on-popstate
       position="bottom"
       round>
       <van-grid clickable :column-num="2" :border="false" icon-size="40px">
@@ -21,6 +22,7 @@
     <van-popup
       class="FooterTabBar-service"
       v-model="isShowCustomerService"
+      close-on-popstate
       closeable
       get-container="body">
       <div class="service-img"><img src="@/assets/images/yuancaokf.jpg" alt="原草网客服" width="240" height="240"></div>

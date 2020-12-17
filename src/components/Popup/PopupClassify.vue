@@ -2,6 +2,7 @@
   <van-popup
     v-model="isShow"
     position="bottom"
+    close-on-popstate
     round
     :close-on-click-overlay="false"
     get-container="body"
