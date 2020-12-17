@@ -4,8 +4,13 @@ import UserService from './User/UserService'
 
 class NotifyService {
   private isGetUnread = false
-  public isClose = false
+  public isShow = false
   public unreadCount = 0
+  private ignoreRouteList = ['/user/notify', '/user']
+
+  index (page: number) {
+    return axios.get('notify', { page })
+  }
 
   checkQueryNotify () {
     return Promise.resolve()
@@ -25,25 +30,35 @@ class NotifyService {
             .then((res) => {
               this.unreadCount = res.data.count
               this.isGetUnread = true
+              if (!this.ignoreRouteList.includes(RouterService.getPath()) && this.unreadCount > 0) {
+                this.isShow = true
+              }
+            })
+        }
+      })
+  }
+
+  reloadUnreadCount () {
+    return Promise.resolve()
+      .then(() => {
+        if (this.isGetUnread === true && UserService.isLogin()) {
+          return axios.get('notify/getUnreadCount')
+            .then((res) => {
+              this.unreadCount = res.data.count
             })
         }
       })
   }
 
   checkMarkHaveRead () {
-    return Promise.resolve()
+    return axios.get('notify/markHaveRead')
       .then(() => {
-        if (this.unreadCount > 0) {
-          return axios.get('notify/markHaveRead')
-            .then(() => {
-              this.unreadCount = 0
-            })
-        }
+        this.unreadCount = 0
       })
   }
 
   setClose () {
-    this.isClose = true
+    this.isShow = false
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <PageContainer class="view-user-index">
+  <PageContainer class="view-user-index" :onLoad="handleLoad">
     <component :is="roleComponent"></component>
     <FooterTabBar></FooterTabBar>
   </PageContainer>
@@ -11,6 +11,7 @@ import UserService from '@/service/User/UserService'
 import Enterprise from './components/enterprise.vue'
 import Personal from './components/personal.vue'
 import FooterTabBar from '@/views/components/FooterTabBar.vue'
+import NotifyService from '@/service/NotifyService'
 
 @Component({
   components: {
@@ -30,6 +31,13 @@ export default class ViewUserIndex extends Vue {
 
   private switchRole (role: string) {
     this.roleComponent = role === 'Enterprise Member' ? 'Enterprise' : 'Personal'
+  }
+
+  private handleLoad () {
+    return Promise.resolve()
+      .then(() => {
+        NotifyService.reloadUnreadCount()
+      })
   }
 
   created () {
@@ -117,7 +125,7 @@ export default class ViewUserIndex extends Vue {
     color: #ed6a0c;
   }
   .zz-icon-bangzhu {
-    color: #ff976a;
+    color: #a0cfff;
   }
   .zz-icon-shezhi {
     color: @gray-7;
@@ -125,5 +133,13 @@ export default class ViewUserIndex extends Vue {
   .zz-icon-qiehuan {
     color: @gray-6;
   }
+  .van-icon-comment-circle {
+    color: #ff976a;
+  }
+  // .user-other {
+  //   .van-cell__value {
+  //     color: #ee0a24;
+  //   }
+  // }
 }
 </style>

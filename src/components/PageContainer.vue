@@ -1,7 +1,7 @@
 <template>
   <div class="PageContainer">
     <van-notice-bar
-      v-if="NotifyService.unreadCount > 0 && NotifyService.isClose === false"
+      v-if="NotifyService.unreadCount > 0 && NotifyService.isShow"
       left-icon="volume-o"
       @close="handleNotifyClose"
       mode="closeable">
@@ -34,9 +34,10 @@ export default class PageContainer extends Vue {
   private NotifyService = NotifyService
 
   private handleLoad () {
-    return NotifyService.checkQueryNotify()
-      .then(() => NotifyService.getUnreadCount())
-      .then(() => this.onLoad())
+    return this.onLoad()
+      .then(() => {
+        NotifyService.checkQueryNotify().then(() => NotifyService.getUnreadCount())
+      })
   }
 
   private handleNotifyClick () {

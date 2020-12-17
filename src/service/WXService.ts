@@ -6,6 +6,7 @@ import cache from '@/plugins/cache'
 import UserService from './User/UserService'
 import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
 import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
+import EventService from './EventService'
 
 interface ShareParams {
   title: string;
@@ -68,6 +69,7 @@ class WXService {
         location.replace(RouterService.query('redirect_url'))
         PopupSelectCouponService.destroy()
         PopupRegisterService.destroy()
+        EventService.emit('view-destroy')
       })
   }
 

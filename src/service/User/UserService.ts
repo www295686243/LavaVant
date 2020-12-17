@@ -8,6 +8,7 @@ import RouterService from '@/service/RouterService'
 import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 import UserControlService from './UserControlService'
 import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
+import EventService from '../EventService'
 
 interface LoginParams {
   username: string;
@@ -66,6 +67,7 @@ class UserService {
       .then(() => {
         PopupSelectCouponService.destroy()
         PopupRegisterService.destroy()
+        EventService.emit('view-destroy')
       })
   }
 

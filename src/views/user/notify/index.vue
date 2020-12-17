@@ -33,7 +33,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import axios from '@/plugins/axios'
 import RouterService from '@/service/RouterService'
 import NotifyService from '@/service/NotifyService'
 
@@ -45,12 +44,14 @@ interface ListItem {
 @Component
 export default class UserNotify extends Vue {
   private handleLoad () {
-    return NotifyService.checkMarkHaveRead()
+    return Promise.resolve()
+      .then(() => {
+        NotifyService.checkMarkHaveRead()
+      })
   }
 
   private handleListLoad (page: number) {
-    return axios.get('notify', { page })
-      .then((res) => res.data.data)
+    return NotifyService.index(page)
   }
 
   private handleLink (v: ListItem) {
@@ -88,6 +89,7 @@ export default class UserNotify extends Vue {
     .remark {
       .van-cell__value {
         color: #1775CC;
+        white-space: pre-line;
       }
     }
     .link {
