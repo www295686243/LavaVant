@@ -117,7 +117,6 @@ export default class PopupQueryContacts extends Vue {
 
   private handleSubmit () {
     return this.Service.pay({ user_coupon_id: UserCouponService.usableCouponInfo.id })
-      .then(() => this.Service.getContacts())
       .then((res: any) => {
         this.$emit('pay', res.data)
         this.phone = res.data.phone

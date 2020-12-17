@@ -22,16 +22,14 @@ class HrJobService extends HrAbstract {
       .then((res) => {
         if (res.data.pay_status !== 'success') {
           return WXService.chooseWXPay(res.data)
-            .then(() => {
-              return { message: '支付成功' }
-            })
+            .then(() => this.checkPayOrder(() => this.getContacts()))
         } else {
-          return res
+          return this.getContacts()
         }
       })
   }
 
-  getContacts () {
+  private getContacts () {
     return axios.get('hr_job/getContacts', { id: RouterService.query('id') })
   }
 

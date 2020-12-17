@@ -97,6 +97,10 @@ class WXService {
           },
           fail: (res) => {
             reject(res)
+          },
+          cancel: () => {
+            const err = { message: '取消支付' }
+            reject(err)
           }
         })
       } else {
