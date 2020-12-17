@@ -30,7 +30,7 @@ class WXService {
   }
 
   config () {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       if (isWX && process.env.VUE_APP_ENV !== 'dev' && (isAndroid || (isIOS && this.isInitConfig === false))) {
         return axios.get('wechat/getConfig', {
           url: location.href
@@ -82,7 +82,7 @@ class WXService {
   }
 
   chooseWXPay (params: IchooseWXPay) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (isWX) {
         wx.chooseWXPay({
           ...params,
@@ -123,7 +123,7 @@ class WXService {
   }
 
   private updateTimelineShareData (params: ShareParams) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void|string>((resolve, reject) => {
       wx.updateTimelineShareData({
         title: params.title,
         link: params.link,
@@ -142,7 +142,7 @@ class WXService {
   }
 
   private updateAppMessageShareData (params: ShareParams) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void|string>((resolve, reject) => {
       wx.updateAppMessageShareData({
         title: params.title, // 分享标题
         desc: params.desc, // 分享描述
@@ -162,7 +162,7 @@ class WXService {
   }
 
   private onMenuShareAppMessage (params: ShareParams) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void|string>((resolve, reject) => {
       wx.onMenuShareAppMessage({
         title: params.title,
         desc: params.desc,
