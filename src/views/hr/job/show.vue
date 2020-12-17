@@ -37,6 +37,7 @@ import RecommendContainer from '../components/RecommendContainer.vue'
 import FixedHelp from '@/views/components/FixedHelp.vue'
 
 @Component({
+  name: 'HrJobShow',
   components: {
     Disclaimer,
     [Sticky.name]: Sticky,

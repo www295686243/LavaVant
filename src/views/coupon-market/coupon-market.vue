@@ -23,6 +23,7 @@ import CouponOrderService from '@/service/Coupon/CouponOrderService'
 import VantService from '@/service/VantService'
 
 @Component({
+  name: 'CouponMarket',
   components: {
     CouponList
   }

@@ -33,6 +33,7 @@ import UserService from '@/service/User/UserService'
 import BusinessSmsCaptcha from '@/components/Business/BusinessSmsCaptcha.vue'
 
 @Component({
+  name: 'OperationInvite',
   components: {
     BusinessSmsCaptcha,
     FollowOfficialAccount

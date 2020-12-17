@@ -15,6 +15,7 @@ import VantService from '@/service/VantService'
 import ConstService from '@/service/ConstService'
 
 @Component({
+  name: 'OtherHelp',
   components: {
     HelpText
   }

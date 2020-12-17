@@ -39,6 +39,7 @@ import { Grid, GridItem, Step, Steps } from 'vant'
 import RouterService from '@/service/RouterService'
 
 @Component({
+  name: 'OperationPublish',
   components: {
     [Grid.name]: Grid,
     [GridItem.name]: GridItem,

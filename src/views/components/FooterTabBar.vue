@@ -32,6 +32,7 @@
       @select="handleClassifySelect"
       get-container="body"
       :lock-scroll="false"
+      close-on-popstate
       v-model="isShowClassify"
       title="分类"
       :options="classifyOptions"
@@ -52,6 +53,7 @@ import RouterService from '@/service/RouterService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import UserService from '@/service/User/UserService'
+import EventService from '@/service/EventService'
 
 @Component({
   components: {
@@ -99,6 +101,7 @@ export default class FooterTabBar extends Vue {
   }
 
   private handleClassifySelect (select: any) {
+    EventService.emit('view-destroy')
     if (select.name === '简历') {
       RouterService.push('/hr/resume')
     } else if (select.name === '职位') {

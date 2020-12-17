@@ -6,6 +6,7 @@
         <ListData :v="v" @click="handleClick(v.id)"></ListData>
       </template>
     </ListContainer>
+    <FooterTabBar></FooterTabBar>
     <FixedHelp></FixedHelp>
   </PageContainer>
 </template>
@@ -17,12 +18,15 @@ import { Component, Vue, Ref } from 'vue-property-decorator'
 import ListData from '../components/ListData.vue'
 import FixedHelp from '@/views/components/FixedHelp.vue'
 import ListFilter from '@/views/components/ListFilter/ListFilter.vue'
+import FooterTabBar from '@/views/components/FooterTabBar.vue'
 
 @Component({
+  name: 'HrResumeIndex',
   components: {
     ListData,
     ListFilter,
-    FixedHelp
+    FixedHelp,
+    FooterTabBar
   }
 })
 export default class ViewHrResumeIndex extends Vue {
