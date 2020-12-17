@@ -2,7 +2,7 @@
   <PageContainer class="view-user-hr-resume-success">
     <div class="status">
       <div class="status-icon"><van-icon name="checked" color="#07c160" size="80px" /></div>
-      <p class="status-text">已{{isUpdate > 0 ? '更新' : '发布'}}成功</p>
+      <p class="status-text">已{{isUpdate > 0 ? '更新' : '发布'}}成功，请等待审核！</p>
     </div>
     <div class="tips">
       <p>1、发布成功后，需要审核通过才能在网站显示</p>

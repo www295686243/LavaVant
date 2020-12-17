@@ -40,11 +40,11 @@ class HrResumeService extends HrAbstract {
   }
 
   authIndex (params: { page: number }) {
-    return axios.get('hr_resume', params)
+    return axios.get('hr_resume/authIndex', params)
   }
 
   authShow () {
-    return axios.get(`hr_resume/${RouterService.query('id')}`, { _check: RouterService.query('_check') })
+    return axios.get('hr_resume/authShow', { id: RouterService.query('id'), _check: RouterService.query('_check') })
   }
 
   store (form: { id: string }) {
