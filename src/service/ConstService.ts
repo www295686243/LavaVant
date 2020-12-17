@@ -23,9 +23,9 @@ interface Rewards {
   coupon_template_id: number;
 }
 
-function resolveClassName (name: string) {
+function resolveClassName (name: string): string {
   if (name.includes('App\\Models')) {
-    return name.split('\\').pop()
+    return name.split('\\').pop() as string
   }
   return name
 }
