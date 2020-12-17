@@ -19,8 +19,14 @@ class UserCouponService extends BaseAbstract {
   }
 
   updateUsableCoupon (params: { id: string; display_name: string; amount: number }) {
-    Object.assign(this.usableCouponInfo, params)
-    this.usableCouponInfo.display_name = this.usableCouponInfo.display_name || '暂无可用的互助券'
+    if (params) {
+      Object.assign(this.usableCouponInfo, params)
+      this.usableCouponInfo.display_name = this.usableCouponInfo.display_name || '暂无可用的互助券'
+    } else {
+      this.usableCouponInfo.id = ''
+      this.usableCouponInfo.display_name = '暂无可用的互助券'
+      this.usableCouponInfo.amount = 0
+    }
   }
 }
 

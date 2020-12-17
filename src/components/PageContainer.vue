@@ -1,5 +1,5 @@
 <template>
-  <div class="PageContainer">
+  <div class="PageContainer" @click="handleTouchEnd">
     <van-notice-bar
       v-if="NotifyService.unreadCount > 0 && NotifyService.isShow"
       left-icon="volume-o"
@@ -18,6 +18,9 @@ import { Component, Vue, Prop, Ref } from 'vue-property-decorator'
 import NotifyService from '@/service/NotifyService'
 import { NoticeBar } from 'vant'
 import RouterService from '@/service/RouterService'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import eruda from 'eruda'
 
 @Component({
   components: {
@@ -32,6 +35,10 @@ export default class PageContainer extends Vue {
   readonly onLoad!: Function
 
   private NotifyService = NotifyService
+  private clickCount = 0
+  private lastClickTime = 0
+  private interval = 200 // 连续点击间隔
+  private triggerCount = 8 // 触发debug点击次数
 
   private handleLoad () {
     return this.onLoad()
@@ -47,6 +54,30 @@ export default class PageContainer extends Vue {
 
   private handleNotifyClose () {
     NotifyService.setClose()
+  }
+
+  private handleTouchEnd () {
+    const current = new Date().getTime()
+
+    if (this.lastClickTime === 0 || (current - this.lastClickTime < this.interval)) {
+      this._countUp(current)
+    } else {
+      this._reset(1)
+    }
+
+    if (this.clickCount === this.triggerCount) {
+      eruda.init()
+    }
+  }
+
+  private _countUp (current: number) {
+    this.clickCount++
+    this.lastClickTime = current
+  }
+
+  private _reset (count = 0) {
+    this.clickCount = count
+    this.lastClickTime = 0
   }
 
   public reload () {

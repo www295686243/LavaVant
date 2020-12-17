@@ -85,9 +85,8 @@ class HrJobService extends HrAbstract {
   getFirstUsableCoupon () {
     return this.getUsableCoupon({ page: 1 })
       .then((res) => {
-        if (res.data && res.data.data.length > 0) {
-          UserCouponService.updateUsableCoupon(res.data.data[0])
-        }
+        const coupon = res.data && res.data.data.length > 0 ? res.data.data[0] : null
+        UserCouponService.updateUsableCoupon(coupon)
       })
   }
 
