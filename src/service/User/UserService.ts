@@ -9,6 +9,7 @@ import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegister
 import UserControlService from './UserControlService'
 import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
 import EventService from '../EventService'
+import VantService from '../VantService'
 
 interface LoginParams {
   username: string;
@@ -100,14 +101,28 @@ class UserService {
     return axios.post('user/sendSmsCaptcha', params)
   }
 
-  bindPhone (params: { phone: string; code: string }) {
+  bindPhone (params: { phone: string; code: string; is_force?: number }): any {
     return axios.post('user/bindPhone', params)
       .then((res) => this.getBaseUserInfo().then(() => res))
+      .catch((err) => {
+        if (err.status === 'force-bind') {
+          return VantService.confirm(err.message)
+            .then(() => this.bindPhone({ is_force: 1, ...params }))
+        }
+        return Promise.reject(err)
+      })
   }
 
-  updatePhone (params: { phone: string; code: string }) {
+  updatePhone (params: { phone: string; code: string; is_force?: number }): any {
     return axios.post('user/updatePhone', params)
       .then((res) => this.getBaseUserInfo().then(() => res))
+      .catch((err) => {
+        if (err.status === 'force-bind') {
+          return VantService.confirm(err.message)
+            .then(() => this.updatePhone({ is_force: 1, ...params }))
+        }
+        return Promise.reject(err)
+      })
   }
 
   verifyPhone (params: { phone: string; code: string }) {
