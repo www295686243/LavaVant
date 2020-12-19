@@ -7,6 +7,7 @@ class CouponOrderService extends BaseAbstract {
   store (params: { ids: string[] }) {
     return axios.post('coupon_order', params)
       .then((res) => WXService.chooseWXPay(res.data))
+      .then(() => this.checkPayOrder(() => this.checkIsPaySuccess()))
       .then(() => {
         return { message: '支付成功' }
       })
@@ -14,6 +15,17 @@ class CouponOrderService extends BaseAbstract {
 
   checkUnpaidOrder () {
     return axios.get('coupon_order/checkUnpaidOrder')
+  }
+
+  checkIsPaySuccess () {
+    return axios.get('coupon_order/checkUnpaidOrder')
+      .then((res) => {
+        if (res.data && !res.data.id) {
+          return Promise.resolve()
+        } else {
+          return Promise.reject(new Error('验证失败'))
+        }
+      })
   }
 
   continueUnpaidOrder () {
