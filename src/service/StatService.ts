@@ -1,8 +1,9 @@
 import cache from '@/plugins/cache'
-import axios from '@/plugins/axios'
 import { Route } from 'vue-router'
 import { formatDate, getEnv } from '@/plugins/tools'
 import RouterService from './RouterService'
+import QueryString from 'qs'
+import UserService from './User/UserService'
 
 interface StackInput {
   message?: string;
@@ -21,6 +22,7 @@ class StatService {
   stack: StackItem[] = []
   queue: Promise<any>[] = []
   isQueue = false
+  baseUrl = process.env.VUE_APP_APIURL + '/api'
   constructor () {
     this.stack = cache.stat.get('stack') || []
   }
@@ -60,12 +62,40 @@ class StatService {
         const stack = this.stack.slice(0, this.stack.length)
         this.stack = this.stack.slice(stack.length)
         if (stack.length > 0) {
-          return axios.post('api_log', { stack })
+          return this.trackByImg('api_log', { stack })
             .then(() => {
               cache.stat.set('stack', this.stack)
             })
         }
       })
+  }
+
+  trackByImg (url: string, params: { stack: StackItem[]; _t?: number; user_id?: string; nickname?: string }) {
+    return new Promise<void>((resolve) => {
+      params._t = +new Date()
+      params.user_id = UserService.info.id
+      params.nickname = UserService.info.nickname
+      const fullUrl = `${this.baseUrl}/${url}?${QueryString.stringify(params)}`
+      const img = document.createElement('img')
+      img.src = fullUrl
+      img.style.display = 'none'
+      img.style.width = '0px'
+      img.style.height = '0px'
+
+      document.body.appendChild(img)
+      img.onload = () => {
+        this.removeImg(img)
+        resolve()
+      }
+      img.onerror = () => {
+        this.removeImg(img)
+        resolve()
+      }
+    })
+  }
+
+  removeImg (img: HTMLImageElement) {
+    document.body.removeChild(img)
   }
 
   queueSubmit () {
@@ -78,6 +108,9 @@ class StatService {
         }
       })
       .then(() => {
+        this.isQueue = false
+      })
+      .catch(() => {
         this.isQueue = false
       })
   }

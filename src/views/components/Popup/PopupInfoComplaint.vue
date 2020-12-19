@@ -137,8 +137,7 @@ export default class PopupInfoComplaint extends Vue {
 
 <style lang="less">
 .PopupInfoComplaint {
-  display: inline-block;
-  .ButtonSubmit {
+  & > .ButtonSubmit {
     padding: 0;
     display: block;
     border: 0;

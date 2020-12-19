@@ -144,8 +144,7 @@ export default class PopupQueryContacts extends Vue {
 
 <style lang="less">
 .PopupQueryContacts {
-  display: inline-block;
-  .ButtonSubmit {
+  & > .ButtonSubmit {
     display: block;
     border: 0;
     color: @text-link-color;

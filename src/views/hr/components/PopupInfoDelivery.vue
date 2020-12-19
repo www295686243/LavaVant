@@ -154,7 +154,9 @@ export default class PopupInfoDelivery extends Vue {
 
 <style lang="less">
 .PopupInfoDelivery {
-  display: inline-block;
+  & > .ButtonSubmit {
+    display: block;
+  }
 }
 .PopupInfoDelivery-popup {
   .DataRender .render-loading {

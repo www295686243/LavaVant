@@ -85,11 +85,9 @@ function ajax (data: any): Promise<PromiseResult> {
             cache.user.set('api_token', res.data.api_token)
           }
           checkStat(data)
-          return checkVersion(data, res)
-            .then(() => checkTodayFirstLogin(data))
-            .then(() => {
-              resolve(res)
-            })
+          checkVersion(data, res)
+          checkTodayFirstLogin(data)
+          resolve(res)
         } else {
           if (res.code === 401) {
             notLogin()

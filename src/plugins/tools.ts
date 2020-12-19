@@ -103,9 +103,14 @@ export function toLowerLine (str: string) {
 
 export function getEnv () {
   const parser = new UAParser()
-  const result: any = parser.getResult()
-  result.screen_width = document.documentElement.clientWidth
-  result.screen_height = document.documentElement.clientHeight
-  result.platform = isWX ? (isPCWX ? '微信公众号PC' : '微信公众号') : 'h5'
-  return result
+  const result = parser.getResult()
+  return {
+    browser: result.browser,
+    device: result.device,
+    engine: result.engine,
+    os: result.os,
+    screen_width: document.documentElement.clientWidth,
+    screen_height: document.documentElement.clientHeight,
+    platform: isWX ? (isPCWX ? '微信公众号PC' : '微信公众号') : 'h5'
+  }
 }
