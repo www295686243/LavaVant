@@ -88,6 +88,7 @@ export default class CouponMarket extends Vue {
           if (err.status === 'cancel-pay') {
             return CouponOrderService.cancelUnpaidOrder()
           } else if (err.message) {
+            this.couponListElement.reload()
             VantService.toast.fail(err.message)
           }
         }
