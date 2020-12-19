@@ -35,6 +35,8 @@ import DescriptionContainer from '../components/DescriptionContainer.vue'
 import BaseInfoContainer from '../components/BaseInfoContainer.vue'
 import RecommendContainer from '../components/RecommendContainer.vue'
 import FixedHelp from '@/views/components/FixedHelp.vue'
+import WXService from '@/service/WXService'
+import UserService from '@/service/User/UserService'
 
 @Component({
   name: 'HrJobShow',
@@ -92,6 +94,13 @@ export default class ViewHrJobShow extends Vue {
         this.info.cityFullName = getCityName(this.info.city, '') + (this.info.address || '')
         // 信息统计
         HrJobService.view({ id: this.info.id, su: RouterService.query('su') })
+        // 分享设置
+        WXService.updateShareData({
+          title: this.info.title,
+          desc: this.info.description,
+          link: `/hr/job/show?id=${this.info.id}&su=${UserService.info.id}`,
+          imgUrl: '/images/share-job.png'
+        })
       })
   }
 

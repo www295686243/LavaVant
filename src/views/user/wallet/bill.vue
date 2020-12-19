@@ -3,10 +3,10 @@
     <ListContainer :onLoad="handleLoad">
       <template v-slot="{ v }">
         <van-cell
-          :value-class="v.amount > 0 ? 'up' : 'down'"
+          :value-class="v.total_amount > 0 ? 'up' : 'down'"
           :key="v.id"
           :title="v.desc"
-          :value="(v.amount > 0 ? '+' + v.amount : v.amount) + '元'"
+          :value="(v.total_amount > 0 ? '+' + v.total_amount : v.total_amount) + '元'"
           :label="v.created_at"/>
       </template>
     </ListContainer>

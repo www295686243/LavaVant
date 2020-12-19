@@ -110,7 +110,7 @@ class WXService {
   updateShareData (params: ShareParams) {
     params.imgUrl = params.imgUrl || '/images/logo.png'
     params.imgUrl = process.env.VUE_APP_BASEURL + params.imgUrl
-    params.link = process.env.VUE_APP_BASEURL + params.link
+    params.link = process.env.VUE_APP_BASEURL + '/#' + params.link
     return Promise.resolve()
       .then(() => {
         if (isWX && process.env.VUE_APP_ENV !== 'dev') {
