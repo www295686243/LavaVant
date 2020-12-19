@@ -15,7 +15,7 @@
       closeable
       close-on-popstate
       :close-on-click-overlay="false"
-      class="dialog-user-coupon-import-amount">
+      class="popup-view-user-sell-coupon">
       <h2>挂售单价</h2>
       <p class="message">(出售成功后，平台收取10%服务费)</p>
       <FormRender :form="form" :onSubmit="handleFormSubmit" ref="formElement" :labelWidth="44">
@@ -107,6 +107,21 @@ export default class UserSellCoupon extends Vue {
       text-align: right;
       color: @blue;
     }
+  }
+}
+.popup-view-user-sell-coupon {
+  width: 80%;
+  h2 {
+    text-align: center;
+    line-height: 40px;
+  }
+  .message {
+    text-align: center;
+    color: @gray-7;
+    margin-bottom: 12px;
+  }
+  .van-popup__close-icon--top-right {
+    top: 8px;
   }
 }
 </style>

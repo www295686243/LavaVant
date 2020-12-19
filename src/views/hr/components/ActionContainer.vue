@@ -4,7 +4,7 @@
       <PopupInfoComplaint :Service="Service" v-if="info.is_pay"></PopupInfoComplaint>
       <template v-else>
         <PopupInfoDelivery
-          v-if="!isSelfPublish && deliveryService"
+          v-if="isShowInfoDelivery && deliveryService"
           :send-service="deliveryService"
           :receive-service="Service" />
         <PopupQueryContacts :Service="Service" v-if="!isSelfPublish" @pay="handlePaySuccess" />
@@ -52,6 +52,18 @@ export default class ActionContainer extends Vue {
 
   get isSelfPublish () {
     return this.info.user_id === UserService.info.id
+  }
+
+  get isShowInfoDelivery () {
+    if (this.info.user_id === UserService.info.id) {
+      return false
+    } else if (this.Service.name === 'HrJob' && UserService.info.current_role === 'Enterprise Member') {
+      return false
+    } else if (this.Service.name === 'HrResume' && UserService.info.current_role === 'Personal Member') {
+      return false
+    } else {
+      return true
+    }
   }
 
   private handlePaySuccess (params: { is_pay: boolean; contacts: string; phone: string }) {

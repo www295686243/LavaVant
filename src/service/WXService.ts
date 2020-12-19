@@ -98,7 +98,7 @@ class WXService {
             reject(res)
           },
           cancel: () => {
-            const err = { message: '取消支付' }
+            const err = { status: 'cancel-pay', message: '取消支付' }
             reject(err)
           }
         })

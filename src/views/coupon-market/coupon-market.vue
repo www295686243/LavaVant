@@ -83,6 +83,11 @@ export default class CouponMarket extends Vue {
         this.couponListElement.reload()
         return res
       })
+      .catch((err) => {
+        if (err && err.status === 'cancel-pay') {
+          return CouponOrderService.cancelUnpaidOrder()
+        }
+      })
   }
 
   private handleUnpaidConfrim () {

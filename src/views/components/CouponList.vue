@@ -130,6 +130,8 @@ export default class ViewCouponList extends Vue {
   }
 
   private reload () {
+    this.isAllChecked = false
+    this.totalAmount = this.market ? 0 : null
     return this.listElement.reload()
   }
 }
