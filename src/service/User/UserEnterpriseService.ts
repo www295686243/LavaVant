@@ -34,6 +34,7 @@ class UserEnterpriseService extends BaseAbstract {
   show () {
     return axios.get('user_enterprise/show')
       .then((res) => {
+        alert(JSON.stringify(res.data))
         this.updateData(res.data)
         return res
       })

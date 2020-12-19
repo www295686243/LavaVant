@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Image, Grid, GridItem } from 'vant'
+import { Image, Grid, GridItem, Badge } from 'vant'
 import UserService from '@/service/User/UserService'
 import UserEnterpriseService from '@/service/User/UserEnterpriseService'
 import RouterService from '@/service/RouterService'
@@ -63,7 +63,8 @@ import NotifyService from '@/service/NotifyService'
   components: {
     [Image.name]: Image,
     [Grid.name]: Grid,
-    [GridItem.name]: GridItem
+    [GridItem.name]: GridItem,
+    [Badge.name]: Badge
   }
 })
 export default class ViewUserEnterpriseIndex extends Vue {

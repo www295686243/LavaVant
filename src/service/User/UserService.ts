@@ -147,10 +147,10 @@ class UserService {
   getUserInfo () {
     return axios.get('user/getUserInfo')
       .then((res) => {
-        this.updateData(res.data)
-        UserPersonalService.show()
-        UserEnterpriseService.show()
-        UserControlService.show()
+        this.updateData(res.data.user_info)
+        UserPersonalService.updateData(res.data.user_personal)
+        UserEnterpriseService.updateData(res.data.user_enterprise)
+        UserControlService.updateData(res.data.user_control)
       })
   }
 

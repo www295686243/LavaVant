@@ -59,17 +59,16 @@ class WXService {
   }
 
   login () {
+    PopupSelectCouponService.destroy()
+    PopupRegisterService.destroy()
+    EventService.emit('view-destroy')
     return axios.post('wechat/login', { code: RouterService.get('code'), state: RouterService.get('state') })
       .then((res) => {
-        cache.user.setAll(res.data)
         UserService.updateData(res.data)
       })
       .then(() => UserService.getUserInfo())
       .then(() => {
         location.replace(RouterService.query('redirect_url'))
-        PopupSelectCouponService.destroy()
-        PopupRegisterService.destroy()
-        EventService.emit('view-destroy')
       })
   }
 
