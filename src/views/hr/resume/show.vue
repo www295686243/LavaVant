@@ -1,5 +1,5 @@
 <template>
-  <PageContainer class="view-hr-resume-show" :onLoad="handleLoad">
+  <PageContainer class="view-hr-resume-show" :onLoad="handleLoad" ref="pageElement">
     <van-sticky>
       <FollowAd :Service="HrResumeService"></FollowAd>
     </van-sticky>
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Ref, Vue, Watch } from 'vue-property-decorator'
 import HrResumeService from '@/service/Info/HrResumeService'
 import RouterService from '@/service/RouterService'
 import { getCityName } from '@/plugins/tools'
@@ -47,6 +47,9 @@ import UserService from '@/service/User/UserService'
   }
 })
 export default class ViewHrResumeShow extends Vue {
+  @Ref()
+  pageElement!: any
+
   private info = {
     id: RouterService.query('id'),
     user_id: '',
@@ -72,6 +75,12 @@ export default class ViewHrResumeShow extends Vue {
   }
 
   private HrResumeService = HrResumeService
+
+  @Watch('$route')
+  onRoute () {
+    this.info.id = RouterService.query('id')
+    this.pageElement.reload()
+  }
 
   private handleLoad () {
     return HrResumeService.show()
