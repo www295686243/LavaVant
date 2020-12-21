@@ -77,7 +77,7 @@ class UserService {
       .then(() => {
         const today = formatDate()
         const firstLoginDate = cache.user.get('_firstLoginDate')
-        if ((!firstLoginDate || today > firstLoginDate) && this.info.id) {
+        if ((!firstLoginDate || today > firstLoginDate) && this.isLogin() && !RouterService.getMetaQuery('isDisableAuth')) {
           cache.user.set('_firstLoginDate', today)
           return axios.post('user/todayFirstLogin')
             .then((res) => {

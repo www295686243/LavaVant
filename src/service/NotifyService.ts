@@ -25,7 +25,7 @@ class NotifyService {
   getUnreadCount () {
     return Promise.resolve()
       .then(() => {
-        if (this.isGetUnread === false && UserService.isLogin()) {
+        if (this.isGetUnread === false && UserService.isLogin() && !RouterService.getMetaQuery('isDisableAuth')) {
           return axios.get('notify/getUnreadCount')
             .then((res) => {
               this.unreadCount = res.data.count

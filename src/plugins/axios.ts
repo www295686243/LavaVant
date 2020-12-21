@@ -25,7 +25,7 @@ interface UrlParams {
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.common.Accept = 'application/json'
 
-const onceUrls = ['app/getAppConfig', 'api_log', 'user/todayFirstLogin']
+const onceUrls = ['app/getAppConfig', 'api_log', 'user/todayFirstLogin', 'wechat/auth']
 
 function notLogin () {
   return UserService.logout()

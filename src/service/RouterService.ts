@@ -34,7 +34,7 @@ class RouterSerivce {
       if (to.meta.isDisableAuth) {
         next()
       } else {
-        if (!UserService.info.id) {
+        if (!UserService.isLogin()) {
           WXService.auth()
         } else {
           next()
@@ -94,6 +94,11 @@ class RouterSerivce {
     const urlStr = location.search.replace('?', '')
     const params = urlStr.split('&').find((str) => str.includes(key + '='))
     return params ? params.replace(key + '=', '') : ''
+  }
+
+  getMetaQuery (name: string) {
+    const meta = this.getPathInfo().meta
+    return meta ? meta[name] : null
   }
 }
 

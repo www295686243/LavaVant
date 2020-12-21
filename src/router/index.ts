@@ -8,6 +8,7 @@ import other from './other'
 import CouponMarket from '@/views/coupon-market/coupon-market.vue'
 import taskHall from '@/views/task-hall/task-hall.vue'
 import invite from '@/views/operation/invite.vue'
+import weChatLogin from '@/views/user/wechat-login.vue'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,14 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/wechat-login',
+    component: weChatLogin,
+    meta: {
+      title: '登录中...',
+      isDisableAuth: true
+    }
   },
   {
     path: '/coupon-market',
