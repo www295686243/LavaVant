@@ -9,6 +9,7 @@
     </van-notice-bar>
     <DataRender :onLoad="handleLoad" ref="drElement">
       <slot></slot>
+      <FooterTabBar v-if="isNotifySource"></FooterTabBar>
     </DataRender>
   </div>
 </template>
@@ -21,10 +22,12 @@ import RouterService from '@/service/RouterService'
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import eruda from 'eruda'
+import FooterTabBar from '@/views/components/FooterTabBar.vue'
 
 @Component({
   components: {
-    [NoticeBar.name]: NoticeBar
+    [NoticeBar.name]: NoticeBar,
+    FooterTabBar
   }
 })
 export default class PageContainer extends Vue {
@@ -39,6 +42,7 @@ export default class PageContainer extends Vue {
   private lastClickTime = 0
   private interval = 200 // 连续点击间隔
   private triggerCount = 8 // 触发debug点击次数
+  private isNotifySource = !!RouterService.query('_notify_id') // 是否从通知那点进来的
 
   private handleLoad () {
     return this.onLoad()

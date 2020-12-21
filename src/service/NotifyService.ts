@@ -15,9 +15,9 @@ class NotifyService {
   checkQueryNotify () {
     return Promise.resolve()
       .then(() => {
-        const notify_id = RouterService.query('notify_id')
-        if (notify_id) {
-          return axios.get(`notify/${notify_id}`)
+        const _notify_id = RouterService.query('_notify_id')
+        if (_notify_id) {
+          return axios.get(`notify/${_notify_id}`)
         }
       })
   }
