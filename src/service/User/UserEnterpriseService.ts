@@ -53,6 +53,25 @@ class UserEnterpriseService extends BaseAbstract {
     Object.assign(this.info, params)
   }
 
+  clearInfo () {
+    this.info.avatar = ''
+    this.info.company = ''
+    this.info.business_license = ''
+    this.info.city = 0
+    this.info.address = ''
+    this.info.intro = ''
+    this.info.industry_attr = 0
+    this.info.tags = ''
+    this.info.company_images = []
+    this.info.company_scale = ''
+    this.info.name = ''
+    this.info.id_card = ''
+    this.info.position = ''
+    this.info.phone = ''
+    this.info.email = ''
+    this.info.industry = []
+  }
+
   checkInfo () {
     return Promise.resolve()
       .then(() => {

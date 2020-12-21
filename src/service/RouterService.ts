@@ -1,5 +1,8 @@
 import VueRouter from 'vue-router'
 import StatService from './StatService'
+import UserService from './User/UserService'
+import VantService from './VantService'
+import WXService from './WXService'
 
 class RouterSerivce {
   router!: VueRouter
@@ -7,7 +10,6 @@ class RouterSerivce {
 
   init (router: VueRouter) {
     this.router = router
-
     router.beforeEach((to, from, next) => {
       // 缓存组件
       if (to.meta.keepAlive) {
@@ -32,7 +34,11 @@ class RouterSerivce {
       if (to.meta.isDisableAuth) {
         next()
       } else {
-        next()
+        if (!UserService.info.id) {
+          WXService.auth()
+        } else {
+          next()
+        }
       }
     })
   }

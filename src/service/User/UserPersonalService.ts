@@ -58,6 +58,26 @@ class UserPersonalService extends BaseAbstract {
     Object.assign(this.info, params)
   }
 
+  clearInfo () {
+    this.info.avatar = ''
+    this.info.name = ''
+    this.info.id_card = ''
+    this.info.seniority = ''
+    this.info.intro = ''
+    this.info.company = ''
+    this.info.position = ''
+    this.info.position_attr = 0
+    this.info.city = 0
+    this.info.address = ''
+    this.info.email = ''
+    this.info.phone = ''
+    this.info.tags = ''
+    this.info.education_experience = []
+    this.info.work_experience = []
+    this.info.honorary_certificate = []
+    this.info.industry = []
+  }
+
   checkInfo () {
     return Promise.resolve()
       .then(() => {

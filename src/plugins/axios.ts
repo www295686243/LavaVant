@@ -5,6 +5,7 @@ import VersionService, { Version } from '@/service/VersionService'
 import StatService from '@/service/StatService'
 import UserService from '@/service/User/UserService'
 import { getEnv } from './tools'
+import WXService from '@/service/WXService'
 
 export interface PromiseResult {
   message: string;
@@ -28,9 +29,7 @@ const onceUrls = ['app/getAppConfig', 'api_log', 'user/todayFirstLogin']
 
 function notLogin () {
   return UserService.logout()
-    .then(() => {
-      router.push({ path: '/login' })
-    })
+    .then(() => WXService.auth())
 }
 
 // 获取应用配置

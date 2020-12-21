@@ -92,7 +92,9 @@ class UserService {
       .then(() => {
         cache.clearAll()
         VersionService.clearAll()
-        this.info.id = ''
+        this.clearInfo()
+        UserPersonalService.clearInfo()
+        UserEnterpriseService.clearInfo()
         return '注销成功'
       })
   }
@@ -135,6 +137,19 @@ class UserService {
     if (this.info.is_follow_official_account) {
       this.isShowFollowAd = false
     }
+  }
+
+  clearInfo () {
+    this.info.id = ''
+    this.info.nickname = ''
+    this.info.username = ''
+    this.info.phone = ''
+    this.info.head_url = ''
+    this.info.city = 0
+    this.info.current_role = ''
+    this.info.roles = []
+    this.info.permissions = []
+    this.info.is_follow_official_account = 0
   }
 
   private getBaseUserInfo () {
@@ -183,20 +198,12 @@ class UserService {
   }
 
   checkBaseInfo () {
-    let attr = 0
-    let industry: any[] = []
-    if (this.hasRole('Enterprise Member')) {
-      attr = UserEnterpriseService.info.industry_attr
-      industry = UserEnterpriseService.info.industry
-    } else {
-      attr = UserPersonalService.info.position_attr
-      industry = UserPersonalService.info.industry
-    }
+    const currentRoleBaseInfo = this.getCurrentRoleInfo()
     return Promise.resolve()
       .then(() => {
         if (!this.info.phone) {
           return Promise.reject(new Error('请先登录'))
-        } else if (!(this.info.city && attr && industry.length > 0)) {
+        } else if (!(currentRoleBaseInfo.city && currentRoleBaseInfo.attr && currentRoleBaseInfo.industry.length > 0)) {
           return Promise.reject(new Error('请先完善基本信息'))
         }
       })
@@ -226,17 +233,20 @@ class UserService {
     if (this.info.current_role === 'Personal Member') {
       return {
         industry: UserPersonalService.info.industry,
-        city: UserPersonalService.info.city
+        city: UserPersonalService.info.city,
+        attr: UserPersonalService.info.position_attr
       }
     } else if (this.info.current_role === 'Enterprise Member') {
       return {
         industry: UserEnterpriseService.info.industry,
-        city: UserEnterpriseService.info.city
+        city: UserEnterpriseService.info.city,
+        attr: UserEnterpriseService.info.industry_attr
       }
     } else {
       return {
         industry: [],
-        city: this.info.city
+        city: this.info.city,
+        attr: 0
       }
     }
   }
