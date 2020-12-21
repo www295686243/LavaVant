@@ -58,6 +58,7 @@ import RouterService from '@/service/RouterService'
 import UserPersonalService from '@/service/User/UserPersonalService'
 import VantService from '@/service/VantService'
 import NotifyService from '@/service/NotifyService'
+import PopupRegisterService from '@/components/Popup/PopupRegister/PopupRegisterService'
 
 @Component({
   components: {
@@ -80,6 +81,11 @@ export default class ViewUserEnterpriseIndex extends Vue {
         return UserService.switchRole('Personal Member')
           .then(() => {
             loading.clear()
+          })
+          .catch(() => {
+            loading.clear()
+            return PopupRegisterService.open('Personal Member')
+              .then(() => this.handleSwitchPersonal())
           })
       })
   }

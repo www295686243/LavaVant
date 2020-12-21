@@ -1,6 +1,5 @@
 import axios from 'axios'
 import cache from './cache'
-import router from '@/router'
 import VersionService, { Version } from '@/service/VersionService'
 import StatService from '@/service/StatService'
 import UserService from '@/service/User/UserService'
@@ -25,7 +24,7 @@ interface UrlParams {
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.common.Accept = 'application/json'
 
-const onceUrls = ['app/getAppConfig', 'api_log', 'user/todayFirstLogin', 'wechat/auth']
+const onceUrls = ['app/getAppConfig', 'api_log', 'user/todayFirstLogin', 'wechat/auth', 'wechat/login']
 
 function notLogin () {
   return UserService.logout()

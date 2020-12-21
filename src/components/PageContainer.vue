@@ -9,7 +9,7 @@
     </van-notice-bar>
     <DataRender :onLoad="handleLoad" ref="drElement">
       <slot></slot>
-      <FooterTabBar v-if="isNotifySource"></FooterTabBar>
+      <FooterTabBar v-if="isShowFooter"></FooterTabBar>
     </DataRender>
   </div>
 </template>
@@ -43,6 +43,16 @@ export default class PageContainer extends Vue {
   private interval = 200 // 连续点击间隔
   private triggerCount = 8 // 触发debug点击次数
   private isNotifySource = !!RouterService.query('_notify_id') // 是否从通知那点进来的
+  private isShareSource = RouterService.query('_source') === 'share'
+  private ignoreShowFooterPathList = ['/hr/job', '/hr/resume', '/user']
+
+  private get isShowFooter () {
+    if (!this.ignoreShowFooterPathList.includes(RouterService.getPath())) {
+      return this.isNotifySource || this.isShareSource
+    } else {
+      return false
+    }
+  }
 
   private handleLoad () {
     return this.onLoad()

@@ -111,6 +111,11 @@ class WXService {
     params.imgUrl = params.imgUrl || '/images/logo.png'
     params.imgUrl = process.env.VUE_APP_BASEURL + params.imgUrl
     params.link = process.env.VUE_APP_BASEURL + '/#' + params.link
+    if (params.link.includes('?')) {
+      params.link += '&_source=share'
+    } else {
+      params.link += '?_source=share'
+    }
     return Promise.resolve()
       .then(() => {
         if (isWX && process.env.VUE_APP_ENV !== 'dev') {

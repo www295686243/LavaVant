@@ -1,7 +1,6 @@
 import VueRouter from 'vue-router'
 import StatService from './StatService'
 import UserService from './User/UserService'
-import VantService from './VantService'
 import WXService from './WXService'
 
 class RouterSerivce {
