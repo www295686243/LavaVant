@@ -1,6 +1,6 @@
 <template>
   <PageContainer class="view-user-cash">
-    <FormRender :Service="UserCashService" :form="form" submitBtn="申请提现" :label-width="1">
+    <FormRender :Service="UserCashService" :onSubmit="handleSubmit" :form="form" submitBtn="申请提现" :label-width="1">
       <div class="cash-input">
         <FormInput v-model="form.amount" :field="formFields.amount" />
       </div>
@@ -20,6 +20,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import ValidateService from '@/service/ValidateService'
 import UserCashService from '@/service/User/UserCashService'
+import UserService from '@/service/User/UserService'
 
 @Component({
   name: 'UserCash'
@@ -39,6 +40,11 @@ export default class UserCash extends Vue {
       rules: [ValidateService.required, ValidateService.money]
     }
   })
+
+  private handleSubmit () {
+    return UserService.checkBaseInfo()
+      .then(() => UserCashService.store(this.form))
+  }
 }
 </script>
 

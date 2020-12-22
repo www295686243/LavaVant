@@ -202,7 +202,7 @@ class UserService {
     return Promise.resolve()
       .then(() => {
         if (!this.info.phone) {
-          return Promise.reject(new Error('请先登录'))
+          return Promise.reject(new Error('请先绑定手机号'))
         } else if (!(currentRoleBaseInfo.city && currentRoleBaseInfo.attr && currentRoleBaseInfo.industry.length > 0)) {
           return Promise.reject(new Error('请先完善基本信息'))
         }
