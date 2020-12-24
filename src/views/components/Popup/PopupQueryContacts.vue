@@ -17,22 +17,34 @@
       position="bottom"
       get-container="body">
       <div class="container">
-        <h2>打赏支付</h2>
-        <div class="amount-container">
-          <span class="amount" v-if="totalAmount > 0">{{totalAmount}}<small> 元</small><span class="original-amount">{{originalAmount}}元</span></span>
-          <span class="free" v-else>免费查看</span>
-        </div>
-        <van-cell
-          @click="handleGotoCoupon"
-          class="coupon-container"
-          :class="{ none: !UserCouponService.usableCouponInfo.id }"
-          title="使用互助券"
-          :value="UserCouponService.usableCouponInfo.display_name"
-          is-link />
-        <div class="flex">
-          <h6>完成互助任务，获得互助券</h6>
-          <h6 @click="RouterService.push('/coupon-market')">进入互助券市场</h6>
-        </div>
+        <van-tabs v-model="payActive">
+          <van-tab title="互助查看">
+            <div class="amount-container">
+              <div class="free" v-if="UserCouponService.usableCouponInfo.id">免费查看</div>
+              <div class="none" v-else>
+                <h3>暂无可用互助券</h3>
+                <p>您可以：<span class="text-color-click" @click="RouterService.push('/task-hall')">做任务</span>或前往<span class="text-color-click" @click="RouterService.push('/coupon-market')">互助券市场</span></p>
+              </div>
+            </div>
+            <van-cell
+              @click="handleGotoCoupon"
+              class="coupon-container"
+              :class="{ none: !UserCouponService.usableCouponInfo.id }"
+              title="使用互助券"
+              :value="UserCouponService.usableCouponInfo.display_name"
+              is-link />
+            <div class="flex text-color-click">
+              <h6 @click="RouterService.push('/task-hall')">完成互助任务，获得互助券</h6>
+              <h6 @click="RouterService.push('/coupon-market')">进入互助券市场</h6>
+            </div>
+          </van-tab>
+          <van-tab title="打赏支付" v-if="!UserCouponService.usableCouponInfo.id">
+            <div class="amount-container">
+              <span class="amount">{{amount}}<small> 元</small><span class="original-amount">{{originalAmount}}元</span></span>
+            </div>
+          </van-tab>
+        </van-tabs>
+        <div class="statement" v-if="Service.name === 'HrJob'">声明：招聘信息经客服回访确认在招才推送，具体薪资待遇、工作等需双方确认签订合同，平台不承担责任！</div>
         <div class="btn">
           <ButtonSubmit block round :onClick="handleSubmit">确认支付</ButtonSubmit>
         </div>
@@ -65,6 +77,7 @@
         <div>
           <van-button icon="phone-o" :url="'tel:' + phone">{{phone}}</van-button>
           <p>(点击可拨号)</p>
+          <p class="statement">提示：联系后，如已招到，是中介，电话有误等问题，请及时投诉，客服核实后退卷或退款！</p>
         </div>
       </div>
     </van-popup>
@@ -78,8 +91,15 @@ import UserService from '@/service/User/UserService'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import PopupSelectCouponService from '@/components/Popup/PopupSelectCouponService'
 import HrAbstract from '@/abstract/HrAbstract'
+import { Tab, Tabs } from 'vant'
+import cache from '@/plugins/cache'
 
-@Component
+@Component({
+  components: {
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs
+  }
+})
 export default class PopupQueryContacts extends Vue {
   @Prop()
   Service!: HrAbstract
@@ -87,12 +107,12 @@ export default class PopupQueryContacts extends Vue {
   private isShowPopup = false
   private isShowOfficialAccounts= false
   private UserCouponService = UserCouponService
-  private totalAmount = 0
   private originalAmount = this.Service.getValue('original_amount')
   private amount = this.Service.getValue('amount')
   private isShowContacts = false
   private phone = ''
   private RouterService = RouterService
+  private payActive = cache.other.get('payActive', 0)
 
   private handleShowPopup () {
     return UserService.checkBaseInfo()
@@ -106,23 +126,34 @@ export default class PopupQueryContacts extends Vue {
       .then(() => {
         if (this.amount > 0) {
           return this.Service.getFirstUsableCoupon()
+            .then(() => {
+              if (UserCouponService.usableCouponInfo.id) {
+                this.payActive = 0
+              }
+            })
         }
       })
       .then(() => {
-        this.totalAmount = this.amount - UserCouponService.usableCouponInfo.amount
-        this.totalAmount = this.totalAmount < 0 ? 0 : this.totalAmount
         this.isShowPopup = true
       })
   }
 
   private handleSubmit () {
-    return this.Service.pay({ user_coupon_id: UserCouponService.usableCouponInfo.id })
-      .then((res: any) => {
-        this.$emit('pay', res.data)
-        this.phone = res.data.phone
-        this.isShowPopup = false
-        this.isShowContacts = true
-        PopupSelectCouponService.destroy()
+    return Promise.resolve()
+      .then(() => {
+        if (this.payActive === 0 && !UserCouponService.usableCouponInfo.id) {
+          return Promise.reject(new Error('暂无可用优惠券'))
+        } else {
+          return this.Service.pay({ user_coupon_id: UserCouponService.usableCouponInfo.id })
+            .then((res: any) => {
+              this.$emit('pay', res.data)
+              this.phone = res.data.phone
+              this.isShowPopup = false
+              this.isShowContacts = true
+              cache.other.set('payActive', this.payActive)
+              PopupSelectCouponService.destroy()
+            })
+        }
       })
   }
 
@@ -159,7 +190,7 @@ export default class PopupQueryContacts extends Vue {
       padding: @padding-md 0;
     }
     .amount-container {
-      padding: 0 0 @padding-lg;
+      padding: @padding-lg 0 @padding-lg;
       text-align: center;
       font-size: 28px;
       color: @orange-dark;
@@ -169,6 +200,12 @@ export default class PopupQueryContacts extends Vue {
       }
       .free {
         font-size: @font-size-md;
+      }
+      .none {
+        p {
+          color: @gray-7;
+          margin-top: @padding-xs;
+        }
       }
       small {
         font-size: @font-size-md;
@@ -203,11 +240,18 @@ export default class PopupQueryContacts extends Vue {
       padding: @padding-md;
       h6 {
         font-size: @font-size-sm;
-        color: @blue;
       }
+    }
+    .statement {
+      padding: 0 @padding-md;
+      font-size: @font-size-xs;
+      color: @gray-6;
     }
     .btn {
       padding: @padding-md;
+    }
+    .van-tabs__nav {
+      padding: 0 60px 15px;
     }
   }
 }
@@ -243,6 +287,9 @@ export default class PopupQueryContacts extends Vue {
   p {
     font-size: @font-size-sm;
     color: @gray-6;
+  }
+  .statement {
+    padding: @padding-lg @padding-md 0;
   }
 }
 </style>
