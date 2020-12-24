@@ -6,9 +6,8 @@
     <div class="container main">
       <BaseInfoContainer :info="info" :Service="HrResumeService"></BaseInfoContainer>
       <DescriptionContainer :info="info" :Service="HrResumeService"></DescriptionContainer>
-      <ContactsContainer v-if="info.is_pay" :info="info"></ContactsContainer>
+      <ContactsContainer v-if="info.is_pay" :info="info" :Service="HrResumeService"></ContactsContainer>
       <ActionContainer :Service="HrResumeService" :info="info"></ActionContainer>
-      <Disclaimer></Disclaimer>
     </div>
     <RecommendContainer class="container" :Service="HrResumeService"></RecommendContainer>
     <FixedHelp></FixedHelp>
@@ -20,7 +19,6 @@ import { Component, Ref, Vue, Watch } from 'vue-property-decorator'
 import HrResumeService from '@/service/Info/HrResumeService'
 import RouterService from '@/service/RouterService'
 import { getCityName } from '@/plugins/tools'
-import Disclaimer from '@/views/hr/components/Disclaimer.vue'
 import { Sticky } from 'vant'
 import FollowAd from '@/views/components/FollowAd.vue'
 import ActionContainer from '../components/ActionContainer.vue'
@@ -35,7 +33,6 @@ import UserService from '@/service/User/UserService'
 @Component({
   name: 'HrResumeShow',
   components: {
-    Disclaimer,
     [Sticky.name]: Sticky,
     FollowAd,
     ActionContainer,

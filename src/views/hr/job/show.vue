@@ -5,15 +5,15 @@
     </van-sticky>
     <div class="container main">
       <BaseInfoContainer :info="info" :Service="HrJobService"></BaseInfoContainer>
+      <DescriptionContainer :info="info" :Service="HrJobService"></DescriptionContainer>
       <div class="enterprise-container">
         <h3 class="title">企业信息</h3>
         <h4 v-if="info.company_name">{{info.company_name}}</h4>
-        <h5>地址：{{info.cityFullName}}</h5>
+        <h4>地址：{{info.cityFullName}}</h4>
+        <ContactsContainer v-if="info.is_pay" :info="info" :Service="HrJobService"></ContactsContainer>
+        <PopupInfoComplaint :Service="HrJobService" v-if="info.is_pay"></PopupInfoComplaint>
       </div>
-      <DescriptionContainer :info="info" :Service="HrJobService"></DescriptionContainer>
-      <ContactsContainer v-if="info.is_pay" :info="info"></ContactsContainer>
       <ActionContainer :Service="HrJobService" :deliveryService="HrResumeService" :info="info"></ActionContainer>
-      <Disclaimer></Disclaimer>
     </div>
     <RecommendContainer class="container" :Service="HrJobService"></RecommendContainer>
     <FixedHelp></FixedHelp>
@@ -25,7 +25,6 @@ import { Component, Vue, Ref, Watch } from 'vue-property-decorator'
 import HrJobService from '@/service/Info/HrJobService'
 import { getCityName } from '@/plugins/tools'
 import RouterService from '@/service/RouterService'
-import Disclaimer from '@/views/hr/components/Disclaimer.vue'
 import { Sticky } from 'vant'
 import FollowAd from '@/views/components/FollowAd.vue'
 import ActionContainer from '../components/ActionContainer.vue'
@@ -37,11 +36,11 @@ import RecommendContainer from '../components/RecommendContainer.vue'
 import FixedHelp from '@/views/components/FixedHelp.vue'
 import WXService from '@/service/WXService'
 import UserService from '@/service/User/UserService'
+import PopupInfoComplaint from '@/views/components/Popup/PopupInfoComplaint.vue'
 
 @Component({
   name: 'HrJobShow',
   components: {
-    Disclaimer,
     [Sticky.name]: Sticky,
     FollowAd,
     ActionContainer,
@@ -49,7 +48,8 @@ import UserService from '@/service/User/UserService'
     DescriptionContainer,
     BaseInfoContainer,
     RecommendContainer,
-    FixedHelp
+    FixedHelp,
+    PopupInfoComplaint
   }
 })
 export default class ViewHrJobShow extends Vue {
@@ -96,7 +96,7 @@ export default class ViewHrJobShow extends Vue {
     return HrJobService.show()
       .then((res) => {
         Object.assign(this.info, res.data)
-        this.info.salary = this.info.is_negotiate ? '面议' : (this.info.monthly_salary_min && this.info.monthly_salary_max ? this.info.monthly_salary_min : this.info.monthly_salary_min + '~' + this.info.monthly_salary_max)
+        this.info.salary = this.info.is_negotiate ? '面议' : (this.info.monthly_salary_min === this.info.monthly_salary_max ? this.info.monthly_salary_min : this.info.monthly_salary_min + '~' + this.info.monthly_salary_max)
         if (this.info.treatment_input) {
           this.info.treatment = this.info.treatment ? `${this.info.treatment},${this.info.treatment_input}` : this.info.treatment_input
         }
@@ -132,7 +132,7 @@ export default class ViewHrJobShow extends Vue {
   }
 
   .enterprise-container {
-    margin-bottom: @padding-lg;
+    position: relative;
     line-height: 1.7;
     .title {
       margin-bottom: @padding-base;
@@ -142,6 +142,11 @@ export default class ViewHrJobShow extends Vue {
     }
     h5 {
       color: @gray-6;
+    }
+    .PopupInfoComplaint {
+      position: absolute;
+      right: 0;
+      top: -2px;
     }
   }
 }

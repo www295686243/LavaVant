@@ -1,14 +1,11 @@
 <template>
   <div class="ActionContainer">
     <template v-if="info.status === Service.getStatusValue(1, '已发布')">
-      <PopupInfoComplaint :Service="Service" v-if="info.is_pay"></PopupInfoComplaint>
-      <template v-else>
-        <PopupInfoDelivery
-          v-if="isShowInfoDelivery && deliveryService"
-          :send-service="deliveryService"
-          :receive-service="Service" />
-        <PopupQueryContacts :Service="Service" v-if="!isSelfPublish" @pay="handlePaySuccess" />
-      </template>
+      <PopupInfoDelivery
+        v-if="!info.is_pay && (isShowInfoDelivery && deliveryService)"
+        :send-service="deliveryService"
+        :receive-service="Service" />
+      <PopupQueryContacts :Service="Service" v-if="!info.is_pay && !isSelfPublish" @pay="handlePaySuccess" />
     </template>
     <ButtonSubmit
       v-if="isSelfPublish"
@@ -26,14 +23,12 @@
 import HrAbstract from '@/abstract/HrAbstract'
 import RouterService from '@/service/RouterService'
 import UserService from '@/service/User/UserService'
-import PopupInfoComplaint from '@/views/components/Popup/PopupInfoComplaint.vue'
 import PopupQueryContacts from '@/views/components/Popup/PopupQueryContacts.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import PopupInfoDelivery from './PopupInfoDelivery.vue'
 
 @Component({
   components: {
-    PopupInfoComplaint,
     PopupInfoDelivery,
     PopupQueryContacts
   }
@@ -74,7 +69,7 @@ export default class ActionContainer extends Vue {
 
 <style lang="less">
 .ActionContainer {
-  margin-top: @padding-lg;
+  margin-top: @padding-md;
   display: flex;
   align-items: center;
   .PopupInfoDelivery + .PopupQueryContacts {

@@ -17,7 +17,7 @@
         :text.sync="form.treatment_input"
         v-model="form.treatment"
         :field="formFields.treatment" />
-      <FormTextarea v-model="form.description" :field="formFields.description" :rows="5" />
+      <FormTextarea v-model="form.description" :field="formFields.description" :rows="7" />
       <FormSelect v-model="form.education" :field="formFields.education" />
       <FormSelect v-model="form.seniority" :field="formFields.seniority" />
       <FormArea v-model="form.city" :field="formFields.city" />
@@ -69,19 +69,19 @@ export default class UserHrJobForm extends Vue {
     },
     rangeSalary: {
       prop: 'rangeSalary',
-      label: '薪资范围',
+      label: '期望薪资',
       rules: [ValidateService.required]
     },
     treatment: {
       prop: 'treatment',
-      label: '要求待遇',
+      label: '期望待遇',
       rules: [ValidateService.required({ trigger: 'onChange' })]
     },
     description: {
       prop: 'description',
       label: '自我介绍',
       placeholder: '自我介绍，描述求职的岗位，擅长做什么设备，做过什么工艺、产品、参与过什么项目，有多少年的工作经验等，给招聘企业提供匹配参考（不低于50字）',
-      rules: [ValidateService.required, ValidateService.max(2000)]
+      rules: [ValidateService.required, ValidateService.max(2000), ValidateService.min(50)]
     },
     education: {
       prop: 'education',

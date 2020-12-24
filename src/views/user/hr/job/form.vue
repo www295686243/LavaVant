@@ -19,7 +19,7 @@
         v-model="form.treatment"
         :field="formFields.treatment" />
       <FormStepper v-model="form.recruiter_number" :field="formFields.recruiter_number" />
-      <FormTextarea v-model="form.description" :field="formFields.description" :rows="5" />
+      <FormTextarea v-model="form.description" :field="formFields.description" :rows="7" />
       <FormSelect v-model="form.education" :field="formFields.education" />
       <FormSelect v-model="form.seniority" :field="formFields.seniority" />
       <FormArea v-model="form.city" :field="formFields.city" />

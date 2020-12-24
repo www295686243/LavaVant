@@ -28,6 +28,7 @@ export default class DescriptionContainer extends Vue {
 
 <style lang="less">
 .DescriptionContainer {
+  margin-bottom: @padding-lg;
   line-height: 1.7;
   .views-container {
     color: @gray-7;
@@ -39,9 +40,10 @@ export default class DescriptionContainer extends Vue {
     font-size: @font-size-md;
     color: @gray-7;
     line-height: 1.7;
+    white-space: pre-line;
   }
   .tips-container {
-    margin-top: @padding-sm;
+    margin-top: @padding-md;
     p {
       font-size: @font-size-sm;
     }
@@ -49,7 +51,7 @@ export default class DescriptionContainer extends Vue {
       color: @gray-6;
     }
     .tips {
-      color: @gray-7;
+      color: @gray-6;
     }
   }
   .flex {
