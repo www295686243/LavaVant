@@ -167,7 +167,9 @@ export default class PopupQueryContacts extends Vue {
         .then((res: any) => {
           UserCouponService.updateUsableCoupon(res)
         })
-        .catch((err: any) => { console.log(err) })
+        .catch(() => {
+          //
+        })
     }
   }
 }
