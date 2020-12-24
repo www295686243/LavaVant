@@ -11,6 +11,9 @@
         您有一笔订单正在支付有效期5分钟，是否继续？&emsp;<span class="click" @click.stop="handleUnpaidConfrim">继续支付</span>
       </template>
     </CouponList>
+    <div class="fixed-sell-entra">
+      <van-button plain type="info" @click="RouterService.push('/user/coupon/sell-coupon')"><van-icon name="after-sale" />出售</van-button>
+    </div>
   </PageContainer>
 </template>
 
@@ -19,8 +22,9 @@ import { Component, Vue, Ref } from 'vue-property-decorator'
 import CouponList from '@/views/components/CouponList.vue'
 import CouponMarketService from '@/service/Coupon/CouponMarketService'
 import CouponOrderService from '@/service/Coupon/CouponOrderService'
-// import nicknameList from './nickname'
+import nicknameList from './nickname'
 import VantService from '@/service/VantService'
+import RouterService from '@/service/RouterService'
 
 @Component({
   name: 'CouponMarket',
@@ -32,6 +36,7 @@ export default class CouponMarket extends Vue {
   @Ref()
   couponListElement!: any
 
+  private RouterService = RouterService
   private unpaidOrder = {
     quantity: 0,
     total_amount: 0
@@ -60,8 +65,8 @@ export default class CouponMarket extends Vue {
               desc: item.user_coupon.desc,
               active: false,
               sell_user: {
-                ...item.sell_user
-                // nickname: nicknameList[Number(item.id.slice(-4)) % nicknameList.length]
+                ...item.sell_user,
+                nickname: nicknameList[Number(item.id.slice(-4)) % nicknameList.length]
               }
             }
           })
@@ -143,6 +148,22 @@ export default class CouponMarket extends Vue {
   }
   .click {
     color: @blue;
+  }
+  .fixed-sell-entra {
+    position: fixed;
+    right: 0;
+    bottom: 30%;
+    .van-button {
+      width: 30px;
+      height: auto;
+      line-height: 1.4;
+      padding: 5px 0 5px 2px;
+      border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
   }
 }
 </style>

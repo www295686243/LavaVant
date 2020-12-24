@@ -14,8 +14,8 @@ class UserCouponService extends BaseAbstract {
     return axios.get('user_coupon', params)
   }
 
-  recall (user_coupon_ids: string[]) {
-    return axios.post('user_coupon/recall', { user_coupon_ids })
+  recall (coupon_market_ids: string[]) {
+    return axios.post('user_coupon/recall', { coupon_market_ids })
   }
 
   updateUsableCoupon (params: { id: string; display_name: string; amount: number }) {

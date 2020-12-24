@@ -51,9 +51,16 @@ class WXService {
   }
 
   auth () {
-    return axios.post('wechat/auth', { redirect_url: location.href })
-      .then((res) => {
-        location.href = res.data.url
+    return Promise.resolve()
+      .then(() => {
+        if (isWX && process.env.VUE_APP_ENV !== 'dev') {
+          return axios.post('wechat/auth', { redirect_url: location.href })
+            .then((res) => {
+              location.href = res.data.url
+            })
+        } else if (process.env.VUE_APP_ENV === 'dev') {
+          RouterService.replace('/demo/login')
+        }
       })
   }
 

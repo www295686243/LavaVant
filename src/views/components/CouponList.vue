@@ -4,7 +4,7 @@
       <template v-slot="{ v }">
         <div class="coupon-item" @click="handleClick(v)">
           <div class="item-left">
-            <div v-if="market">
+            <div v-if="market || mySell">
               <h2>{{v.sell_amount}}</h2>
               <h3>售价</h3>
             </div>
@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="item-right">
-            <p class="title" v-if="market">{{v.amount}}元{{v.display_name}}</p>
+            <p class="title" v-if="market || mySell">{{v.amount}}元{{v.display_name}}</p>
             <p class="desc">说明：{{v.desc}}</p>
             <p class="time">截止日期：{{v.end_at}}</p>
             <p class="sell van-ellipsis" v-if="market">出售人：{{v.sell_user.nickname}}</p>
@@ -70,6 +70,9 @@ export default class ViewCouponList extends Vue {
 
   @Prop({ default: false })
   market!: boolean
+
+  @Prop({ default: false })
+  mySell!: boolean
 
   @Prop({ default: '提交' })
   buttonText!: string
