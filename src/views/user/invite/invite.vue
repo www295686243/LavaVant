@@ -30,11 +30,14 @@ export default class UserInvite extends Vue {
   private isShowShareGuide = false
 
   private handleLoad () {
-    WXService.updateShareData({
-      title: UserService.info.nickname + '邀请您加入求职招聘互助，共同互助找工作！',
-      desc: '原草互助，行业人的互帮互助！',
-      link: `/operation/invite?iu=${UserService.info.id}`
-    })
+    return Promise.resolve()
+      .then(() => {
+        WXService.updateShareData({
+          title: UserService.info.nickname + '邀请您加入求职招聘互助，共同互助找工作！',
+          desc: '原草互助，行业人的互帮互助！',
+          link: `/operation/invite?iu=${UserService.info.id}`
+        })
+      })
   }
 }
 </script>

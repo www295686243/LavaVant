@@ -13,7 +13,8 @@ export default [
     path: '/demo/entra',
     component: entra,
     meta: {
-      title: '入口'
+      title: '入口',
+      isDisableAuth: true
     }
   },
   {
@@ -27,14 +28,16 @@ export default [
     path: '/demo/login',
     component: login,
     meta: {
-      title: '登录'
+      title: '登录',
+      isDisableAuth: true
     }
   },
   {
     path: '/demo/wechat-login',
     component: wechatLogin,
     meta: {
-      title: '微信登录'
+      title: '微信登录',
+      isDisableAuth: true
     }
   },
   {

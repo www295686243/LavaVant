@@ -58,7 +58,7 @@ class WXService {
             .then((res) => {
               location.href = res.data.url
             })
-        } else if (process.env.VUE_APP_ENV === 'dev') {
+        } else {
           RouterService.replace('/demo/login')
         }
       })
